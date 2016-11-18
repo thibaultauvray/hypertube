@@ -4,6 +4,7 @@ var mimeTypes = {
     ".f4p":		"video/mp4",
     ".mp4":		"video/mp4",
     ".asf":		"video/x-ms-asf",
+    ".mkv" :      "video/x-matroska",
     ".asr":		"video/x-ms-asf",
     ".asx":		"video/x-ms-asf",
     ".avi":		"video/x-msvideo",

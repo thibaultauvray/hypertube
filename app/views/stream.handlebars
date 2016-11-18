@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <h1>Video</h1>
+<div class="video-container">
+    <video id="video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264"
+           controls preload="auto">
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </video>
+
+
+
+</div>
+
+    <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.6.12/videojs-contrib-hls.js"></script>
+    <script>
+
+        var player = videojs('video');
+        player.src({
+            src: "http://localhost:3000/torrent",
+            type: 'video/mp4',
+            withCredentials: true
+        });
+
+    </script>
+
+
+

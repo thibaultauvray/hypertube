@@ -74,7 +74,7 @@ exports.accessToken = function(req, res) {
 					token_twitter : authenticatedData.oauth_token,
 					token_secret_twitter : authenticatedData.oauth_token_secret,
 					username : body.screen_name,
-					password : 'hypertube1234',
+					password : 'hypertube1234', // TODO La securite avant tout
 					mail : 'mail@hypertube.com',
 					firstname : 'firstname',
 					lastname : 'lastname',
@@ -83,8 +83,9 @@ exports.accessToken = function(req, res) {
 				axios.post('http://localhost:3000/api/user/new', {
 					user : newUser
 				}).then(function(resp) {
-					if (resp.data.state === 'success')
+					if (resp.data.state === 'success') {
 						res.redirect('/app/library');
+					}
 					if (resp.data.state === 'user already exist') {
 						User.findOne({ username : newUser.username }, function(err, user) {
 							if (!err && user) {
@@ -94,7 +95,7 @@ exports.accessToken = function(req, res) {
 								req.session.firstname = user.firstname;
 								req.session.lastname = user.lastname;
 								req.session.language = user.language;
-
+								console.log("Already exist");
 								res.redirect('/app/library');
 							} else {
 								console.log(err);

@@ -4,6 +4,7 @@ var mongoose = require('../mongoose'),
 	_ = require('lodash');
 
 var library = function(req, res, next) {
+	console.log("USERNAME" + req.session.username);
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
 

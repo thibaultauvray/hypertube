@@ -7,7 +7,8 @@ var express = require('express'),
 	mongoose = require('./mongoose');
 
 var app = express();
-
+var config = require('./config/config');
+var flash    = require('connect-flash');
 app.set('view engine', 'handlebars'); // Set template engine
 app.engine('handlebars', hbs({
 	defaultLayout : 'main',
@@ -21,8 +22,8 @@ app.engine('handlebars', hbs({
 }));
 
 process.env.NODE_ENV = 'production';
-app.enable('view cache');
 
+app.enable('view cache');
 app.use(express.static('public'));
 app.use(express.static('bower_components'));
 app.use(bodyParser.json({limit: '5mb'}));
@@ -33,6 +34,8 @@ app.use(session({
 	resave : false,
 	saveUninitialized : true
 }));
+
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use(function (req, res, next) {
 	var views = req.session.views ;

@@ -1,0 +1,22 @@
+// var range = req.headers.range;
+// var positions = range.replace(/bytes=/, "").split("-");
+// var start = parseInt(positions[0], 10);
+// var total = movie_file.length;
+// var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
+// var chunksize = (end - start) + 1;
+// var stream = movie_file.createReadStream({start: start, end: end});
+// var stream = fs.createReadStream('/tmp/tdl/Finding.Dory.2016.WEB-DLRip.1.46Gb.MegaPeer.avi');
+// var Transcoder = require('stream-transcoder');
+// new Transcoder(stream)
+//     .maxSize(1280, 720)
+//     .videoCodec('h264')
+//     .videoBitrate(800 * 1000)
+//     .fps(25)
+//     .sampleRate(44100)
+//     .channels(2)
+//     .audioBitrate(128 * 1000)
+//     .format('mp4')
+//     .on('finish', function() {
+//         console.log("finished");
+//     })
+//     .stream().pipe(res);
