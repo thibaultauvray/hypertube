@@ -1,30 +1,53 @@
 <div class="container-fluid">
-    <h1>Video</h1>
-<div class="video-container">
-    <video id="video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264"
-           controls preload="auto">
-        <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser that
-            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-        </p>
-    </video>
+    <div class="row stream center-block">
+        <div class="video-container">
+            <div id="test"></div>
+            <video id="video" class="video-js vjs-sublime-skin col-sm-12" data-setup='{"example_option":true}' controls
+                   preload="none">
+                <!--<source src="http://localhost:3000/torrent" type="video/mp4" />-->
 
+                <!--<track kind="captions" src="http://example.com/path/to/captions.vtt" srclang="en" label="English" default>-->
 
+                <track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>
+                <track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">
 
+                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </video>
+        </div>
+    </div>
 </div>
+<script>
+    socket.on('update', function (data)
+    {
+        console.log(data);
+        $("#test").html(data);
+    });
+</script>
+<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+<script src="/js/videojs-overlay.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.6.12/videojs-contrib-hls.js"></script>
+<script>
 
-    <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.6.12/videojs-contrib-hls.js"></script>
-    <script>
+    var player = videojs('video');
 
-        var player = videojs('video');
-        player.src({
-            src: "http://localhost:3000/torrent",
-            type: 'video/mp4',
-            withCredentials: true
-        });
+    player.overlay({
+        showBackground: true,
+        overlays: [{
+            align: top,
+            content: '<div class=overlay>Default overlay content</div>',
+            start: 'pause',
+            end: 'play'
+        }]
+    });
+    player.src({
+        src: "http://localhost:3000/torrent",
+        type: 'video/mp4',
+        withCredentials: true
+    });
 
-    </script>
+
+</script>
 
 
 
