@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var changeCase = require('change-case');
 var torrentStream = require('torrent-stream');
 
-var Movie = require('../schemas/movie');
+var Movie = require('.././movie');
 
 var mimeTypes = require('./mime_types');
 var settings = require('./config.json');

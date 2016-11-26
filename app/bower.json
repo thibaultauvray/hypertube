@@ -24,7 +24,8 @@
     "bootstrap": "^3.3.6",
     "jquery": "^2.2.3",
     "font-awesome": "fontawesome#^4.6.3",
-    "jquery-dateFormat": "^1.0.2"
+    "jquery-dateFormat": "^1.0.2",
+    "videojs-sublime-skin": "^1.0.3"
   },
   "devDependencies": {
     "jquery-dateFormat": "^1.0.2"

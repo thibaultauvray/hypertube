@@ -495,3 +495,6 @@ footer {
   margin-top: 36px;
   margin-bottom: 16px;
   z-index: 2; }
+
+.nopadding {
+  padding: 0 !important; }

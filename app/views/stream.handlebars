@@ -1,12 +1,9 @@
-<div class="container-fluid">
-    <div class="row stream center-block">
-        <div class="video-container">
-            <div id="test"></div>
-            <video id="video" class="video-js vjs-sublime-skin col-sm-12" data-setup='{"example_option":true}' controls
-                   preload="none">
-                <!--<source src="http://localhost:3000/torrent" type="video/mp4" />-->
+<div class="container">
+    <div class="row stream">
+        <div id="videoContainer" class="video-container col-xs-12 nopadding ">
 
-                <!--<track kind="captions" src="http://example.com/path/to/captions.vtt" srclang="en" label="English" default>-->
+            <video id="video" class="video-js vjs-sublime-skin videojs-stream col-sm-12 " data-setup='{"example_option":true}' controls
+                   preload="none">
 
                 <track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>
                 <track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">
@@ -14,37 +11,83 @@
                 To view this video please enable JavaScript, and consider upgrading to a web browser that
                 <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
             </video>
+            <div id="progresBar">
+            <div class="progress col-xs-11 nopadding">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                    <span class="currentTime" style="
+    color: white;
+    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+"></span>
+                </div>
+            </div>
+            <div id="duration" class="col-xs-1"></div>
+            </div>
         </div>
+
+
+        <div id="test"></div>
     </div>
 </div>
 <script>
+    socket.on('getDuration', function(data)
+    {
+        data = data.substring(0, data.indexOf('.'));
+        var a = data.split(':');
+        var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+        $('#duration').html(data);
+    });
+    socket.on('getExt', function(data)
+    {
+        console.log(data);
+       if(data == "video/mp4" || data == "video/webm" || data == "video/ogg")
+       {
+           console.log('remove');
+           $('#video').removeClass('videojs-stream');
+           $('#progresBar').addClass('hidden');
+       }
+    });
     socket.on('update', function (data)
     {
         console.log(data);
-        $("#test").html(data);
+//        $("#test").html(data);
     });
 </script>
 <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
-<script src="/js/videojs-overlay.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.6.12/videojs-contrib-hls.js"></script>
 <script>
 
-    var player = videojs('video');
 
-    player.overlay({
-        showBackground: true,
-        overlays: [{
-            align: top,
-            content: '<div class=overlay>Default overlay content</div>',
-            start: 'pause',
-            end: 'play'
-        }]
-    });
+    var toHHMMSS = (secs) => {
+        var sec_num = parseInt(secs, 10)
+        var hours   = Math.floor(sec_num / 3600) % 24
+        var minutes = Math.floor(sec_num / 60) % 60
+        var seconds = sec_num % 60
+        return [hours,minutes,seconds]
+                .map(v => v < 10 ? "0" + v : v)
+    .filter((v,i) => v !== "00" || i > 0)
+    .join(":")
+    }
+
+    var player = videojs('video');
     player.src({
         src: "http://localhost:3000/torrent",
         type: 'video/mp4',
         withCredentials: true
     });
+
+    setInterval(function() {
+        var whereYouAt = player.currentTime();
+        whereYouAt = parseInt(whereYouAt);
+        var duration = $('#duration').html();
+        var a = duration.split(':');
+        var secondsTotal = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+        var percent = (whereYouAt * 100) / secondsTotal;
+        $('.progress-bar').css('width', percent+'%');
+        $('.currentTime').html(toHHMMSS(whereYouAt));
+
+    }, 1000);
+
+
 
 
 </script>

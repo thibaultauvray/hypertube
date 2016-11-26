@@ -75,7 +75,6 @@ var downloadTorrent = function (isDownload, magnet, io)
                 {
                     if (engineHash[i] && engineHash[i].path === engine.path)
                     {
-                        console.log('spiderTorrent Notice: Engine', engine.hashIndex, 'not original: copying engine', i);
                         engineHash[engine.hashIndex] = undefined;
                         engine.destroy();
                         engine = engineHash[i];
@@ -95,7 +94,7 @@ var downloadTorrent = function (isDownload, magnet, io)
                 });
                 if (movie_file)
                 {
-
+                    // If file stream is OK
                     movie_file.select();
                     var movie_data = {
                         name: movie_file.name,
@@ -104,21 +103,24 @@ var downloadTorrent = function (isDownload, magnet, io)
                         path: path + movie_file.path
                     };
                     var mime = validExtension(movie_file.name);
+                    io.emit('getExt', mime);
+                    // ON ENVOIT REOTUR PROMISE LE FICHIER EN TRAIN DETRE TELECHARGE
                     fulfill(movie_data);
                     if (original)
                     {
                         movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
                         engine.on('download', function (piece_index)
                         {
-                            // if (piece_index % 10 == 0) {
+                            // ENVOIE POURCENTAGE TELECHARGE
                             io.emit('update', parseInt((engine.swarm.downloaded * 100) / movie_file.length));
                             console.log('torrentStream Notice: Engine', engine.hashIndex, 'downloaded piece: Index:', piece_index, '(', engine.swarm.downloaded, '/', movie_file.length, ')');
-                            // }
                         });
                         engine.on('idle', function ()
                         {
+                            // FICHIER TELECHARGE
                             if (mime == "video/mp4" || mime == "video/webm" || mime == "video/ogg")
                             {
+                                // ON SAVE EN BDD SI LISIBLE DIRECTEMENT PAR NAV
                                 console.log("Save model");
                                 var newMagnet = Magnet(
                                     {
@@ -131,21 +133,17 @@ var downloadTorrent = function (isDownload, magnet, io)
                                     console.log(err);
                                 });
                             }
-                            console.log('torrentStream Notice: Engine', engine.hashIndex, 'idle');
-                            if (engine.selection.length === 0)
-                            {//(engine.swarm.downloaded < movie_data.length) {
-                                // console.log('torrentStream Notice: Engine', engine.hashIndex, 'downloaded (', engine.swarm.downloaded, '/', movie_data.length, ')');
-                                console.log('torrentStream Notice: Engine', engine.hashIndex, 'no files selected');
-                            } // else {
-                            console.log('torrentStream Notice: Engine', engine.hashIndex, 'downloaded (', engine.swarm.downloaded, '/', movie_data.length, '); destroying');
-                            /* FIXME: If fds are still open, maybe turn this back on */
+                            // ON SUPPRIMER LECOUTE DU TORRENT
                             engine.removeAllListeners();
                             engine.destroy();
                             // }
                         });
                     }
                 }
-
+                else
+                {
+                    // FICHIER NON COMPTAIBLE ENVOIE MESSAGE DERREUR TODO
+                }
             });
         }
         else { // ELSE ALREADY DOWNLOAD
@@ -157,16 +155,17 @@ var downloadTorrent = function (isDownload, magnet, io)
                 date: new Date,
                 path: isDownload.path
             };
+            io.emit('getExt', validExtension(isDownload.path));
+
             fulfill(movie_data);
+            // ON ENVOIE LES DONNES DU FICHIER DU SERVER
         }
     });
 }
 
 
-var streamMovie = function (data, query, range_string, res, isdownload, magnet)
+var streamMovie = function (data, query, range_string, res, isdownload, magnet, io)
 {
-    console.log("DATA = ");
-    console.log(data);
     /*
      DATA.NAME = File name
      Data.lenght = size;
@@ -176,31 +175,34 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
     info.file = data.name;
     info.path = data.path;
     info.size = data.length;
+    info.duration = data.duration;
     info.modified = data.date;
     var old = info.path;
     info.old_size = data.length;
     info.mime = validExtension(info.file);
+    info.old_mime = info.mime;
     if (info.mime == false)
     {
+        // SI FICHIER NON COMPATIBLE ENVOIE ERROR TODO
         return false;
     }
     console.log("INFO MIME" + info.mime);
     new Promise(function (fill, reje)
     {
-
+        // CONVERSION SI PAS LISIBLE PAR NAVIGATEUR
         if (info.mime !== "video/mp4" && info.mime !== "video/webm" && info.mime !== "video/ogg" && !isdownload)
         {
-            console.log("CONVERT");
+            console.log("CONVERTION");
+            console.log(data);
             var key = ++gen;
             info.file = data.name;
             // PATH COMPLET + NOM DU FICHIER '/tmp/tdl/movie.converted.mp4
             var converted_path = data.path + '.converted.mp4';
-            // NOM FICHIER movie.converted.mp$
+            // NOM FICHIER movie.converted.mp4
             var converted_file = data.name + '.converted.mp4';
             info.size = data.length;
             if (ffmpegHash[old] === undefined)
             {
-                console.log('fluent-ffmpeg Notice:', key + ':', 'Movie not yet converted, competing for key...');
                 ffmpegHash[old] = key;
             }
             if (ffmpegHash[old] === key)
@@ -220,16 +222,14 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
                                 .output(converted_path)
                                 .on('codecData', function (data)
                                 {
-                                    console.log('fluent-ffmpeg Notice: CodecData:', data);
                                     clearInterval(interval_id);
+                                    io.emit('getDuration', data.duration);
                                     fill(data);
                                     dataHash[old] = data;
                                 })
                                 .on("end", function (data)
                                 {
-                                    console.log("FINISH");
-                                    console.log(info.path);
-                                    console.log(data.name);
+                                    // SI FICHIER CONVERTI ENTIEREMENT ENREGISTREMENT BDD
                                     // fs.createReadStream(converted_path).pipe(fs.createWriteStream(converted_path + '.finished.mp4'));
                                     // var newMagnet = Magnet(
                                     //     {
@@ -248,10 +248,6 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
                                     console.log('fluent-ffmpeg Error:'.red, '\nErr:', err, '\nStdOut:', stdout, '\nStdErr:', stderr);
                                     busy = false;
                                     ++fails;
-                                })
-                                .on("progress", function (progress)
-                                {
-                                    console.log("progress");
                                 })
                                 .outputFormat('mp4')
                                 .outputOptions('-movflags frag_keyframe+empty_moov')
@@ -273,9 +269,13 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
             }
             else
             {
+                // SI DEJA EN TRAIN DETRE CONVERTIS PASSE ANCIENNE DATA
+                console.log("OLD");
+               console.log(dataHash[old]);
+                io.emit('getDuration', dataHash[old].duration);
+
                 fill(dataHash[old]);
             }
-            console.log("Converting Loop");
             info.file = converted_file;
             info.path = converted_path;
             info.mime = 'video/mp4';
@@ -284,13 +284,13 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
                 info.size = fs.statSync(info.path).size;
             } catch (exception)
             {
-                console.log('spiderStreamer Error:'.red, 'Converted movie size not found');
+                console.log('Converted movie size not found');
                 info.size = 0;
             }
         }
         else
         {
-            console.log('spiderStreamer Notice: No conversion needed:', info.mime);
+            console.log('No conversion needed:', info.mime);
             fill(false);
         }
     }).then(function (success)
@@ -299,6 +299,7 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
             {
                 if(!isdownload)
                 {
+                    // SI PAS DEJA TELECHARGE ON ATTEND QUIL GRANDISSE
                     console.log("Stream");
                     var fails = 0;
                     var interval_id = setInterval(function ()
@@ -306,23 +307,23 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
                         try
                         {
                             info.size = fs.statSync(info.path).size;
-                            console.log('spiderStreamer Notice:', info.path, ' size:', info.size);
+                            console.log(info.path + ' size:' + info.size);
                             if (info.size > 5000000)
                             {
+                                // on atend que le fichier soit assez gros pour le stream
                                 clearInterval(interval_id);
                                 fulfill(info.size);
                                 return;
                             }
-                            console.log('spiderStreamer Notice: Movie file not yet big enough; fails:', fails);
                         } catch (exception)
                         {
-                            console.error('spiderStreamer Error:'.red, exception);
                         }
                         ++fails;
                         if (fails > 30)
                         {
                             clearInterval(interval_id);
                             reject('Movie file never grew to at least 5mb');
+                            // TODO throw err
                         }
                     }, 2000);
                 }
@@ -336,41 +337,63 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
                 {
                     console.log("INFO FILE + ");
                     console.log(info);
-                    // info.size = fs.statSync(info.path).size;
-                    // info.rangeRequest = false;
-                    // info.start = 0;
-                    // info.end = info.size - 1;
-                    // if (range_string && (range = range_string.match(/bytes=(.+)-(.+)?/)) !== null)
-                    // {
-                    //     info.start = isNumber(range[1]) && range[1] >= 0 && range[1] < info.end ? range[1] - 0 : info.start;
-                    //     info.end = isNumber(range[2]) && range[2] > info.start && range[2] <= info.end ? range[2] - 0 : info.end;
-                    //     info.rangeRequest = true;
-                    //     console.log("Request partiel");
-                    // } else if (req.query.start || req.query.end)
-                    // {
-                    //     console.log("here");
-                    //     // This is a range request, but doesn't get range headers. So there.
-                    //     info.start = isNumber(req.query.start) && req.query.start >= 0 && req.query.start < info.end ? req.query.start - 0 : info.start;
-                    //     info.end = isNumber(req.query.end) && req.query.end > info.start && req.query.end <= info.end ? req.query.end - 0 : info.end;
-                    // }
-                    // info.length = info.end - info.start + 1;
-                    setHeaderInfo(data, info, res, range_string);
                     try
                     {
+                        console.log("ENVOIE HEADER = " + info.path);
+                        var stat = fs.statSync(info.path);
+                        var total = stat.size;
+
+                        if (range_string)
+                        {
+                            console.log("Calcul header a envoyer");
+                            if (info.old_mime !== "video/mp4" && info.old_mime !== "video/webm" && info.old_mime !== "video/ogg")
+                            {
+                                res.writeHead(200, {
+                                    'transferMode.dlna.org': 'Streaming',
+                                    'contentFeatures.dlna.org': 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
+                                    // 'Content-Range' : 'bytes ' + start + '-' + end + '/' + total,
+                                    // 'Accept-Ranges' : 'bytes',
+                                    "Cache-Control": "private",
+                                    "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
+                                    // 'Content-Length': total,
+                                    'Content-Type': 'video/mp4'
+                                });
+                                file = GrowingFile.open(info.path);
+                                file.pipe(res);
+                            }
+                            else
+                            {
+                                console.log("Range requete");
+                                var parts = range_string.replace(/bytes=/, "").split("-");
+                                var partialstart = parts[0];
+                                var partialend = parts[1];
+
+                                var start = parseInt(partialstart, 10);
+                                var end = partialend ? parseInt(partialend, 10) : total - 1;
+
+                                var chunksize = (end - start) + 1;
+                                console.log(parts + " - " + end);
+                                stream = fs.createReadStream(info.path, {start: start, end: end});
+
+                                res.writeHead(206, {
+                                    'transferMode.dlna.org': 'Streaming',
+                                    'contentFeatures.dlna.org': 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
+                                    'Content-Range' : 'bytes ' + start + '-' + end + '/' + total,
+                                    'Accept-Ranges' : 'bytes',
+                                    "Cache-Control": "private",
+                                    "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
+                                    'Content-Length': chunksize,
+                                    'Content-Type': 'video/mp4'
+                                });
+                                stream.pipe(res);
+                            }
+                        }
+                        else {
+                            console.log("Entiere video");
+                            res.writeHead(200, {'Content-Length' : total, 'Content-Type' : 'video/mp4'});
+                        }
+
                         console.log(info.path);
-                        // console.log("TRy Straming, PATH" + info.path);
-                        // header = {
-                        //     Expires: 0,
-                        //     "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
-                        //     "Cache-Control": "private",
-                        //     "Content-Type": "video/mp4",
-                        //     "Content-Disposition": "attachment; filename=" + info.file + ";"
-                        // };
-                        // res.writeHead(200, header);
-                        // file = GrowingFile.open(info.path);
-                        // file.pipe(res);
-                        stream = fs.createReadStream(info.path, {flags: "r", start: info.start, end: info.end});
-                        stream.pipe(res);
                     }
                     catch (exception)
                     {
@@ -456,55 +479,79 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet)
 
 }
 
-var setHeaderInfo = function (data, info, res)
+var setHeaderInfo = function (data, info, res, header)
 {
     var code = 200;
     var header;
+    var stat = fs.statSync(info.path);
+    var total = stat.size;
 
+    if (header)
+    {
+        var parts = header.replace(/bytes=/, "").split("-");
+        var partialstart = parts[0];
+        var partialend = parts[1];
+
+        var start = parseInt(partialstart, 10);
+        var end = partialend ? parseInt(partialend, 10) : total - 1;
+
+        var chunksize = (end - start)+1;
+        res.writeHead(206, {
+            'transferMode.dlna.org': 'Streaming',
+            'Content-Range' : 'bytes' + start + '-' + end + '/' + total,
+            'Accept-Ranges' : 'bytes',
+            'Content-Length': chunksize,
+            'Content-Type': 'video/mp4'
+        })
+    }
+    else {
+        res.writeHead(200, {'Content-Length' : total, 'Content-Type' : 'video/mp4'});
+    }
+    return true;
     // 'Connection':'close',
     // 'Cache-Control':'private',
     // 'Transfer-Encoding':'chunked'
 
-    if (settings.forceDownload)
-    {
-        header = {
-            Expires: 0,
-            "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
-            //"Cache-Control": "private",
-            "Content-Type": info.mime,
-            "Content-Disposition": "attachment; filename=" + info.file + ";"
-        };
-    } else
-    {
-        header = {
-            "Cache-Control": "public; max-age=" + settings.maxAge,
-            Connection: "keep-alive",
-            "Content-Type": info.mime,
-            "Content-Disposition": "inline; filename=" + info.file + ";",
-            "Accept-Ranges": "bytes"
-        };
-
-        if (info.rangeRequest)
-        {
-            // Partial http response
-            code = 206;
-            header.Status = "206 Partial Content";
-            header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
-        }
-    }
-
-    header.Pragma = "public";
-    header["Last-Modified"] = info.modified.toUTCString();
-    header["Content-Transfer-Encoding"] = "binary";
-    header["Content-Length"] = info.length;
-    if (settings.cors)
-    {
-        header["Access-Control-Allow-Origin"] = "*";
-        header["Access-Control-Allow-Headers"] = "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept";
-    }
-    header.Server = settings.server;
-
-    res.writeHead(code, header);
+    // if (settings.forceDownload)
+    // {
+    //     header = {
+    //         Expires: 0,
+    //         "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
+    //         //"Cache-Control": "private",
+    //         "Content-Type": info.mime,
+    //         "Content-Disposition": "attachment; filename=" + info.file + ";"
+    //     };
+    // } else
+    // {
+    //     header = {
+    //         "Cache-Control": "public; max-age=" + settings.maxAge,
+    //         Connection: "keep-alive",
+    //         "Content-Type": info.mime,
+    //         "Content-Disposition": "inline; filename=" + info.file + ";",
+    //         "Accept-Ranges": "bytes"
+    //     };
+    //
+    //     if (info.rangeRequest)
+    //     {
+    //         // Partial http response
+    //         code = 206;
+    //         header.Status = "206 Partial Content";
+    //         header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
+    //     }
+    // }
+    //
+    // header.Pragma = "public";
+    // header["Last-Modified"] = info.modified.toUTCString();
+    // header["Content-Transfer-Encoding"] = "binary";
+    // header["Content-Length"] = info.length;
+    // if (settings.cors)
+    // {
+    //     header["Access-Control-Allow-Origin"] = "*";
+    //     header["Access-Control-Allow-Headers"] = "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept";
+    // }
+    // header.Server = settings.server;
+    //
+    // res.writeHead(code, header);
 }
 
 exports.torrent = function (req, res, next)
@@ -512,19 +559,20 @@ exports.torrent = function (req, res, next)
     var io = req.io;
     var range_string = req.headers['range'];
     // MP4
-    // var magnet = "magnet:?xt=urn:btih:93293ef1db6d2ccbe298f5605777476e75ad472e&dn=Rick+And+Morty+S01E08+HDTV+x264-MiNDTHEGAP+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
+    var magnet = "magnet:?xt=urn:btih:93293ef1db6d2ccbe298f5605777476e75ad472e&dn=Rick+And+Morty+S01E08+HDTV+x264-MiNDTHEGAP+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
     // AVI
     // var magnet = "magnet:?xt=urn:btih:a9d589dc4810eacb7dc6b0bb68688bb14a98da49&dn=Finding+Dory+%282016%29+WEB-DLRip+%7C+Rus+%28iTunes%29&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
     // MKV
-    var magnet = "magnet:?xt=urn:btih:5855c0f4de84e4037bacb70f4b72c0206740ab26&dn=Modern.Family.S08E06.PROPER.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
+    // var magnet = "magnet:?xt=urn:btih:5855c0f4de84e4037bacb70f4b72c0206740ab26&dn=Modern.Family.S08E06.PROPER.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
     Magnet.findOne({url: magnet}, function (err, obj)
     {
+        // Download file
         downloadTorrent(obj, magnet, io).then(
             /* Promise fulfill callback */
             function (data)
             {
                 // Neccessary for streaming video
-                streamMovie(data, req.query, range_string, res, obj, magnet);
+                streamMovie(data, req.query, range_string, res, obj, magnet, io);
             },
             // Error TODO
             function (err)
@@ -818,9 +866,4 @@ exports.torrent = function (req, res, next)
 //         }
 //     });
 }
-
-var isNumber = function (n)
-{
-    return !isNaN(parseFloat(n)) && isFinite(n);
-};
 

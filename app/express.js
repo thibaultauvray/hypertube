@@ -6,8 +6,9 @@ var express = require('express'),
 	hbs = require('express-handlebars');
 	mongoose = require('./mongoose');
 
+var io = require('socket.io');
 var app = express();
-var config = require('./config/config');
+// var config = require('./config/config');
 var flash    = require('connect-flash');
 app.set('view engine', 'handlebars'); // Set template engine
 app.engine('handlebars', hbs({
@@ -38,6 +39,7 @@ app.use(session({
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use(function (req, res, next) {
+	req.io = io;
 	var views = req.session.views ;
 	if (!views) {
 		views = req.session.views = {};
@@ -49,8 +51,22 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.listen(3000, function () {
+var server = app.listen(3000, function () {
 	console.log('Listening on port 3000');
 });
+
+var io = require('socket.io').listen(server);
+
+io.on('connection', function(socket)
+{
+	socket.on('update', function(data)
+	{
+		console.log("UPDATE TRIGGERED");
+		console.log(data);
+		socket.emit(data);
+	});
+	console.log("user conencted");
+});
+
 
 module.exports = app;

@@ -2,9 +2,159 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34a68119-603a-4159-ae89-3aa79918b50f" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/config/config.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/.bin/latest-version" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/.bin/touch" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/CHANGELOG.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/lib/deep-extend.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/license" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/readme.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/cli.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/command_result.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/session.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/strategies/ping.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/example/parse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/readme.markdown" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/all_bool.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/bool.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/dash.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/default_bool.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/dotted.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/kv_short.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/long.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/num.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/parse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/parse_modified.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/short.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/stop_early.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/unknown.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/whitespace.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/touch/.npmignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/touch/.travis.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/touch/test/basic.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/.bin/repeating" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/cli.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/index.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/license" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/readme.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/spider.zip" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spider/torrents/Rick.And.Morty.S01E08.HDTV.x264-MiNDTHEGAP.mp4" afterPath="$PROJECT_DIR$/spider/torrents/Rick.And.Morty.S01E08.HDTV.x264-MiNDTHEGAP.mp4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/bower.json" afterPath="$PROJECT_DIR$/app/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/express.js" afterPath="$PROJECT_DIR$/app/express.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/mongoose.js" afterPath="$PROJECT_DIR$/app/mongoose.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/configstore/index.js" afterPath="$PROJECT_DIR$/app/node_modules/configstore/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/configstore/package.json" afterPath="$PROJECT_DIR$/app/node_modules/configstore/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/configstore/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/configstore/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/README.md" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/index.js" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/package.json" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/CHANGELOG.md" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/README.md" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.min.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/-internal.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/-internal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/asap.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/asap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/enumerator.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/enumerator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise/race.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise/race.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/package.json" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/got/index.js" afterPath="$PROJECT_DIR$/app/node_modules/got/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/got/package.json" afterPath="$PROJECT_DIR$/app/node_modules/got/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/got/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/got/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/index.js" afterPath="$PROJECT_DIR$/app/node_modules/latest-version/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/package.json" afterPath="$PROJECT_DIR$/app/node_modules/latest-version/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/latest-version/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/README.md" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/index.js" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/package.json" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/HISTORY.md" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/HISTORY.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/conf.json" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/conf.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/index.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/gssapi.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/gssapi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/mongocr.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/mongocr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/plain.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/plain.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/scram.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/scram.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/sspi.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/sspi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/x509.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/x509.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/commands.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/commands.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/connection.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/connection.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/logger.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/logger.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/pool.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/pool.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/utils.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/cursor.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/cursor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/error.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/error.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/mongos.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/mongos.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/read_preference.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/read_preference.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset_state.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset_state.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/server.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/server.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_4_support.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_4_support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_6_support.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_6_support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/3_2_support.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/3_2_support.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/shared.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/shared.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/package.json" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb/package.json" afterPath="$PROJECT_DIR$/app/node_modules/mongodb/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/httpreq/package.json" afterPath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/httpreq/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/socks/package.json" afterPath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/socks/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/nodemon/package.json" afterPath="$PROJECT_DIR$/app/node_modules/nodemon/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/package-json/index.js" afterPath="$PROJECT_DIR$/app/node_modules/package-json/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/package-json/package.json" afterPath="$PROJECT_DIR$/app/node_modules/package-json/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/package-json/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/package-json/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/HISTORY.md" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/HISTORY.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/README.md" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/index.js" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/package.json" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/README.md" afterPath="$PROJECT_DIR$/app/node_modules/rc/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/index.js" afterPath="$PROJECT_DIR$/app/node_modules/rc/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/lib/utils.js" afterPath="$PROJECT_DIR$/app/node_modules/rc/lib/utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/package.json" afterPath="$PROJECT_DIR$/app/node_modules/rc/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/test/nested-env-vars.js" afterPath="$PROJECT_DIR$/app/node_modules/rc/test/nested-env-vars.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/resolve-from/index.js" afterPath="$PROJECT_DIR$/app/node_modules/resolve-from/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/resolve-from/package.json" afterPath="$PROJECT_DIR$/app/node_modules/resolve-from/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/resolve-from/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/resolve-from/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/timed-out/index.js" afterPath="$PROJECT_DIR$/app/node_modules/timed-out/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/timed-out/package.json" afterPath="$PROJECT_DIR$/app/node_modules/timed-out/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/timed-out/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/timed-out/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/touch/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/README.md" afterPath="$PROJECT_DIR$/app/node_modules/touch/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/bin/touch.js" afterPath="$PROJECT_DIR$/app/node_modules/touch/bin/touch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/package.json" afterPath="$PROJECT_DIR$/app/node_modules/touch/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/touch.js" afterPath="$PROJECT_DIR$/app/node_modules/touch/touch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/check.js" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/check.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/index.js" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/package.json" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/xdg-basedir/index.js" afterPath="$PROJECT_DIR$/app/node_modules/xdg-basedir/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/xdg-basedir/package.json" afterPath="$PROJECT_DIR$/app/node_modules/xdg-basedir/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/xdg-basedir/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/xdg-basedir/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/css/main.css" afterPath="$PROJECT_DIR$/app/public/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/css/videojs.css" afterPath="$PROJECT_DIR$/app/public/css/videojs.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/scss/main.scss" afterPath="$PROJECT_DIR$/app/public/scss/main.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/router.js" afterPath="$PROJECT_DIR$/app/router.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/schemas/magnet.js" afterPath="$PROJECT_DIR$/app/schemas/magnet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/server.js" afterPath="$PROJECT_DIR$/app/server.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/server/stream.js" afterPath="$PROJECT_DIR$/app/server/stream.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spider/movie_spider/streamer.js" afterPath="$PROJECT_DIR$/spider/movie_spider/streamer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/test.js" afterPath="$PROJECT_DIR$/app/test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/stream.handlebars" afterPath="$PROJECT_DIR$/app/views/stream.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spider/movie_spider/torrent.js" afterPath="$PROJECT_DIR$/spider/movie_spider/torrent.js" />
     </list>
     <ignored path="hypertube.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,52 +177,90 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="bower.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/bower.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="videosub.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/public/js/videosub.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="videojs.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/public/css/videojs.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1154">
+              <caret line="239" column="95" selection-start-line="239" selection-start-column="95" selection-end-line="239" selection-end-column="95" />
+              <folding>
+                <element signature="e#7505#7672#2" expanded="true" />
+                <element signature="e#7917#8072#2" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/public/scss/app.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="5" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stream.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/public/scss/stream.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/public/scss/main.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="stream.handlebars" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/stream.handlebars">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="adapter_html_5.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/views/adapter_html_5.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="adapter_jwplayer.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/views/adapter_jwplayer.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/views/index.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="layout.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/views/layout.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="600">
+              <caret line="40" column="2" selection-start-line="40" selection-start-column="2" selection-end-line="40" selection-end-column="2" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -80,47 +268,23 @@
       <file leaf-file-name="stream.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/server/stream.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1182">
-              <caret line="649" column="90" selection-start-line="649" selection-start-column="90" selection-end-line="649" selection-end-column="90" />
+            <state relative-caret-position="1035">
+              <caret line="157" column="44" selection-start-line="157" selection-start-column="44" selection-end-line="157" selection-end-column="44" />
               <folding>
-                <element signature="e#11335#11337#0" expanded="false" />
-                <element signature="e#13626#13663#0" expanded="false" />
+                <element signature="e#16293#18410#0" expanded="false" />
+                <element signature="e#18681#18683#0" expanded="false" />
+                <element signature="e#19816#22245#0" expanded="false" />
+                <element signature="e#24009#24046#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="streamer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/movie_spider/streamer.js">
+      <file leaf-file-name="player.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/public/scss/player.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1380">
-              <caret line="281" column="31" selection-start-line="281" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
-              <folding>
-                <element signature="e#737#868#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="torrent.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/movie_spider/torrent.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="633">
-              <caret line="75" column="40" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="40" />
-              <folding>
-                <element signature="e#2248#2385#0" expanded="false" />
-                <element signature="e#3186#3301#0" expanded="false" />
-                <element signature="e#3357#3480#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="player.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/views/player.pug">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="24" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="24" />
+            <state relative-caret-position="15">
+              <caret line="1" column="19" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -133,6 +297,7 @@
       <list>
         <option value="handlebars" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -143,23 +308,34 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/config/auth.js" />
-        <option value="$PROJECT_DIR$/app/server.js" />
-        <option value="$PROJECT_DIR$/app/package.json" />
         <option value="$PROJECT_DIR$/app/config/passport.js" />
         <option value="$PROJECT_DIR$/app/config/config.js" />
         <option value="$PROJECT_DIR$/app/server/facebook.js" />
         <option value="$PROJECT_DIR$/app/views/login.handlebars" />
-        <option value="$PROJECT_DIR$/app/express.js" />
         <option value="$PROJECT_DIR$/app/server/library.js" />
         <option value="$PROJECT_DIR$/app/server/oauth/twitter/twitter.js" />
         <option value="$PROJECT_DIR$/app/stream.js" />
-        <option value="$PROJECT_DIR$/app/router.js" />
         <option value="$PROJECT_DIR$/app/config/mine-type.js" />
-        <option value="$PROJECT_DIR$/app/views/layouts/main.handlebars" />
-        <option value="$PROJECT_DIR$/app/server/mine-type.js" />
         <option value="$PROJECT_DIR$/app/node_modules/stream-transcoder/lib/transcoder.js" />
         <option value="$PROJECT_DIR$/app/server/save" />
+        <option value="$PROJECT_DIR$/app/server.js" />
+        <option value="$PROJECT_DIR$/app/mongoose.js" />
+        <option value="$PROJECT_DIR$/app/test.js" />
+        <option value="$PROJECT_DIR$/app/server/streamtest.js" />
+        <option value="$PROJECT_DIR$/app/package.json" />
+        <option value="$PROJECT_DIR$/app/hypermaster/app.js" />
+        <option value="$PROJECT_DIR$/app/hypermaster/config/connections.js" />
+        <option value="$PROJECT_DIR$/spider/routes/index.js" />
+        <option value="$PROJECT_DIR$/hypertube-master 2/routes/index.js" />
+        <option value="$PROJECT_DIR$/app/server/mine-type.js" />
+        <option value="$PROJECT_DIR$/app/router.js" />
+        <option value="$PROJECT_DIR$/app/express.js" />
         <option value="$PROJECT_DIR$/spider/movie_spider/streamer.js" />
+        <option value="$PROJECT_DIR$/app/schemas/magnet.js" />
+        <option value="$PROJECT_DIR$/app/views/layouts/main.handlebars" />
+        <option value="$PROJECT_DIR$/app/public/scss/stream.scss" />
+        <option value="$PROJECT_DIR$/app/public/scss/main.scss" />
+        <option value="$PROJECT_DIR$/app/public/css/videojs.css" />
         <option value="$PROJECT_DIR$/app/views/stream.handlebars" />
         <option value="$PROJECT_DIR$/app/server/stream.js" />
       </list>
@@ -200,6 +376,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -228,7 +406,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="spider" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -242,29 +420,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="spider" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hypertube" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hypertube" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spider" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vid-streamer" />
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -278,31 +438,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="spider" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="movie_spider" />
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scss" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="FullScreen" value="true" />
     <property name="nodejs_interpreter_path" value="$USER_HOME$/.brew/bin/node" />
     <property name="js-jscs-nodeInterpreter" value="$USER_HOME$/.brew/bin/node" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="FullScreen" value="true" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/server" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/app/server" />
     </key>
   </component>
@@ -386,11 +553,19 @@
       <workItem from="1479301872162" duration="8619000" />
       <workItem from="1479376411734" duration="7768000" />
       <workItem from="1479459752583" duration="15593000" />
+      <workItem from="1479550631176" duration="3974000" />
+      <workItem from="1479721122154" duration="4709000" />
+      <workItem from="1479807466132" duration="9582000" />
+      <workItem from="1479901202944" duration="9414000" />
+      <workItem from="1479981441609" duration="289000" />
+      <workItem from="1479982136109" duration="10597000" />
+      <workItem from="1480069755899" duration="8987000" />
+      <workItem from="1480157001015" duration="9404000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52756000" />
+    <option name="totallyTimeSpent" value="109712000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
@@ -413,7 +588,7 @@
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -436,40 +611,112 @@
           <line>38</line>
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/login.handlebars">
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/api/controllers/AdminController.js" />
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/config/connections.js" />
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/app.js" />
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/api/controllers/StreamController.js" />
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/api/controllers/ModifyController.js" />
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/api/controllers/HypertubeController.js" />
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/api/controllers/APIController.js" />
+    <entry file="file://$PROJECT_DIR$/spider/bin/www">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="242" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="242" />
+        <state relative-caret-position="405">
+          <caret line="27" column="3" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/express.js">
+    <entry file="file://$PROJECT_DIR$/app/dump/Hypertube/movie.bson">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <caret line="75" column="10" selection-start-line="75" selection-start-column="10" selection-end-line="75" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/player.js">
+    <entry file="file://$PROJECT_DIR$/app/dump/Hypertube/movie.metadata.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="24" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/oauth/42/loginApi42.js">
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/api/services/download.js" />
+    <entry file="file://$PROJECT_DIR$/app/hypermaster/package.json" />
+    <entry file="file://$PROJECT_DIR$/app/stream.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" column="50" selection-start-line="39" selection-start-column="50" selection-end-line="39" selection-end-column="50" />
+        <state relative-caret-position="315">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/auth.js" />
+    <entry file="file://$PROJECT_DIR$/spider/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="915">
+          <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/routes/index.js" />
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/views/adapter_jwplayer.pug" />
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/views/error.pug" />
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/views/layout.pug" />
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/package.json" />
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/app.js" />
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/views/index.pug" />
+    <entry file="file://$PROJECT_DIR$/hypertube-master 2/vid-streamer/index.js" />
+    <entry file="file://$PROJECT_DIR$/app/server/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/server/mine-type.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/movie_spider/mime_types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/partials/footer.handlebars">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user.handlebars">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/mongoose.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -477,339 +724,176 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/movie_schema.js">
+    <entry file="file://$PROJECT_DIR$/app/schemas/movie.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/install_run">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/user_schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="31" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/passport.js" />
-    <entry file="file://$PROJECT_DIR$/app/config/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="67" selection-start-line="2" selection-start-column="67" selection-end-line="2" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/facebook.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/library.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/api/addNewUser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/register.handlebars">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/player.handlebars">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="43" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/oauth/twitter/twitter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home.handlebars">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/login.handlebars">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="242" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="242" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/express.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/movie_spider/cleaner.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/movie_spider/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-225">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/vid-streamer/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/movie_spider/mime_types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="27" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/stream.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="112" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="112" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/node_modules/stream-transcoder/lib/transcoder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="263" column="34" selection-start-line="263" selection-start-column="34" selection-end-line="263" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/node_modules/stream-transcoder/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/save">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/server/mine-type.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/main.handlebars">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/movie_spider/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/views/adapter_html_5.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/views/adapter_jwplayer.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/views/index.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/views/layout.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/views/player.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="24" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/vid-streamer/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="75" column="22" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/movie_spider/search.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/stream.handlebars">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="240">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/movie_spider/torrent.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="633">
-          <caret line="75" column="40" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="40" />
-          <folding>
-            <element signature="e#2248#2385#0" expanded="false" />
-            <element signature="e#3186#3301#0" expanded="false" />
-            <element signature="e#3357#3480#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/schemas/magnet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="43" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/movie_spider/streamer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="281" column="31" selection-start-line="281" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
+        <state relative-caret-position="1312">
+          <caret line="206" column="43" selection-start-line="206" selection-start-column="43" selection-end-line="206" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/_player.handlebars">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/profile.handlebars">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="42" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/register.handlebars">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/scss/profile.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/bin/build-css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/bin/watch-css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/main.handlebars">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/bower.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/scss/player.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="19" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/css/videojs.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1154">
+          <caret line="239" column="95" selection-start-line="239" selection-start-column="95" selection-end-line="239" selection-end-column="95" />
           <folding>
-            <element signature="e#737#868#0" expanded="false" />
+            <element signature="e#7505#7672#2" expanded="true" />
+            <element signature="e#7917#8072#2" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/js/videosub.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/scss/stream.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/scss/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="5" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/public/scss/main.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/stream.handlebars">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="2" selection-start-line="40" selection-start-column="2" selection-end-line="40" selection-end-column="2" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/server/stream.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1182">
-          <caret line="649" column="90" selection-start-line="649" selection-start-column="90" selection-end-line="649" selection-end-column="90" />
+        <state relative-caret-position="1035">
+          <caret line="157" column="44" selection-start-line="157" selection-start-column="44" selection-end-line="157" selection-end-column="44" />
           <folding>
-            <element signature="e#11335#11337#0" expanded="false" />
-            <element signature="e#13626#13663#0" expanded="false" />
+            <element signature="e#16293#18410#0" expanded="false" />
+            <element signature="e#18681#18683#0" expanded="false" />
+            <element signature="e#19816#22245#0" expanded="false" />
+            <element signature="e#24009#24046#0" expanded="false" />
           </folding>
         </state>
       </provider>
