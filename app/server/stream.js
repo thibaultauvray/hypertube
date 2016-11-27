@@ -122,16 +122,16 @@ var downloadTorrent = function (isDownload, magnet, io)
                             {
                                 // ON SAVE EN BDD SI LISIBLE DIRECTEMENT PAR NAV
                                 console.log("Save model");
-                                var newMagnet = Magnet(
-                                    {
-                                        url: magnet,
-                                        path: movie_data.path,
-                                        name: movie_file.name
-                                    });
-                                newMagnet.save(function (err)
-                                {
-                                    console.log(err);
-                                });
+                                // var newMagnet = Magnet(
+                                //     {
+                                //         url: magnet,
+                                //         path: movie_data.path,
+                                //         name: movie_file.name
+                                //     });
+                                // newMagnet.save(function (err)
+                                // {
+                                //     console.log(err);
+                                // });
                             }
                             // ON SUPPRIMER LECOUTE DU TORRENT
                             engine.removeAllListeners();
@@ -373,11 +373,10 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
 
                                 var chunksize = (end - start) + 1;
                                 console.log(parts + " - " + end);
-                                stream = fs.createReadStream(info.path, {start: start, end: end});
+                                stream = fs.createReadStream(info.path, { flags : "r", start: start, end: end});
 
                                 res.writeHead(206, {
-                                    'transferMode.dlna.org': 'Streaming',
-                                    'contentFeatures.dlna.org': 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
+                                    'Status' : '206 Partial Content',
                                     'Content-Range' : 'bytes ' + start + '-' + end + '/' + total,
                                     'Accept-Ranges' : 'bytes',
                                     "Cache-Control": "private",

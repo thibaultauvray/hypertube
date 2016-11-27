@@ -2,159 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34a68119-603a-4159-ae89-3aa79918b50f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/config/config.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/.bin/latest-version" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/.bin/touch" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/CHANGELOG.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/lib/deep-extend.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/license" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/got/node_modules/object-assign/readme.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/cli.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/LICENSE.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/node_modules/lodash.assign/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/command_result.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/session.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/strategies/ping.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/example/parse.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/readme.markdown" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/all_bool.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/bool.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/dash.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/default_bool.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/dotted.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/kv_short.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/long.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/num.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/parse.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/parse_modified.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/short.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/stop_early.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/unknown.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/rc/node_modules/minimist/test/whitespace.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/touch/.npmignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/touch/.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/touch/test/basic.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/.bin/repeating" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/cli.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/license" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/node_modules/repeating/readme.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/spider.zip" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spider/torrents/Rick.And.Morty.S01E08.HDTV.x264-MiNDTHEGAP.mp4" afterPath="$PROJECT_DIR$/spider/torrents/Rick.And.Morty.S01E08.HDTV.x264-MiNDTHEGAP.mp4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/bower.json" afterPath="$PROJECT_DIR$/app/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/express.js" afterPath="$PROJECT_DIR$/app/express.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/mongoose.js" afterPath="$PROJECT_DIR$/app/mongoose.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/configstore/index.js" afterPath="$PROJECT_DIR$/app/node_modules/configstore/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/configstore/package.json" afterPath="$PROJECT_DIR$/app/node_modules/configstore/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/configstore/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/configstore/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/README.md" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/index.js" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/deep-extend/package.json" afterPath="$PROJECT_DIR$/app/node_modules/deep-extend/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/CHANGELOG.md" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/CHANGELOG.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/README.md" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.min.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/dist/es6-promise.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/-internal.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/-internal.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/asap.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/asap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/enumerator.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/enumerator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise/race.js" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/lib/es6-promise/promise/race.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/es6-promise/package.json" afterPath="$PROJECT_DIR$/app/node_modules/es6-promise/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/got/index.js" afterPath="$PROJECT_DIR$/app/node_modules/got/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/got/package.json" afterPath="$PROJECT_DIR$/app/node_modules/got/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/got/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/got/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/index.js" afterPath="$PROJECT_DIR$/app/node_modules/latest-version/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/package.json" afterPath="$PROJECT_DIR$/app/node_modules/latest-version/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/latest-version/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/latest-version/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/README.md" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/index.js" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/lodash.defaults/package.json" afterPath="$PROJECT_DIR$/app/node_modules/lodash.defaults/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/HISTORY.md" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/HISTORY.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/conf.json" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/conf.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/index.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/gssapi.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/gssapi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/mongocr.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/mongocr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/plain.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/plain.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/scram.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/scram.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/sspi.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/sspi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/x509.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/auth/x509.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/commands.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/commands.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/connection.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/connection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/logger.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/logger.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/pool.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/pool.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/utils.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/connection/utils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/cursor.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/cursor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/error.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/error.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/mongos.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/mongos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/read_preference.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/read_preference.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset_state.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/replset_state.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/server.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/topologies/server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_4_support.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_4_support.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_6_support.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/2_6_support.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/3_2_support.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/3_2_support.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/shared.js" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/lib/wireprotocol/shared.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb-core/package.json" afterPath="$PROJECT_DIR$/app/node_modules/mongodb-core/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/mongodb/package.json" afterPath="$PROJECT_DIR$/app/node_modules/mongodb/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/httpreq/package.json" afterPath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/httpreq/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/socks/package.json" afterPath="$PROJECT_DIR$/app/node_modules/nodemailer/node_modules/socks/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/nodemon/package.json" afterPath="$PROJECT_DIR$/app/node_modules/nodemon/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/package-json/index.js" afterPath="$PROJECT_DIR$/app/node_modules/package-json/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/package-json/package.json" afterPath="$PROJECT_DIR$/app/node_modules/package-json/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/package-json/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/package-json/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/HISTORY.md" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/HISTORY.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/README.md" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/index.js" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/range-parser/package.json" afterPath="$PROJECT_DIR$/app/node_modules/range-parser/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/README.md" afterPath="$PROJECT_DIR$/app/node_modules/rc/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/index.js" afterPath="$PROJECT_DIR$/app/node_modules/rc/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/lib/utils.js" afterPath="$PROJECT_DIR$/app/node_modules/rc/lib/utils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/package.json" afterPath="$PROJECT_DIR$/app/node_modules/rc/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/rc/test/nested-env-vars.js" afterPath="$PROJECT_DIR$/app/node_modules/rc/test/nested-env-vars.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/resolve-from/index.js" afterPath="$PROJECT_DIR$/app/node_modules/resolve-from/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/resolve-from/package.json" afterPath="$PROJECT_DIR$/app/node_modules/resolve-from/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/resolve-from/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/resolve-from/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/timed-out/index.js" afterPath="$PROJECT_DIR$/app/node_modules/timed-out/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/timed-out/package.json" afterPath="$PROJECT_DIR$/app/node_modules/timed-out/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/timed-out/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/timed-out/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/LICENSE" afterPath="$PROJECT_DIR$/app/node_modules/touch/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/README.md" afterPath="$PROJECT_DIR$/app/node_modules/touch/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/bin/touch.js" afterPath="$PROJECT_DIR$/app/node_modules/touch/bin/touch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/package.json" afterPath="$PROJECT_DIR$/app/node_modules/touch/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/touch/touch.js" afterPath="$PROJECT_DIR$/app/node_modules/touch/touch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/check.js" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/check.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/index.js" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/package.json" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/update-notifier/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/update-notifier/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/xdg-basedir/index.js" afterPath="$PROJECT_DIR$/app/node_modules/xdg-basedir/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/xdg-basedir/package.json" afterPath="$PROJECT_DIR$/app/node_modules/xdg-basedir/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/node_modules/xdg-basedir/readme.md" afterPath="$PROJECT_DIR$/app/node_modules/xdg-basedir/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/css/main.css" afterPath="$PROJECT_DIR$/app/public/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/css/videojs.css" afterPath="$PROJECT_DIR$/app/public/css/videojs.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/public/scss/main.scss" afterPath="$PROJECT_DIR$/app/public/scss/main.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/router.js" afterPath="$PROJECT_DIR$/app/router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/schemas/magnet.js" afterPath="$PROJECT_DIR$/app/schemas/magnet.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/server.js" afterPath="$PROJECT_DIR$/app/server.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/server/stream.js" afterPath="$PROJECT_DIR$/app/server/stream.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/test.js" afterPath="$PROJECT_DIR$/app/test.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/stream.handlebars" afterPath="$PROJECT_DIR$/app/views/stream.handlebars" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spider/movie_spider/torrent.js" afterPath="$PROJECT_DIR$/spider/movie_spider/torrent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/server/streamtest.js" afterPath="$PROJECT_DIR$/app/server/streamtest.js" />
     </list>
     <ignored path="hypertube.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -177,16 +27,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="bower.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/bower.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/package.json">
           <provider selected="true" editor-type-id="text-editor">
@@ -212,7 +52,7 @@
       <file leaf-file-name="videojs.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/public/css/videojs.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1154">
+            <state relative-caret-position="3585">
               <caret line="239" column="95" selection-start-line="239" selection-start-column="95" selection-end-line="239" selection-end-column="95" />
               <folding>
                 <element signature="e#7505#7672#2" expanded="true" />
@@ -255,27 +95,33 @@
       <file leaf-file-name="stream.handlebars" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/stream.handlebars">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
+            <state relative-caret-position="555">
               <caret line="40" column="2" selection-start-line="40" selection-start-column="2" selection-end-line="40" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stream.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/server/stream.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="375" column="87" selection-start-line="375" selection-start-column="87" selection-end-line="375" selection-end-column="87" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#16189#18306#0" expanded="false" />
+                <element signature="e#18577#18579#0" expanded="false" />
+                <element signature="e#23905#23942#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stream.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/server/stream.js">
+      <file leaf-file-name="streamer.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/spider/movie_spider/streamer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1035">
-              <caret line="157" column="44" selection-start-line="157" selection-start-column="44" selection-end-line="157" selection-end-column="44" />
-              <folding>
-                <element signature="e#16293#18410#0" expanded="false" />
-                <element signature="e#18681#18683#0" expanded="false" />
-                <element signature="e#19816#22245#0" expanded="false" />
-                <element signature="e#24009#24046#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="442">
+              <caret line="186" column="112" selection-start-line="186" selection-start-column="63" selection-end-line="186" selection-end-column="112" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -377,7 +223,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -393,6 +238,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hypertube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hypertube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hypertube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spider" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hypertube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hypertube" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spider" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movie_spider" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -452,6 +329,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -560,12 +438,13 @@
       <workItem from="1479981441609" duration="289000" />
       <workItem from="1479982136109" duration="10597000" />
       <workItem from="1480069755899" duration="8987000" />
-      <workItem from="1480157001015" duration="9404000" />
+      <workItem from="1480157001015" duration="9566000" />
+      <workItem from="1480255621521" duration="780000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="109712000" />
+    <option name="totallyTimeSpent" value="110654000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
@@ -575,21 +454,21 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24970461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11824817" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -728,7 +607,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -744,14 +622,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="43" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/movie_spider/streamer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1312">
-          <caret line="206" column="43" selection-start-line="206" selection-start-column="43" selection-end-line="206" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -801,7 +671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -831,7 +700,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/public/css/videojs.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1154">
+        <state relative-caret-position="3585">
           <caret line="239" column="95" selection-start-line="239" selection-start-column="95" selection-end-line="239" selection-end-column="95" />
           <folding>
             <element signature="e#7505#7672#2" expanded="true" />
@@ -876,25 +745,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/stream.handlebars">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
+        <state relative-caret-position="555">
           <caret line="40" column="2" selection-start-line="40" selection-start-column="2" selection-end-line="40" selection-end-column="2" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/server/stream.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="157" column="44" selection-start-line="157" selection-start-column="44" selection-end-line="157" selection-end-column="44" />
+        <state relative-caret-position="630">
+          <caret line="375" column="87" selection-start-line="375" selection-start-column="87" selection-end-line="375" selection-end-column="87" />
           <folding>
-            <element signature="e#16293#18410#0" expanded="false" />
-            <element signature="e#18681#18683#0" expanded="false" />
-            <element signature="e#19816#22245#0" expanded="false" />
-            <element signature="e#24009#24046#0" expanded="false" />
+            <element signature="e#16189#18306#0" expanded="false" />
+            <element signature="e#18577#18579#0" expanded="false" />
+            <element signature="e#23905#23942#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/movie_spider/streamer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="186" column="112" selection-start-line="186" selection-start-column="63" selection-end-line="186" selection-end-column="112" />
+          <folding />
         </state>
       </provider>
     </entry>

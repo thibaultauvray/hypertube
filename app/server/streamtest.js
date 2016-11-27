@@ -9,7 +9,6 @@ var nightmare = new Nightmare();
 var Transcoder = require('stream-transcoder');
 var torrentStream = require('torrent-stream');
 var mimeTypes = require('./mine-type.js');
-var handbrake = require('handbrake-js');
 var gen = 0;
 var ffmpegHash = {};
 var path = '/tmp/tdl/';
