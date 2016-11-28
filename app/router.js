@@ -11,6 +11,8 @@ var app = require('./express.js'),
 	profile = require('./server/profile'),
 	user = require('./server/user');
 var graph     = require('fbgraph');
+var User = require('./user_schema');
+
 
 var facebook = require('./server/facebook');
 
@@ -41,24 +43,34 @@ var fs = require('fs');
 var path = require('path');
 var imdb = require('imdb-api');
 
+app.use('/app', function(req, res, next)
+{
+	User.findOne({ username : req.session.username }, function(err, user) {
+		if (!err && user) {
+			next();
+		} else {
+			console.log('User not found or not logged in, redirect to home page');
+			res.redirect('/');
+		}
+	});
+});
 
 // App routes
 app.get('/', home);
 app.get('/logout', logout);
 
-app.get('/users/register', register);
-app.get('/users/login', login);
+app.get('/register', register);
+app.get('/login', login);
 
 
-
-app.get('/stream', stream.stream);
-app.get('/torrent', stream.torrent);
+app.get('/app/stream', stream.stream);
+app.get('/app/torrent', stream.torrent);
 app.get('/torrentTest', torrentTest.torrentTest);
 
 app.get('/users/forgot-password',  forgotPassword);
 app.get('/users/reset-password/:username/:token', resetPassword);
 app.get('/app/library', library);
-app.get('/player/html5/:id/:resolution', player);
+// app.get('/player/html5/:id/:resolution', player);
 app.get('/app/search/:text', makeSearch);
 app.get('/app/profile', profile);
 app.get('/app/user/:id', user);

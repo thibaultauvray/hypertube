@@ -36,6 +36,22 @@
         var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
         $('#duration').html(data);
     });
+    socket.on('error', function(data)
+    {
+        var msg = "<div class='col-xs-12 alert alert-danger'>";
+        if(data == "badExt")
+        {
+            msg += "Impossible de lire ce fichier";
+        }
+        else if(data == "unknown")
+        {
+            msg += "Erreur inconnue est survenu";
+        }
+        msg += "</div>";
+        console.log("MSG" + msg);
+        $('.stream').prepend(msg);
+
+    });
     socket.on('getExt', function(data)
     {
         console.log(data);
@@ -70,7 +86,7 @@
 
     var player = videojs('video');
     player.src({
-        src: "http://localhost:3000/torrent",
+        src: "http://localhost:3000/app/torrent",
         type: 'video/mp4',
         withCredentials: true
     });

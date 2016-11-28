@@ -12,6 +12,9 @@ var nightmare = new Nightmare();
 var torrentStream = require('torrent-stream');
 var mimeTypes = require('./mine-type.js');
 
+var event = require('events');
+var events = new event.EventEmitter();
+
 var gen = 0;
 var ffmpegHash = {};
 var path = '/tmp/tdl/';
@@ -142,7 +145,10 @@ var downloadTorrent = function (isDownload, magnet, io)
                 }
                 else
                 {
+                    events.emit('badExt', res, io);
+                    return false;
                     // FICHIER NON COMPTAIBLE ENVOIE MESSAGE DERREUR TODO
+
                 }
             });
         }
@@ -183,7 +189,7 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
     info.old_mime = info.mime;
     if (info.mime == false)
     {
-        // SI FICHIER NON COMPATIBLE ENVOIE ERROR TODO
+        events.emit('badExt', res, io);
         return false;
     }
     console.log("INFO MIME" + info.mime);
@@ -556,6 +562,8 @@ var setHeaderInfo = function (data, info, res, header)
 exports.torrent = function (req, res, next)
 {
     var io = req.io;
+
+    console.log("ERROOR LAUCNHED");
     var range_string = req.headers['range'];
     // MP4
     var magnet = "magnet:?xt=urn:btih:93293ef1db6d2ccbe298f5605777476e75ad472e&dn=Rick+And+Morty+S01E08+HDTV+x264-MiNDTHEGAP+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
@@ -865,4 +873,26 @@ exports.torrent = function (req, res, next)
 //         }
 //     });
 }
+
+var headerError = function(res, code)
+{
+    var header = { 'Content-Type' : 'text/html'};
+    res.writeHead(code, header);
+
+}
+
+// HANDLE ERROR
+events.on('badExt', function(res, io)
+{
+    console.log('error');
+    io.emit('error', 'badExt');
+
+    headerError(res, 403);
+    res.end("<!DOCTYPE html><html lang=\"en\">" +
+        "<head><title>403 Forbidden</title></head>" +
+        "<body>" +
+        "<h1>Sorry...</h1>" +
+        "<p>Cannot stream that movie format.</p>" +
+        "</body></html>");
+})
 

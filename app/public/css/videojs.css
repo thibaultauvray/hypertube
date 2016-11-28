@@ -233,7 +233,7 @@ $slider-bg-color: lighten($primary-background-color, 33%);
     margin-top: 5%;
 
 }
-.vjs-tech {
+.videojs-stream .vjs-tech {
     pointer-events: none;
 }
 
