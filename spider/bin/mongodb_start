@@ -1,3 +1,0 @@
-#!/bin/bash
-mkdir -p ~/goinfre/shabbach/data/db
-mongod --dbpath ~/goinfre/shabbach/data/db $@
