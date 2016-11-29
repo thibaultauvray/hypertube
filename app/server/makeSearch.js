@@ -3,8 +3,66 @@ var mongoose = require('../mongoose'),
 	Movie = require('../movie_schema'),
 	promise = require('promise'),
 	search = require('./api/search'),
+	omdb = require('omdb'),
+	async = require("async"),
+	Nightmare = require('nightmare'),
 	_ = require('lodash');
+	const PirateBay = require('thepiratebay');
 
+	var omdbSearch = function(req, res, next) {
+		var movies = [];
+	
+    	PirateBay.search(req.params.text, {
+		  category: 200,    // default - 'all' | 'all', 'audio', 'video', 'xxx', 
+		                      //                   'applications', 'games', 'other' 
+		                      // 
+		                      // You can also use the category number: 
+		                      // `/search/0/99/{category_number}` 
+		  filter: {
+		    verified: false    // default - false | Filter all VIP or trusted torrents 
+		  },
+		  page: 0,            // default - 0 - 99 
+		  orderBy: 'seeds', // default - name, date, size, seeds, leeches 
+		  sortBy: 'desc'      // default - desc, asc 
+		})
+		.then(torrents => {
+		  async.each(torrents, function(torrent, callback) {
+		    var imdb = new Nightmare()
+		    .useragent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36")
+		    .goto(torrent.link)
+		    //.wait()
+		    .evaluate( function() {
+		      if (document.querySelector("dd > a[title=IMDB]"))
+		        return (document.querySelector("dd > a[title=IMDB]").href.match(/((tt[0-9]{7,8})\/)/)[0].slice(0, -1));
+		      else if (document.querySelector("pre").innerText.match(/((tt[0-9]{7,8})\/)/))
+		        return (document.querySelector("pre").innerText.match(/((tt[0-9]{7,8})\/)/)[0].slice(0, -1));
+		      else
+		        return (null);
+		    })
+		    .run(function(err, nightmare) {
+		      if (err) return console.log(err);
+		      if (nightmare) {
+		        omdb.get(nightmare, function(err, movie) {
+		          movies.push({movie, torrent});
+		        })
+		      }  
+		      callback(null);
+		      })
+		    .end()
+		  }, function(err) {
+		      res.render('search', {
+							isApp : true,
+							title : 'Hypertube - Search',
+							movies : movies
+						});
+		  }); 
+	})	
+	.catch(err => {
+  		console.log(err)
+	});		
+	};	
+	module.exports = omdbSearch;
+/*	
 var makeSearch = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
@@ -46,5 +104,5 @@ var makeSearch = function(req, res, next) {
 		}
 	});
 };
-
-module.exports = makeSearch;
+*/
+//module.exports = makeSearch;

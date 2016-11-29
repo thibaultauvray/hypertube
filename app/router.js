@@ -8,6 +8,7 @@ var app = require('./express.js'),
 	library = require('./server/library'),
 	player = require('./server/player'),
 	makeSearch = require('./server/makeSearch'),
+	stream = require('./server/stream.js'),
 	profile = require('./server/profile'),
 	user = require('./server/user');
 
@@ -35,8 +36,10 @@ app.get('/users/login', login);
 app.get('/users/forgot-password', forgotPassword);
 app.get('/users/reset-password/:username/:token', resetPassword);
 app.get('/app/library', library);
-app.get('/player/html5/:id/:resolution', player);
+app.get('/player/html5/:id/:magnet', player);
+//app.get('/player/html5/:text', player);
 app.get('/app/search/:text', makeSearch);
+//app.get('/app/stream/:text', stream);
 app.get('/app/profile', profile);
 app.get('/app/user/:id', user);
 
