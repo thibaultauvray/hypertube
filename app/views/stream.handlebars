@@ -22,6 +22,8 @@
             </div>
             <div id="duration" class="col-xs-1"></div>
             </div>
+            <p id="mag">{{ magnet }}</p>
+
         </div>
 
 
@@ -41,7 +43,7 @@
         var msg = "<div class='col-xs-12 alert alert-danger'>";
         if(data == "badExt")
         {
-            msg += "Impossible de lire ce fichier";
+            msg += "Impossible de lire ce format de fichier";
         }
         else if(data == "unknown")
         {
@@ -67,11 +69,11 @@
         console.log(data);
 //        $("#test").html(data);
     });
+
 </script>
 <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.6.12/videojs-contrib-hls.js"></script>
 <script>
-
 
     var toHHMMSS = (secs) => {
         var sec_num = parseInt(secs, 10)
@@ -83,10 +85,10 @@
     .filter((v,i) => v !== "00" || i > 0)
     .join(":")
     }
-
+    var url = "http://localhost:3000/app/torrent/magnet"+$("#mag").html();
     var player = videojs('video');
     player.src({
-        src: "http://localhost:3000/app/torrent",
+        src: url,
         type: 'video/mp4',
         withCredentials: true
     });

@@ -8,6 +8,7 @@ var promise = require('promise');
 var settings = require('./config.json');
 var Nightmare = require('nightmare');
 var nightmare = new Nightmare();
+var url = require('url');
 
 var torrentStream = require('torrent-stream');
 var mimeTypes = require('./mine-type.js');
@@ -43,10 +44,12 @@ var validExtension = function (name)
 exports.stream = function (req, res, next)
 {
     //console.log(req.session);
-
+    var url_parts = url.parse(req.url, true);
+    var magnet = url_parts.search;
     res.render('stream', {
         isApp: true,
         title: 'Hypertube - Register',
+        magnet: magnet,
         uri: '/tmp/tdl/Rick_And_Morty_S01E08_HDTV_x264-MiNDTHEGAP_[eztv].mp4'
     });
 };
@@ -55,7 +58,7 @@ var engineCount = 0;
 var engineHash = {};
 var enginePaths = {};
 
-var downloadTorrent = function (isDownload, magnet, io)
+var downloadTorrent = function (isDownload, magnet, io, res)
 {
     return new Promise(function (fulfill, reject)
     {
@@ -105,13 +108,15 @@ var downloadTorrent = function (isDownload, magnet, io)
                         date: new Date,
                         path: path + movie_file.path
                     };
+                    console.log("MOVIE DATA");
+                    console.log(movie_data);
                     var mime = validExtension(movie_file.name);
                     io.emit('getExt', mime);
                     // ON ENVOIT REOTUR PROMISE LE FICHIER EN TRAIN DETRE TELECHARGE
                     fulfill(movie_data);
                     if (original)
                     {
-                        movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
+                        // movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
                         engine.on('download', function (piece_index)
                         {
                             // ENVOIE POURCENTAGE TELECHARGE
@@ -122,7 +127,7 @@ var downloadTorrent = function (isDownload, magnet, io)
                         {
                             // FICHIER TELECHARGE
                             if (mime == "video/mp4" || mime == "video/webm" || mime == "video/ogg")
-                            {
+                            {``
                                 // ON SAVE EN BDD SI LISIBLE DIRECTEMENT PAR NAV
                                 console.log("Save model");
                                 // var newMagnet = Magnet(
@@ -232,6 +237,14 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                                     io.emit('getDuration', data.duration);
                                     fill(data);
                                     dataHash[old] = data;
+                                })
+                                .on("progress", function(data)
+                                {
+                                    console.log("PROGRESS");
+                                    console.log("OLD SIZE" + info.old_size);
+                                    console.log("DATA");
+                                    console.log(data);
+                                    console.log("==============");
                                 })
                                 .on("end", function (data)
                                 {
@@ -352,8 +365,10 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                         if (range_string)
                         {
                             console.log("Calcul header a envoyer");
-                            if (info.old_mime !== "video/mp4" && info.old_mime !== "video/webm" && info.old_mime !== "video/ogg")
+                            // Si fichier convertis
+                            if (info.old_mime !== "video/mp4" && info.old_mime !== "video/ogg" && info.old_mime !== "video/webm")
                             {
+                                console.log("STREAMING");
                                 res.writeHead(200, {
                                     'transferMode.dlna.org': 'Streaming',
                                     'contentFeatures.dlna.org': 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
@@ -370,32 +385,57 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                             else
                             {
                                 console.log("Range requete");
-                                var parts = range_string.replace(/bytes=/, "").split("-");
-                                var partialstart = parts[0];
-                                var partialend = parts[1];
+                                info.start = 0;
+                                info.end = info.size - 1;
+                                console.log(range_string.match(/bytes=(.+)-(.+)?/));
+                                if (range_string && (range = range_string.match(/bytes=(.+)-(.+)?/)) !== null) {
 
-                                var start = parseInt(partialstart, 10);
-                                var end = partialend ? parseInt(partialend, 10) : total - 1;
+                                    info.start = isNumber(range[1]) && range[1] >= 0 && range[1] < info.end ? range[1] - 0 : info.start;
+                                    info.end = isNumber(range[2]) && range[2] > info.start && range[2] <= info.end ? range[2] - 0 : info.end;
+                                    info.rangeRequest = true;
+                                    console.log("INFO RANGE");
+                                    console.log(info.start);
+                                    console.log(info.end);
+                                } else if (query.start || query.end) {
+                                    // This is a range request, but doesn't get range headers. So there.
+                                    info.start = isNumber(query.start) && query.start >= 0 && query.start < info.end ? query.start - 0 : info.start;
+                                    info.end = isNumber(query.end) && query.end > info.start && query.end <= info.end ? query.end - 0 : info.end;
+                                }
 
-                                var chunksize = (end - start) + 1;
-                                console.log(parts + " - " + end);
-                                stream = fs.createReadStream(info.path, { flags : "r", start: start, end: end});
+                                info.length = info.end - info.start + 1;
+                                var header;
+                                header = {
+                                        "Cache-Control": "public; max-age=3600",
+                                        Connection: "keep-alive",
+                                        "Content-Type": info.mime,
+                                        "Content-Disposition": "inline; filename=" + info.file + ";",
+                                        "Accept-Ranges": "bytes"
+                                };
+                                header.Status = "206 Partial Content";
+                                header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
+                                header.Pragma = "public";
+                                header["Content-Transfer-Encoding"] = "binary";
+                                header["Content-Length"] = info.length;
+                                res.writeHead(206, header);
+                                stream = fs.createReadStream(info.path, { flags : "r", start: info.start, end: info.end});
 
-                                res.writeHead(206, {
-                                    'Status' : '206 Partial Content',
-                                    'Content-Range' : 'bytes ' + start + '-' + end + '/' + total,
-                                    'Accept-Ranges' : 'bytes',
-                                    "Cache-Control": "private",
-                                    "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
-                                    'Content-Length': chunksize,
-                                    'Content-Type': 'video/mp4'
-                                });
+                                // res.writeHead(206, {
+                                //     'Status' : '206 Partial Content',
+                                //     'Content-Range' : 'bytes ' + start + '-' + end + '/' + total,
+                                //     'Accept-Ranges' : 'bytes',
+                                //     "Cache-Control": "private",
+                                //     "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
+                                //     'Content-Length': chunksize,
+                                //     'Content-Type': 'video/mp4'
+                                // });
                                 stream.pipe(res);
                             }
                         }
                         else {
                             console.log("Entiere video");
+                            stream = fs.createReadStream(info.path);
                             res.writeHead(200, {'Content-Length' : total, 'Content-Type' : 'video/mp4'});
+                            stream.pipe(res);
                         }
 
                         console.log(info.path);
@@ -562,11 +602,12 @@ var setHeaderInfo = function (data, info, res, header)
 exports.torrent = function (req, res, next)
 {
     var io = req.io;
-
-    console.log("ERROOR LAUCNHED");
-    var range_string = req.headers['range'];
+    var url_parts = url.parse(req.url, true);
+    console.log(url_parts);
+    var magnet = "magnet:" + url_parts.search;
+    var range_string = req.headers.range;
     // MP4
-    var magnet = "magnet:?xt=urn:btih:93293ef1db6d2ccbe298f5605777476e75ad472e&dn=Rick+And+Morty+S01E08+HDTV+x264-MiNDTHEGAP+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
+    // var magnet = "magnet:?xt=urn:btih:93293ef1db6d2ccbe298f5605777476e75ad472e&dn=Rick+And+Morty+S01E08+HDTV+x264-MiNDTHEGAP+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
     // AVI
     // var magnet = "magnet:?xt=urn:btih:a9d589dc4810eacb7dc6b0bb68688bb14a98da49&dn=Finding+Dory+%282016%29+WEB-DLRip+%7C+Rus+%28iTunes%29&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
     // MKV
@@ -574,7 +615,7 @@ exports.torrent = function (req, res, next)
     Magnet.findOne({url: magnet}, function (err, obj)
     {
         // Download file
-        downloadTorrent(obj, magnet, io).then(
+        downloadTorrent(obj, magnet, io, res).then(
             /* Promise fulfill callback */
             function (data)
             {
@@ -879,7 +920,12 @@ var headerError = function(res, code)
     var header = { 'Content-Type' : 'text/html'};
     res.writeHead(code, header);
 
-}
+};
+
+var isNumber = function (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
 
 // HANDLE ERROR
 events.on('badExt', function(res, io)
