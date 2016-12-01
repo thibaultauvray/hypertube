@@ -48,7 +48,7 @@
 			$(self).html('<i class="fa fa-refresh" aria-hidden="true"></i> Loading...');
 			$.post('/api/user/signin', { user : userData }).done(function(data) {
 				if (data.state === 'success')
-					window.location = '/app/library';
+					window.location = '/app/accueil';
 				else if (data.state === 'wrong password') {
 					$(self).html('<i class="fa fa-sign-in" aria-hidden="true"></i> Sign-in');
 					$('div.pwd-field').removeClass('has-success').addClass('has-error');
