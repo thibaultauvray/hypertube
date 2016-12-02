@@ -22,16 +22,15 @@ module.exports = mongoose;
 
 
 var accueil = function(req, res, next) {
-	tmp = db.collection("Top100").find();
+	tmp = db.collection("Top100").find().sort( { 'movie.year': 1 } );
 	
 	tmp.forEach(function(result){
 		var movie = result.movie;
 		var torrent = result.torrent;
 		movies.push({movie, torrent});
 	});
-	console.log(movies);
+	//console.log(movies);
 	//movies.sort();
-
 	/*
 	movies.sort(function (a, b) {
 	  if (a.value > b.value)
