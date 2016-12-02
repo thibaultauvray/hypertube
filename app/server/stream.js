@@ -44,13 +44,18 @@ var validExtension = function (name)
 exports.stream = function (req, res, next)
 {
     //console.log(req.session);
+    console.log(req.params);
     var url_parts = url.parse(req.url, true);
     var magnet = url_parts.search;
+    var imdbid = req.params.id;
+    imdb.getById(imdbid).then(function(data) {
     res.render('stream', {
         isApp: true,
         title: 'Hypertube - Register',
         magnet: magnet,
+        duration: parseInt(data.runtime),
         uri: '/tmp/tdl/Rick_And_Morty_S01E08_HDTV_x264-MiNDTHEGAP_[eztv].mp4'
+    });
     });
 };
 
@@ -74,7 +79,6 @@ var downloadTorrent = function (isDownload, magnet, io, res)
             var file_size = 0;
             enginePaths[path] = enginePaths[path] ? enginePaths[path] : 1;
             engineHash[(engine.hashIndex = engineCount++)] = engine;
-            console.log('spiderTorrent Notice: Waiting for torrentStream engine')
             engine.on('ready', function ()
             {
                 for (var i = 0; i < engine.hashIndex; i++)
@@ -121,7 +125,7 @@ var downloadTorrent = function (isDownload, magnet, io, res)
                         {
                             // ENVOIE POURCENTAGE TELECHARGE
                             io.emit('update', parseInt((engine.swarm.downloaded * 100) / movie_file.length));
-                            console.log('torrentStream Notice: Engine', engine.hashIndex, 'downloaded piece: Index:', piece_index, '(', engine.swarm.downloaded, '/', movie_file.length, ')');
+                            console.log('downloaded ' + piece_index + '(' + engine.swarm.downloaded + '/' + movie_file.length + ')');
                         });
                         engine.on('idle', function ()
                         {
@@ -175,7 +179,7 @@ var downloadTorrent = function (isDownload, magnet, io, res)
 }
 
 
-var streamMovie = function (data, query, range_string, res, isdownload, magnet, io)
+var streamMovie = function (data, query, range_string, res, isdownload, magnet, io, duration)
 {
     /*
      DATA.NAME = File name
@@ -234,16 +238,30 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                                 .on('codecData', function (data)
                                 {
                                     clearInterval(interval_id);
+                                    console.log("DURATION ====" + data.duration);
+                                    console.log(data);
                                     io.emit('getDuration', data.duration);
-                                    fill(data);
+
+                                    // fill(data);
                                     dataHash[old] = data;
                                 })
                                 .on("progress", function(data)
                                 {
                                     console.log("PROGRESS");
+                                    console.log("duration" + duration);
                                     console.log("OLD SIZE" + info.old_size);
                                     console.log("DATA");
-                                    console.log(data);
+                                    var minCon = HHMM(data.timemark);
+                                    var perCent = (minCon / duration) * 100;
+                                    console.log("PERCENT" + perCent);
+                                    if (perCent >= 5) {
+                                        io.emit("convertDone");
+                                        fill(dataHash[old]);
+                                    }
+                                    else
+                                        io.emit("getPercent", perCent);
+                                    console.log(data.timemark);
+                                    console.log(HHMM(data.timemark));
                                     console.log("==============");
                                 })
                                 .on("end", function (data)
@@ -263,8 +281,9 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                                 })
                                 .on("error", function (err, stdout, stderr)
                                 {
-                                    console.error('spiderStreamer Error:'.red, 'Could not convert file:', info.path);
-                                    console.log('fluent-ffmpeg Error:'.red, '\nErr:', err, '\nStdOut:', stdout, '\nStdErr:', stderr);
+                                    console.log("Erreur ffmpeg" + err);
+                                    console.log(stdout);
+                                    console.log(stderr);
                                     busy = false;
                                     ++fails;
                                 })
@@ -403,6 +422,8 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                                 }
 
                                 info.length = info.end - info.start + 1;
+                                console.log("INFO")
+                                console.log(info);
                                 var header;
                                 header = {
                                         "Cache-Control": "public; max-age=3600",
@@ -442,47 +463,8 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                     }
                     catch (exception)
                     {
-                        stream = null;
-                        i = 0;
-                        var timer_id = setInterval(function ()
-                        {
-                            ++i;
-                            if (stream === null)
-                            {
-                                if (i === 5)
-                                {
-                                    clearInterval(timer_id);
-                                    console.error('spiderStreamer Error:'.red, 'Could not stream file:', info.path);
-                                    /* Can't set headers after they are sent. */
-                                    // handler.emit("badFile", res);
-                                    return;
-                                }
+                        console.log(exception);
 
-                                try
-                                {
-                                    stream = fs.createReadStream(info.path, {
-                                        flags: "r",
-                                        start: info.start,
-                                        end: info.end
-                                    });
-                                } catch (exception)
-                                {
-                                    console.log('spiderStreamer Error:'.red, exception);
-                                    console.log('spiderStreamer Notice: Retrying in 3 seconds... i:', i);
-                                    stream = null
-                                }
-                                if (stream !== null)
-                                {
-                                    clearInterval(timer_id);
-                                    console.log('spiderStreamer Notice: Piping stream...');
-                                    stream.pipe(res);
-                                    console.log('spiderStreamer Notice: Pipe set');
-                                }
-                            } else if (stream !== null)
-                            {
-                                clearInterval(timer_id);
-                            }
-                        }, 3000);
                     }
                 },
                 function (failure)
@@ -605,13 +587,9 @@ exports.torrent = function (req, res, next)
     var url_parts = url.parse(req.url, true);
     console.log(url_parts);
     var magnet = "magnet:" + url_parts.search;
+    var duration = req.params.duration;
+    console.log("DURATIONNN " + duration);
     var range_string = req.headers.range;
-    // MP4
-    // var magnet = "magnet:?xt=urn:btih:93293ef1db6d2ccbe298f5605777476e75ad472e&dn=Rick+And+Morty+S01E08+HDTV+x264-MiNDTHEGAP+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
-    // AVI
-    // var magnet = "magnet:?xt=urn:btih:a9d589dc4810eacb7dc6b0bb68688bb14a98da49&dn=Finding+Dory+%282016%29+WEB-DLRip+%7C+Rus+%28iTunes%29&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
-    // MKV
-    // var magnet = "magnet:?xt=urn:btih:5855c0f4de84e4037bacb70f4b72c0206740ab26&dn=Modern.Family.S08E06.PROPER.HDTV.x264-KILLERS%5Bettv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Fopen.demonii.com%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fexodus.desync.com%3A6969";
     Magnet.findOne({url: magnet}, function (err, obj)
     {
         // Download file
@@ -620,299 +598,37 @@ exports.torrent = function (req, res, next)
             function (data)
             {
                 // Neccessary for streaming video
-                streamMovie(data, req.query, range_string, res, obj, magnet, io);
+                streamMovie(data, req.query, range_string, res, obj, magnet, io, duration);
             },
             // Error TODO
             function (err)
             {
-                console.log('spiderTorrent Error:'.red, err.message);
+                console.log('Callback Error:' + err.message);
                 return false;
             }
         );
     })
+}
 
-//     engine.on('ready', function ()
-//     {
-//         engine.files.forEach(function (file)
-//         {
-//             console.log(file.name);
-//             // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
-//             if (validExtension(file.name) && file_size < file.length)
-//             {
-//                 console.log(file.name);
-//                 file_size = file.length;
-//                 movie_file = file;
-//             }
-//         });
-//
-//         engine.on('download', function (index)
-//         {
-//             console.log('torrentStream Notice: Engine', engine.hashIndex, 'downloaded piece: Index:', index, '(', engine.swarm.downloaded, '/', movie_file.length, ')');
-//         });
-//         engine.on('idle', function ()
-//         {
-//             console.log('FInish');
-//         })
-//         if (movie_file)
-//         {
-//             convert = true;
-//             if (getExtension(movie_file.name) != '.mp4' && getExtension(movie_file.name) != '.webm')
-//                 convert = false;
-//             if (convert == true)
-//             {
-//                 console.log(movie_file.name);
-//                 movie_file.select();
-//                 console.log(movie_file.length)
-//                 console.log(validExtension(movie_file.name));
-//                 var range = req.headers.range;
-//                 var positions = range.replace(/bytes=/, "").split("-");
-//                 var start = parseInt(positions[0], 10);
-//                 var total = movie_file.length;
-//                 var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
-//                 var chunksize = (end - start) + 1;
-//                 console.log("CHUNKSIZE" + chunksize);
-//                 res.writeHead(206, {
-//                     "Content-Range": "bytes " + start + "-" + end + "/" + total,
-//                     "Accept-Ranges": "bytes",
-//                     "Content-Length": chunksize,
-//                     "Content-Type": "video/mp4"
-//                 });
-//
-//
-//                 var stream = movie_file.createReadStream({start: start, end: end});
-//
-//                 stream.pipe(res);
-//             }
-//             else
-//             {
-//                 engine.on('download', function (index)
-//                 {
-//                     console.log('torrentStream Notice: Engine', engine.hashIndex, 'downloaded piece: Index:', index, '(', engine.swarm.downloaded, '/', movie_file.length, ')');
-//                 });
-//                 info.file = movie_file.name;
-//                 info.path = path+movie_file.path;
-//                 var old = info.path;
-//                 new Promise(function (fill, reje)
-//                 {
-//                     var key = ++gen;
-//                     info.file = movie_file.name;
-//                     // PATH COMPLET + NOM DU FICHIER '/tmp/tdl/movie.converted.mp4
-//                     var converted_path = path+info.file+'.converted.mp4';
-//                     console.log("CONVERTED FILE " + converted_path);
-//                     // NOM FICHIER movie.converted.mp$
-//                     var converted_file = info.file+'.converted.mp4';
-//                     var fails = 0;
-//                     info.size = movie_file.length;
-//                     var busy = false;
-//                     if (ffmpegHash[old] === undefined) {
-//                         console.log('fluent-ffmpeg Notice:', key+':', 'Movie not yet converted, competing for key...');
-//                         ffmpegHash[old] = key;
-//                     }
-//                     if (ffmpegHash[old] === key)
-//                     {
-//                         var interval_id = setInterval(function ()
-//                         {
-//                             if (!busy)
-//                             {
-//                                 busy = true;
-//
-//                                 try
-//                                 {
-//                                     var proc = ffmpeg().input(old)
-//                                         .audioCodec('aac')
-//                                         .videoCodec('libx264')
-//                                         .output(converted_path)
-//                                         .on('codecData', function (data)
-//                                         {
-//                                             console.log('fluent-ffmpeg Notice: CodecData:', data);
-//                                             clearInterval(interval_id);
-//                                             fill(data);
-//                                             dataHash[old] = data;
-//                                         })
-//                                         .on("error", function (err, stdout, stderr)
-//                                         {
-//                                             console.error('spiderStreamer Error:'.red, 'Could not convert file:', info.path);
-//                                             console.log('fluent-ffmpeg Error:'.red, '\nErr:', err, '\nStdOut:', stdout, '\nStdErr:', stderr);
-//                                             /* Handle error */
-//                                             busy = false;
-//                                             // console.log('spiderStreamer Notice: Giving up: Piping raw stream');
-//                                             // stream.pipe(res);
-//                                         })
-//                                         .outputFormat('mp4')
-//                                         .outputOptions('-movflags frag_keyframe+empty_moov')
-//                                         .run();
-//                                 }
-//                                 catch (exception)
-//                                 {
-//                                     console.log(exception);
-//                                     ++fails;
-//                                     busy = false;
-//                                 }
-//                                 if (fails > 30 && busy === false)
-//                                 {
-//                                     clearInterval(interval_id);
-//                                     reje('fluent-ffmpeg never launched without error');
-//                                 }
-//                             }
-//                         }, 3000);
-//                     }
-//                     else
-//                     {
-//                         fill(dataHash[old]);
-//                     }
-//                     console.log("Converting Loop");
-//                     info.file = converted_file;
-//                     info.path = converted_path;
-//                     info.mime = 'video/mp4';
-//                 }).then(function (success)
-//                 {
-//                     new Promise(function (fulfill, reject)
-//                     {
-//                         console.log("Stream");
-//                         var fails = 0;
-//                         var interval_id = setInterval(function ()
-//                         {
-//                             try
-//                             {
-//                                 info.size = fs.statSync(info.path).size;
-//                                 console.log('spiderStreamer Notice:', info.path, ' size:', info.size);
-//                                 if (info.size > 5000000)
-//                                 {
-//                                     clearInterval(interval_id);
-//                                     fulfill(info.size);
-//                                     return;
-//                                 }
-//                                 console.log('spiderStreamer Notice: Movie file not yet big enough; fails:', fails);
-//                             } catch (exception)
-//                             {
-//                                 console.error('spiderStreamer Error:'.red, exception);
-//                             }
-//                             ++fails;
-//                             if (fails > 30)
-//                             {
-//                                 clearInterval(interval_id);
-//                                 reject('Movie file never grew to at least 5mb');
-//                             }
-//                         }, 2000);
-//
-//                     }).then(
-//                         function (suceed)
-//                         {
-//                             info.rangeRequest = false;
-//                             info.start = 0;
-//                             info.end = info.size - 1;
-//                             if (range_string && (range = range_string.match(/bytes=(.+)-(.+)?/)) !== null) {
-//                                 info.start = isNumber(range[1]) && range[1] >= 0 && range[1] < info.end ? range[1] - 0 : info.start;
-//                                 info.end = isNumber(range[2]) && range[2] > info.start && range[2] <= info.end ? range[2] - 0 : info.end;
-//                                 info.rangeRequest = true;
-//                                 console.log("Request partiel");
-//                             } else if (req.query.start || req.query.end) {
-//                                 // This is a range request, but doesn't get range headers. So there.
-//                                 info.start = isNumber(req.query.start) && req.query.start >= 0 && req.query.start < info.end ? req.query.start - 0 : info.start;
-//                                 info.end = isNumber(req.query.end) && req.query.end > info.start && req.query.end <= info.end ? req.query.end - 0 : info.end;
-//                             }
-//                             // range request TODO
-//                             info.length = info.end - info.start + 1;
-//                             setHeaderInfo(info, res);
-//                             try
-//                             {
-//                                 console.log("TRy Straming, PATH" + info.path);
-//                                 stream = fs.createReadStream(info.path, {flags: "r", start: info.start, end: info.end});
-//                                 stream.pipe(res);
-//                             }
-//                             catch (exception)
-//                             {
-//                                 stream = null;
-//                                 i = 0;
-//                                 var timer_id = setInterval(function ()
-//                                 {
-//                                     ++i;
-//                                     if (stream === null)
-//                                     {
-//                                         if (i === 5)
-//                                         {
-//                                             clearInterval(timer_id);
-//                                             console.error('spiderStreamer Error:'.red, 'Could not stream file:', info.path);
-//                                             /* Can't set headers after they are sent. */
-//                                             // handler.emit("badFile", res);
-//                                             return;
-//                                         }
-//
-//                                         try
-//                                         {
-//                                             stream = fs.createReadStream(info.path, {
-//                                                 flags: "r",
-//                                                 start: info.start,
-//                                                 end: info.end
-//                                             });
-//                                         } catch (exception)
-//                                         {
-//                                             console.log('spiderStreamer Error:'.red, exception);
-//                                             console.log('spiderStreamer Notice: Retrying in 3 seconds... i:', i);
-//                                             stream = null
-//                                         }
-//                                         if (stream !== null)
-//                                         {
-//                                             clearInterval(timer_id);
-//                                             console.log('spiderStreamer Notice: Piping stream...');
-//                                             stream.pipe(res);
-//                                             console.log('spiderStreamer Notice: Pipe set');
-//                                         }
-//                                     } else if (stream !== null)
-//                                     {
-//                                         clearInterval(timer_id);
-//                                     }
-//                                 }, 3000);
-//                             }
-//                         },
-//                         function(failure)
-//                         {
-//                             console.log("fail 1 = " + failure);
-//                         }
-//                     );
-//                 },
-//                     function(error)
-//                     {
-//                         console.log("fail 2 " + error);
-//                     }
-//                 );
-//
-//
-// //
-// //
-// //                 // var stream = movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
-// //                 // var proc = ffmpeg(stream)
-// //                 //     .format('mp4')
-// //                 //     .flvmeta()
-// //                 //     .size('320x?')
-// //                 //     .videoBitrate('512k')
-// //                 //     .videoCodec('libx264')
-// //                 //     .fps(24)
-// //                 //     .audioBitrate('96k')
-// //                 //     .audioCodec('aac')
-// //                 //     .audioFrequency(22050)
-// //                 //     .audioChannels(2)
-// //                 // // setup event handlers
-// //                 //     .on('end', function() {
-// //                 //         console.log('done processing input stream');
-// //                 //     })
-// //                 //     .on('error', function(err) {
-// //                 //         console.log('an error happened: ' + err.message);
-// //                 //     })
-// //                 //     // save to file
-// //                 //     .pipe(stream, {end:true});
-//                 console.log("CONVERT");
-//
-//             }
-//
-//
-//         }
-//         else
-//         {
-//             console.log("ERROR");
-//             // THROW ERR
-//         }
-//     });
+var minTOHHMM = (min) =>
+{
+    var h = parseInt(min / 60);
+    var min = parseInt(min - (60 * h));
+    if (h == 0)
+        h = "00";
+    if (min.toString().length == 1)
+        min = '0' + min;
+    return (h + ":" + min + ":00");
+
+}
+var HHMM = (dur) =>
+{
+    var hms = dur;   // your input string
+    var a = hms.split(':'); // split it at the colons
+
+// Hours are worth 60 minutes.
+    var minutes = (+a[0]) * 60 + (+a[1]);
+    return minutes;
 }
 
 var headerError = function(res, code)
