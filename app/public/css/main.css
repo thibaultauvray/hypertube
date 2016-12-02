@@ -285,8 +285,8 @@ nav {
             cursor: pointer;
             background-color: white; }
       .moviesList .thumbnails .movie .poster:hover, .moviesList .thumbnails .movie .poster:focus {
-        filter: grayscale(100%);
-        -webkit-filter: grayscale(100%); }
+        filter: grayscale(60%);
+        -webkit-filter: grayscale(60%); }
       .moviesList .thumbnails .movie .movie-infos {
         max-height: 202px;
         overflow: hidden; }
@@ -489,33 +489,42 @@ nav {
         font-size: 2vw; } }
 
 body {
-  background-image: url("../img/bg.jpg"); }
+  background-image: url("../img/bg.jpg"); 
+}
 
 footer {
   margin-top: 36px;
   margin-bottom: 16px;
-  z-index: 2; }
+  z-index: 2;
+}
 
 .myButton {
+  /*
   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
   background:-moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
   background:-webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
   background:-o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
   background:-ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-  background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+  */
+  /*background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);*/
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a',GradientType=0);
-  background-color:#44c767;
-  -moz-border-radius:10px;
-  -webkit-border-radius:10px;
-  border-radius:10px;
-  border:4px solid #18ab29;
+  background-color:#ff8f00;
+  -moz-border-radius:0px;
+  -webkit-border-radius:0px;
+  border-radius:0px;
+  /*border:4px solid #18ab29;*/
+  border-top: 2px solid #18aba9;
+  border-bottom: 2px solid #18aba9;
   display:inline-block;
   cursor:pointer;
   color:#ffffff;
   font-family:Trebuchet MS;
   font-size:15px;
   font-style:italic;
-  padding:6px 27px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 43%;
   text-decoration:none;
   text-shadow:1px 2px 0px #2f6627;
 }
@@ -531,5 +540,5 @@ footer {
 }
 .myButton:active {
   position:relative;
-  top:1px;
+  bottom: 1px;
 }

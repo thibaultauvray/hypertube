@@ -7,9 +7,11 @@ var mongoose = require('../mongoose'),
 	async = require("async"),
 	Nightmare = require('nightmare'),
 	_ = require('lodash');
-	const PirateBay = require('thepiratebay');
+const PirateBay = require('thepiratebay');
 
-	var omdbSearch = function(req, res, next) {
+var omdbSearch = function(req, res, next) {
+	User.findOne({ username : req.session.username }, function(err, user) {
+	if (!err && user) {
 		var movies = [];
 	
     	PirateBay.search(req.params.text, {
@@ -53,15 +55,22 @@ var mongoose = require('../mongoose'),
 		      res.render('search', {
 							isApp : true,
 							title : 'Hypertube - Search',
+							firstname : _.capitalize(user.firstname),
+							language : user.language,
 							movies : movies
 						});
 		  }); 
-	})	
-	.catch(err => {
-  		console.log(err)
+		})	
+		.catch(err => {
+	  		console.log(err)
+		});
+	} else {
+			console.log('User not found or not logged in, redirect to home page');
+			res.redirect('/');
+		}
 	});		
-	};	
-	module.exports = omdbSearch;
+};	
+module.exports = omdbSearch;
 /*	
 var makeSearch = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {

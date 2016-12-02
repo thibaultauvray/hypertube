@@ -22,13 +22,15 @@ module.exports = mongoose;
 
 
 var accueil = function(req, res, next) {
-	tmp = db.collection("Top100").find().sort( { 'movie.year': 1 } );
+	User.findOne({ username : req.session.username }, function(err, user) {
+		if (!err && user) {
+			tmp = db.collection("Top100").find().sort( { 'movie.title': 1 } );
 	
-	tmp.forEach(function(result){
-		var movie = result.movie;
-		var torrent = result.torrent;
-		movies.push({movie, torrent});
-	});
+			tmp.forEach(function(result){
+				var movie = result.movie;
+				var torrent = result.torrent;
+				movies.push({movie, torrent});
+			});
 	//console.log(movies);
 	//movies.sort();
 	/*
@@ -45,10 +47,15 @@ var accueil = function(req, res, next) {
 			res.render('Accueil', {
 							isApp : true,
 							title : 'Hypertube - Accueil',
+							firstname : _.capitalize(user.firstname),
+							language : user.language,
 							movies : movies
 						});
-
-		
+		} else {
+			console.log('User not found or not logged in, redirect to home page');
+			res.redirect('/');
+		}
+	});	
 
 };
 
