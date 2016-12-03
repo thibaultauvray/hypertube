@@ -83,27 +83,28 @@ var downloadTorrent = function (isDownload, magnet, io, res)
             {
                 for (var i = 0; i < engine.hashIndex; i++)
                 {
-                    if (engineHash[i] && engineHash[i].path === engine.path)
-                    {
-                        engineHash[engine.hashIndex] = undefined;
-                        engine.destroy();
-                        engine = engineHash[i];
-                        original = false;
-                        break;
-                    }
+                //     if (engineHash[i] && engineHash[i].path === engine.path)
+                //     {
+                //         engineHash[engine.hashIndex] = undefined;
+                //         engine.destroy();
+                //         engine = engineHash[i];
+                //         original = false;
+                //         break;
+                //     }
                 }
                 engine.files.forEach(function (file)
                 {
                     // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
                     if (validExtension(file.name) && file_size < file.length)
                     {
-                        console.log(file.name);
                         file_size = file.length;
                         movie_file = file;
                     }
                 });
                 if (movie_file)
                 {
+                    console.log(movie_file.name);
+                    console.log("==============");
                     // If file stream is OK
                     movie_file.select();
                     var movie_data = {
@@ -120,7 +121,7 @@ var downloadTorrent = function (isDownload, magnet, io, res)
                     fulfill(movie_data);
                     if (original)
                     {
-                        // movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
+                        movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
                         engine.on('download', function (piece_index)
                         {
                             // ENVOIE POURCENTAGE TELECHARGE
@@ -131,7 +132,7 @@ var downloadTorrent = function (isDownload, magnet, io, res)
                         {
                             // FICHIER TELECHARGE
                             if (mime == "video/mp4" || mime == "video/webm" || mime == "video/ogg")
-                            {``
+                            {
                                 // ON SAVE EN BDD SI LISIBLE DIRECTEMENT PAR NAV
                                 console.log("Save model");
                                 // var newMagnet = Magnet(
@@ -229,6 +230,10 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                     if (!busy)
                     {
                         busy = true;
+                        res.on('close', function(){
+                            console.log('response closed');
+                            rejec();
+                        });
                         try
                         {
                             ffmpeg().input(old)
@@ -335,6 +340,7 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
         {
             new Promise(function (fulfill, reject)
             {
+
                 if(!isdownload)
                 {
                     // SI PAS DEJA TELECHARGE ON ATTEND QUIL GRANDISSE
@@ -400,6 +406,8 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                                 });
                                 file = GrowingFile.open(info.path);
                                 file.pipe(res);
+                                return true;
+
                             }
                             else
                             {
@@ -439,6 +447,7 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                                 header["Content-Length"] = info.length;
                                 res.writeHead(206, header);
                                 stream = fs.createReadStream(info.path, { flags : "r", start: info.start, end: info.end});
+                                res.openedFile = stream;
 
                                 // res.writeHead(206, {
                                 //     'Status' : '206 Partial Content',
@@ -450,6 +459,19 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                                 //     'Content-Type': 'video/mp4'
                                 // });
                                 stream.pipe(res);
+                                res.on('close', function(){
+                                    stream = null;
+                                    info = null;
+                                    console.log('response closed');
+                                    if (res.openedFile) {
+                                        res.openedFile.unpipe(this);
+                                        if (this.openedFile.fd) {
+                                            fs.close(this.openedFile.fd);
+                                        }
+                                    }
+                                });
+
+                                return true;
                             }
                         }
                         else {
@@ -457,6 +479,8 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                             stream = fs.createReadStream(info.path);
                             res.writeHead(200, {'Content-Length' : total, 'Content-Type' : 'video/mp4'});
                             stream.pipe(res);
+                            return true;
+
                         }
 
                         console.log(info.path);
@@ -585,13 +609,16 @@ exports.torrent = function (req, res, next)
 {
     var io = req.io;
     var url_parts = url.parse(req.url, true);
-    console.log(url_parts);
     var magnet = "magnet:" + url_parts.search;
     var duration = req.params.duration;
     console.log("DURATIONNN " + duration);
     var range_string = req.headers.range;
     Magnet.findOne({url: magnet}, function (err, obj)
     {
+        res.on('close', function(){
+            console.log('response closed');
+            return false;
+        });
         // Download file
         downloadTorrent(obj, magnet, io, res).then(
             /* Promise fulfill callback */
@@ -608,6 +635,7 @@ exports.torrent = function (req, res, next)
             }
         );
     })
+
 }
 
 var minTOHHMM = (min) =>

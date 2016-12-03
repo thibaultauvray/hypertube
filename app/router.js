@@ -6,6 +6,7 @@ var app = require('./express.js'),
 	forgotPassword = require('./server/forgotPassword'),
 	resetPassword = require('./server/resetPassword'),
 	library = require('./server/library'),
+	accueil = require('./server/accueil'),
 	player = require('./server/player'),
 	makeSearch = require('./server/makeSearch'),
 	profile = require('./server/profile'),
@@ -25,7 +26,7 @@ var addNewUser = require('./server/api/addNewUser'),
 	deleteComment = require('./server/api/deleteComment'),
 	addNewVisit = require('./server/api/addNewVisit'),
 	setLocale = require('./server/api/setLocale'),
-	getMovies = require('./server/api/getMovies'),
+	getMovies = require('./server/api/getMovies');
 	// getSubtitles = require('./server/api/getSubtitles');
 
 var torrentTest = require('./server/streamtest');
@@ -43,17 +44,17 @@ var fs = require('fs');
 var path = require('path');
 var imdb = require('imdb-api');
 
-app.use('/app', function(req, res, next)
-{
-	User.findOne({ username : req.session.username }, function(err, user) {
-		if (!err && user) {
-			next();
-		} else {
-			console.log('User not found or not logged in, redirect to home page');
-			res.redirect('/');
-		}
-	});
-});
+// app.use('/app', function(req, res, next)
+// {
+// 	User.findOne({ username : req.session.username }, function(err, user) {
+// 		if (!err && user) {
+// 			next();
+// 		} else {
+// 			console.log('User not found or not logged in, redirect to home page');
+// 			res.redirect('/');
+// 		}
+// 	});
+// });
 
 // App routes
 app.get('/', home);
@@ -69,10 +70,11 @@ app.get('/torrentTest', torrentTest.torrentTest);
 app.get('/users/forgot-password',  forgotPassword);
 app.get('/users/reset-password/:username/:token', resetPassword);
 app.get('/app/library', library);
+app.get('/app/accueil', accueil);
 
 // app.get('/player/html5/:id/:resolution', player);
 app.get('/app/player/html5/:id/:magnet', stream.stream);
-app.get('/app/torrent/:magnet', stream.torrent)
+app.get('/app/torrent/:duration/:magnet', stream.torrent)
 //app.get('/player/html5/:text', player);
 app.get('/app/search/:text', makeSearch);
 //app.get('/app/stream/:text', stream);
@@ -93,7 +95,7 @@ app.post('/api/comment/delete', deleteComment);
 app.post('/api/movie/visit/add', addNewVisit);
 app.post('/api/user/lang/set', setLocale);
 app.post('/api/library/movies/get', getMovies);
-app.post('/api/movie/subtitles/get', getSubtitles);
+// app.post('/api/movie/subtitles/get', getSubtitles);
 
 // OAuth register and login routes
 app.get('/users/register/42', getCode42);
