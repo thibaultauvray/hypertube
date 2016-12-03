@@ -84,7 +84,7 @@ exports.accessToken = function(req, res) {
 					user : newUser
 				}).then(function(resp) {
 					if (resp.data.state === 'success') {
-						res.redirect('/app/library');
+						res.redirect('/app/accueil');
 					}
 					if (resp.data.state === 'user already exist') {
 						User.findOne({ username : newUser.username }, function(err, user) {
@@ -95,8 +95,7 @@ exports.accessToken = function(req, res) {
 								req.session.firstname = user.firstname;
 								req.session.lastname = user.lastname;
 								req.session.language = user.language;
-								console.log("Already exist");
-								res.redirect('/app/library');
+								res.redirect('/app/accueil');
 							} else {
 								console.log(err);
 								res.redirect('/');

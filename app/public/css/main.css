@@ -285,8 +285,8 @@ nav {
             cursor: pointer;
             background-color: white; }
       .moviesList .thumbnails .movie .poster:hover, .moviesList .thumbnails .movie .poster:focus {
-        filter: grayscale(100%);
-        -webkit-filter: grayscale(100%); }
+        filter: grayscale(60%);
+        -webkit-filter: grayscale(60%); }
       .moviesList .thumbnails .movie .movie-infos {
         max-height: 202px;
         overflow: hidden; }
@@ -489,12 +489,15 @@ nav {
         font-size: 2vw; } }
 
 body {
-  background-image: url("../img/bg.jpg"); }
+  background-image: url("../img/bg.jpg"); 
+}
 
 footer {
   margin-top: 36px;
   margin-bottom: 16px;
-  z-index: 2; }
+  z-index: 2;
+}
 
 .nopadding {
   padding: 0 !important; }
+
