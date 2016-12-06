@@ -56,8 +56,8 @@
 			<hr />
 			{{#each user.history}}
 				<div class="video-infos">
-					<a class="movie" href="{{ link }}">
-						<div class="poster" style="background-image: url('{{ poster }}');"></div>
+					<a class="movie" href="/player/html5/{{movie.imdb.id}}/{{torrent.magnetLink}}">
+						<div class="poster" style="background-image: url('{{ movie.poster }}');"></div>
 					</a>
 				</div>
 			{{/each}}

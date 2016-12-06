@@ -24,7 +24,7 @@ module.exports = mongoose;
 var accueil = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			tmp = db.collection("Top100").find().sort( { 'movie.title': 1 } );
+			tmp = db.collection("movies").find().sort( { 'movie.title': 1 } );
 	
 			tmp.forEach(function(result){
 				var movie = result.movie;
