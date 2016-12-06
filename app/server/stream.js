@@ -13,6 +13,9 @@ var url = require('url');
 var torrentStream = require('torrent-stream');
 var mimeTypes = require('./mine-type.js');
 
+var Top100 = require('../top100_schema');
+var Users = require('../user_schema');
+
 var event = require('events');
 var events = new event.EventEmitter();
 
@@ -41,27 +44,44 @@ var validExtension = function (name)
     return false;
 }
 
+var db = mongoose.connection;
+
+db.on('error', function (err) {
+    console.log('DB Connection error : ', err);
+});
+
 exports.stream = function (req, res, next)
 {
-    //console.log(req.session);
-    console.log(req.params);
+    var torrentId = req.params.id;
+
+    Users.findOne({ username : req.session.username }, function (error, user)
+    {
+        console.log(user);
+        console.log("TOP100 = " + req.params.id);
+        Top100.findOne({'torrent.id':torrentId}).lean().exec(function(err, movie)
+        {
+            console.log(movie);
+            console.log("UPDATE")
+            Users.update({ 'username' : req.session.username }, { $addToSet: { 'history' : movie } }, function (err, doc)
+            {
+                console.log(err);
+                console.log(doc);
+            });
+        });
+    });
     var url_parts = url.parse(req.url, true);
     var magnet = url_parts.search;
-    var imdbid = req.params.id;
-    imdb.getById(imdbid).then(function(data) {
+    // imdb.getById(imdbid).then(function(data) {
     res.render('stream', {
         isApp: true,
         title: 'Hypertube - Register',
         magnet: magnet,
-        duration: parseInt(data.runtime),
+        // duration: parseInt(data.runtime),
         uri: '/tmp/tdl/Rick_And_Morty_S01E08_HDTV_x264-MiNDTHEGAP_[eztv].mp4'
-    });
+    // });
     });
 };
 
-var engineCount = 0;
-var engineHash = {};
-var enginePaths = {};
 
 var downloadTorrent = function (isDownload, magnet, io, res)
 {
@@ -77,21 +97,9 @@ var downloadTorrent = function (isDownload, magnet, io, res)
                 });
             var movie_file;
             var file_size = 0;
-            enginePaths[path] = enginePaths[path] ? enginePaths[path] : 1;
-            engineHash[(engine.hashIndex = engineCount++)] = engine;
             engine.on('ready', function ()
             {
-                for (var i = 0; i < engine.hashIndex; i++)
-                {
-                //     if (engineHash[i] && engineHash[i].path === engine.path)
-                //     {
-                //         engineHash[engine.hashIndex] = undefined;
-                //         engine.destroy();
-                //         engine = engineHash[i];
-                //         original = false;
-                //         break;
-                //     }
-                }
+
                 engine.files.forEach(function (file)
                 {
                     // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
@@ -230,10 +238,6 @@ var streamMovie = function (data, query, range_string, res, isdownload, magnet, 
                     if (!busy)
                     {
                         busy = true;
-                        res.on('close', function(){
-                            console.log('response closed');
-                            rejec();
-                        });
                         try
                         {
                             ffmpeg().input(old)
@@ -615,10 +619,10 @@ exports.torrent = function (req, res, next)
     var range_string = req.headers.range;
     Magnet.findOne({url: magnet}, function (err, obj)
     {
-        res.on('close', function(){
-            console.log('response closed');
-            return false;
-        });
+        // res.on('close', function(){
+        //     console.log('response closed');
+        //     return false;
+        // });
         // Download file
         downloadTorrent(obj, magnet, io, res).then(
             /* Promise fulfill callback */

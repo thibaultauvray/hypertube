@@ -73,7 +73,7 @@ app.get('/app/library', library);
 app.get('/app/accueil', accueil);
 
 // app.get('/player/html5/:id/:resolution', player);
-app.get('/app/player/html5/:id/:magnet', stream.stream);
+app.get('/app/player/:id/:magnet', stream.stream);
 app.get('/app/torrent/:duration/:magnet', stream.torrent)
 //app.get('/player/html5/:text', player);
 app.get('/app/search/:text', makeSearch);
