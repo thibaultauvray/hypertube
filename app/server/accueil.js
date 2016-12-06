@@ -5,7 +5,7 @@ var mongoose = require('../mongoose'),
 
 var tmp = [];
 var movies = [];
-
+var vu = false;
 //mongoose.connect('mongodb://localhost:27017/hypertube');
 
 var db = mongoose.connection;
@@ -29,7 +29,14 @@ var accueil = function(req, res, next) {
 			tmp.forEach(function(result){
 				var movie = result.movie;
 				var torrent = result.torrent;
-				movies.push({movie, torrent});
+				movies.push({movie, torrent, vu});
+			});
+			movies.forEach(function(film){
+				user.history.forEach(function(histo){
+					if (film.torrent.id == histo.torrent.id){
+						film.vu = true
+					}
+				});
 			});
 	//console.log(movies);
 	//movies.sort();

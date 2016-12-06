@@ -13,6 +13,7 @@ var omdbSearch = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
 	if (!err && user) {
 		var movies = [];
+		var vu = false;
 		// var tmp = [];	
     	PirateBay.search(req.params.text, {
 		  category: 200,    // default - 'all' | 'all', 'audio', 'video', 'xxx', 
@@ -46,7 +47,9 @@ var omdbSearch = function(req, res, next) {
 		      if (nightmare) {
 		        omdb.get(nightmare, function(err, movie) {
 		          // tmp.push({movie, torrent});
-		          movies.push({movie, torrent});
+		          // console.log('id: '+torrent.id+' | '+'seeds: '+torrent.seeders);
+		          
+		          movies.push({movie, torrent, vu});
 		        })
 		      }  
 		      callback(null);
@@ -54,6 +57,14 @@ var omdbSearch = function(req, res, next) {
 		    .end()
 		  }, function(err) {
 		  	//movies = tmp.sort(function(a, b){return a.movie.title-b.movie.title});
+		  		movies.forEach(function(film){
+					user.history.forEach(function(histo){
+
+						if (film.torrent.id == histo.torrent.id){
+							film.vu = true
+						}
+					});
+				});
 		      res.render('search', {
 							isApp : true,
 							title : 'Hypertube - Search',
@@ -68,7 +79,8 @@ var omdbSearch = function(req, res, next) {
 										    return -1;
 										  // a doit être égale à b
 										  return 0;
-										})
+										}),
+							// history: user.history
 						});
 		  }); 
 		})	
