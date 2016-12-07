@@ -110,7 +110,7 @@
     .filter((v,i) => v !== "00" || i > 0)
     .join(":")
     }
-    var url = "http://localhost:3000/app/torrent/{{duration}}/magnet"+$("#mag").html();
+    var url = "http://localhost:3000/app/torrent/{{torrentId}}/{{duration}}/magnet"+$("#mag").html();
     var player = videojs('video');
     player.src({
         src: url,

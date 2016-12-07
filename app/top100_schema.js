@@ -64,6 +64,9 @@ var Top100 = new Schema({
             avatar: String
         }
     }]
+},
+{
+    timestamps: true
 });
 
 
