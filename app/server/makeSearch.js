@@ -5,9 +5,13 @@ var mongoose = require('../mongoose'),
 	search = require('./api/search'),
 	omdb = require('omdb'),
 	async = require("async"),
+	test = require('assert'),
 	Nightmare = require('nightmare'),
 	_ = require('lodash');
 const PirateBay = require('thepiratebay');
+
+//mongoose.connect('mongodb://localhost:27017/hypertube');
+var db = mongoose.connection;
 
 var omdbSearch = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
@@ -17,16 +21,16 @@ var omdbSearch = function(req, res, next) {
 		// var tmp = [];	
     	PirateBay.search(req.params.text, {
 		  category: 200,    // default - 'all' | 'all', 'audio', 'video', 'xxx', 
-		                      //                   'applications', 'games', 'other' 
-		                      // 
-		                      // You can also use the category number: 
-		                      // `/search/0/99/{category_number}` 
+		                    //                   'applications', 'games', 'other' 
+		                    // 
+		                    // You can also use the category number: 
+		                    // `/search/0/99/{category_number}` 
 		  filter: {
-		    verified: false    // default - false | Filter all VIP or trusted torrents 
+		    verified: false    	// default - false | Filter all VIP or trusted torrents 
 		  },
-		  page: 0,            // default - 0 - 99 
-		  orderBy: 'seeds', // default - name, date, size, seeds, leeches 
-		  sortBy: 'desc'      // default - desc, asc 
+		  page: 0,            	// default - 0 - 99 
+		  orderBy: 'seeds', 	// default - name, date, size, seeds, leeches 
+		  sortBy: 'desc'    	// default - desc, asc 
 		})
 		.then(torrents => {
 		  async.each(torrents, function(torrent, callback) {
@@ -45,18 +49,18 @@ var omdbSearch = function(req, res, next) {
 		    .run(function(err, nightmare) {
 		      if (err) return console.log(err);
 		      if (nightmare) {
-		        omdb.get(nightmare, function(err, movie) {
-		          // tmp.push({movie, torrent});
-		          // console.log('id: '+torrent.id+' | '+'seeds: '+torrent.seeders);
-		          
+		        omdb.get(nightmare, function(err, movie) {  
 		          movies.push({movie, torrent, vu});
+		          db.collection('movies').findOne({'torrent.id':torrent.id}, function(err, result){
+		          	if (!result)
+		          		 db.collection('movies').save({movie,torrent});
+		          })
 		        })
 		      }  
 		      callback(null);
 		      })
 		    .end()
 		  }, function(err) {
-		  	//movies = tmp.sort(function(a, b){return a.movie.title-b.movie.title});
 		  		movies.forEach(function(film){
 					user.history.forEach(function(histo){
 
@@ -65,6 +69,7 @@ var omdbSearch = function(req, res, next) {
 						}
 					});
 				});
+
 		      res.render('search', {
 							isApp : true,
 							title : 'Hypertube - Search',
@@ -80,7 +85,6 @@ var omdbSearch = function(req, res, next) {
 										  // a doit être égale à b
 										  return 0;
 										}),
-							// history: user.history
 						});
 		  }); 
 		})	
