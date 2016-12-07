@@ -285,8 +285,8 @@ nav {
             cursor: pointer;
             background-color: white; }
       .moviesList .thumbnails .movie .poster:hover, .moviesList .thumbnails .movie .poster:focus {
-        filter: grayscale(60%);
-        -webkit-filter: grayscale(60%); }
+        filter: grayscale(100%);
+        -webkit-filter: grayscale(100%); }
       .moviesList .thumbnails .movie .movie-infos {
         max-height: 202px;
         overflow: hidden; }
@@ -309,6 +309,30 @@ nav {
       .moviesList .thumbnails .movie .plot, .moviesList .thumbnails .movie .director, .moviesList .thumbnails .movie .stars {
         font-size: 1vw;
         margin-bottom: 2px; }
+
+.myButton {
+  background-color: #ff8f00;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border-top: 2px solid #18aba9;
+  border-bottom: 2px solid #18aba9;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Trebuchet MS;
+  font-size: 15px;
+  font-style: italic;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 43%;
+  text-decoration: none;
+  text-shadow: 1px 2px 0px #2f6627; }
+
+.myButton:active {
+  position: relative;
+  bottom: 1px; }
 
 .player {
   margin-top: 5%; }
@@ -489,15 +513,12 @@ nav {
         font-size: 2vw; } }
 
 body {
-  background-image: url("../img/bg.jpg"); 
-}
+  background-image: url("../img/bg.jpg"); }
 
 footer {
   margin-top: 36px;
   margin-bottom: 16px;
-  z-index: 2;
-}
+  z-index: 2; }
 
 .nopadding {
   padding: 0 !important; }
-
