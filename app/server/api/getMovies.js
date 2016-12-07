@@ -7,6 +7,7 @@ var getMovies = function(req, res, next) {
 		.limit(req.body.limit)
 		.sort({ [req.body.sort] : req.body.order })
 		.exec(function(err, movies) {
+			//console.log(req.body);
 			if (!err && movies && movies.length > 0) {
 				for (var i = 0; i < movies.length; i++) {
 					movies[i].director = movies[i].director ? movies[i].director.split(', ')[0] : 'N/A';
