@@ -42,7 +42,7 @@ var movieSchema = new Schema(
 						id 		: String,
 						name 	: String
 					  },
-		seeders 	: {type: String, required: true},
+		seeders 	: {type: Number, required: true},
 		leechers 	: String,
 		uploadDate 	: String,
 		magnetLink 	: { type: String, required: true }, 
