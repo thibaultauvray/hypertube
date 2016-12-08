@@ -13,7 +13,7 @@ var url = require('url');
 var torrentStream = require('torrent-stream');
 var mimeTypes = require('./mine-type.js');
 
-var Top100 = require('../top100_schema');
+var Movies = require('../movie_schema');
 var Users = require('../user_schema');
 
 var event = require('events');
@@ -50,23 +50,34 @@ db.on('error', function (err) {
 
 exports.stream = function (req, res, next) {
     var torrentId = req.params.id;
-
+    var already = false;
     console.log(user);
-    console.log("TOP100 = " + req.params.id);
-    Top100.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
+    console.log("Movies = " + req.params.id);
+    Movies.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
         console.log(movie);
-        console.log("UPDATE")
-        Users.update({'username': req.session.username}, {$addToSet: {'history': movie}}, function (err, doc) {
-            console.log(doc);
-            if (err)
-            {
-                // TODO throw err
+        Users.findOne({username: req.session.username}, function (err, user) {
+            user.history.forEach(function (elem) {
+                if (elem.torrent.id == torrentId) {
+                    already = true;
+                }
+                console.log(elem.torrent.id);
+            });
+            if (!already) {
+                console.log("UPDATE");
+                Users.update({'username': req.session.username}, {$addToSet: {'history': movie}}, function (err, doc) {
+                    console.log(doc);
+                    if (err) {
+                        // TODO throw err
+                    }
+                });
             }
         });
+        console.log("=============");
+
         var url_parts = url.parse(req.url, true);
         var magnet = movie.torrent.magnetLink;
         // TODO THROW ERROR WHEN IMDB ID NOT HERE
-        console.log(movie.movie.imdb);
+        // console.log(movie.movie.imdb);
         imdb.getById(movie.movie.imdb.id).then(function (data) {
             res.render('stream', {
                 isApp: true,
@@ -83,17 +94,18 @@ exports.stream = function (req, res, next) {
 
 
 var downloadTorrent = function (movie, magnet, io, res) {
+    console.log("==============================");
+    if (movie.torrent.path === undefined || movie.torrent.path === null) {
+        var isDownload = false;
+    }
+    else {
+        var isDownload = true;
+    }
+    var old_mime;
     return new Promise(function (fulfill, reject) {
         console.log("PATH MOVIE");
         console.log(movie.torrent.path);
 
-        if (movie.torrent.path === undefined || movie.torrent.path === null)
-        {
-            var isDownload = false;
-        }
-        else {
-            var isDownload = true;
-        }
         if (!isDownload) // SI PAS DANS LA BDD DONC PAS SUR LE SERVEUR
         {
             var original = true;
@@ -131,37 +143,44 @@ var downloadTorrent = function (movie, magnet, io, res) {
                     var mime = validExtension(movie_file.name);
                     io.emit('getExt', mime);
                     // ON ENVOIT REOTUR PROMISE LE FICHIER EN TRAIN DETRE TELECHARGE
-                    fulfill(movie_data);
+                    console.log("MIMEUH" + mime);
+                    // fulfill(movie_data);
                     if (original) {
-                        movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
+                        // movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
                         engine.on('download', function (piece_index) {
-                            // ENVOIE POURCENTAGE TELECHARGE
-                            io.emit('update', parseInt((engine.swarm.downloaded * 100) / movie_file.length));
-                            console.log('downloaded ' + piece_index + '(' + engine.swarm.downloaded + '/' + movie_file.length + ')');
+                            // // ENVOIE POURCENTAGE TELECHARGE
+                            // var pourcent = parseInt((engine.swarm.downloaded * 100) / movie_file.length);
+                            // console.log(pourcent);
+                            // if (mime != "video/mp4" && mime != "video/webm" && mime != "video/ogg") {
+                            //     if (pourcent > 5) {
+                            //         // console.log("Fill");
+                            //         // console.log(movie_data);
+                            //         // fulfill(movie_data);
+                            //     }
+                            // }
+                            // else {
+                            //     fulfill(movie_data);
+                            // }
+                            // console.log(pourcent);
+                            // io.emit('update', parseInt((engine.swarm.downloaded * 100) / movie_file.length));
+                            // console.log('downloaded ' + piece_index + '(' + engine.swarm.downloaded + '/' + movie_file.length + ')');
                         });
                         engine.on('idle', function () {
                             // FICHIER TELECHARGE
+                            fulfill(movie_data);
+                            console.log("MIMEEEE");
+                            console.log(mime);
                             if (mime == "video/mp4" || mime == "video/webm" || mime == "video/ogg") {
                                 // ON SAVE EN BDD SI LISIBLE DIRECTEMENT PAR NAV
                                 console.log("Save model");
                                 console.log(movie.torrent.id);
                                 console.log(movie_data.path);
-                                    Top100.update({'torrent.id': movie.torrent.id}, { $set: {'torrent.path': movie_data.path} }, function (err, doc) {
+                                Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.path': movie_data.path}}, function (err, doc) {
+                                    console.log(movie_data);
                                     console.log("YOLOOOOOOOOO");
-                                        console.log(doc);
-                                        console.log(err);
-                                    })
-
-                                    // var newMagnet = Magnet(
-                                //     {
-                                //         url: magnet,
-                                //         path: movie_data.path,
-                                //         name: movie_file.name
-                                //     });
-                                // newMagnet.save(function (err)
-                                // {
-                                //     console.log(err);
-                                // });
+                                    console.log(doc);
+                                    console.log(err);
+                                })
                             }
                             // ON SUPPRIMER LECOUTE DU TORRENT
                             engine.removeAllListeners();
@@ -188,7 +207,7 @@ var downloadTorrent = function (movie, magnet, io, res) {
                 path: movie.torrent.path
             };
             // Update updated_at
-            Top100.update({'torrent.id': movie.torrent.id}, { $set: {'torrent.path': movie.torrent.path} }, function (err, doc) {
+            Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.path': movie.torrent.path}}, function (err, doc) {
                 console.log(doc);
                 console.log(err);
             })
@@ -207,8 +226,8 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
      Data.lenght = size;
      data . path PAth + file
      */
-    if (movie.torrent.path === undefined || movie.torrent.path === null)
-    {
+    console.log("STREAM");
+    if (movie.torrent.path === undefined || movie.torrent.path === null) {
         var isdownload = false;
     }
     else {
@@ -260,69 +279,62 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                                     console.log("DURATION ====" + data.duration);
                                     console.log(data);
                                     io.emit('getDuration', data.duration);
-
-                                    // fill(data);
+                                    fill(dataHash[old]);
                                     dataHash[old] = data;
                                 })
-                                .on("progress", function (data) {
-                                    console.log("PROGRESS");
-                                    console.log("duration" + duration);
-                                    console.log("OLD SIZE" + info.old_size);
-                                    console.log("DATA");
-                                    var minCon = HHMM(data.timemark);
-                                    var perCent = (minCon / duration) * 100;
-                                    console.log("PERCENT" + perCent);
-                                    if (perCent >= 5) {
-                                        io.emit("convertDone");
-                                        fill(dataHash[old]);
-                                    }
-                                    else
-                                        io.emit("getPercent", perCent);
-                                    console.log(data.timemark);
-                                    console.log(HHMM(data.timemark));
-                                    console.log("==============");
-                                })
                                 .on("end", function (data) {
-                                    // SI FICHIER CONVERTI ENTIEREMENT ENREGISTREMENT BDD
-                                    // fs.createReadStream(converted_path).pipe(fs.createWriteStream(converted_path + '.finished.mp4'));
-                                    Top100.update({'torrent.id': movie.torrent.id}, { $set: {'torrent.path': converted_path} }, function (err, doc) {
-                                        console.log("YOLOOOOOOOOO");
+                                    Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.path': converted_path}}, function (err, doc) {
+                                        console.log("YOLO");
                                         console.log(doc);
                                         console.log(err);
+                                    });
                                     })
-                                    // var newMagnet = Magnet(
-                                    //     {
-                                    //         url: magnet,
-                                    //         path: info.path,
-                                    //         name: info.file
-                                    //     });
-                                    // newMagnet.save(function (err)
-                                    // {
-                                    //     console.log(err);
-                                    // });
-                                })
-                                .on("error", function (err, stdout, stderr) {
-                                    console.log("Erreur ffmpeg" + err);
-                                    console.log(stdout);
-                                    console.log(stderr);
-                                    busy = false;
-                                    ++fails;
-                                })
-                                .outputFormat('mp4')
-                                .outputOptions('-movflags frag_keyframe+empty_moov')
-                                .run();
-                        }
-                        catch (exception) {
-                            console.log(exception);
-                            ++fails;
-                            busy = false;
-                        }
-                        if (fails > 30 && busy === false) {
-                            clearInterval(interval_id);
-                            reje('fluent-ffmpeg never launched without error');
+                                    // .on("progress", function (data) {
+                                    //     console.log("PROGRESS");
+                                    //     console.log("duration" + duration);
+                                    //     console.log("OLD SIZE" + info.old_size);
+                                    //     console.log("DATA");
+                                    //     var minCon = HHMM(data.timemark);
+                                    //     var perCent = (minCon / duration) * 100;
+                                    //     console.log("PERCENT" + perCent);
+                                    //
+                                    //     if (perCent >= 5) {
+                                    //         io.emit("convertDone");
+                                    //         fill(dataHash[old]);
+                                    //     }
+                                    //     else
+                                    //         io.emit("getPercent", perCent);
+                                    //     console.log(data.timemark);
+                                    //     console.log(HHMM(data.timemark));
+                                    //     console.log("==============");
+                                    // })
+                                        .on("error", function (err, stdout, stderr) {
+                                            console.log("Erreur ffmpeg" + err);
+                                            console.log(stdout);
+                                            console.log(stderr);
+                                            busy = false;
+                                            ++fails;
+                                        })
+                                        .outputFormat('mp4')
+                                        .outputOptions('-movflags frag_keyframe+empty_moov')
+                                        .run();
+                                }
+                        catch
+                            (exception)
+                            {
+                                console.log(exception);
+                                ++fails;
+                                busy = false;
+                            }
+                            if (fails > 30 && busy === false) {
+                                clearInterval(interval_id);
+                                reje('fluent-ffmpeg never launched without error');
+                            }
                         }
                     }
-                }, 3000);
+                    ,
+                    3000
+                    );
             }
             else {
                 // SI DEJA EN TRAIN DETRE CONVERTIS PASSE ANCIENNE DATA
@@ -348,12 +360,10 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
         }
     }).then(function (success) {
             new Promise(function (fulfill, reject) {
-                if (movie.torrent.path === undefined || movie.torrent.path === null)
-                {
+                if (movie.torrent.path === undefined || movie.torrent.path === null) {
                     var isdownload = false;
                 }
-                else
-                {
+                else {
                     var isdownload = true;
                 }
                 if (!isdownload) {
@@ -608,7 +618,7 @@ exports.torrent = function (req, res, next) {
     var duration = req.params.duration;
     console.log("DURATIONNN " + duration);
     var range_string = req.headers.range;
-    Top100.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
+    Movies.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
         // res.on('close', function(){
         //     console.log('response closed');
         //     return false;
@@ -630,8 +640,7 @@ exports.torrent = function (req, res, next) {
 
 }
 
-var minTOHHMM = function(min)
-{
+var minTOHHMM = function (min) {
     var h = parseInt(min / 60);
     var min = parseInt(min - (60 * h));
     if (h == 0)
@@ -641,8 +650,7 @@ var minTOHHMM = function(min)
     return (h + ":" + min + ":00");
 
 }
-var HHMM = function(dur)
-{
+var HHMM = function (dur) {
     var hms = dur;   // your input string
     var a = hms.split(':'); // split it at the colons
 

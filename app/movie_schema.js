@@ -71,6 +71,6 @@ movieSchema.statics.findByTitle = function (name, cb) {
 	return this.find({ 'movie.title': new RegExp('^'+name+'$', 'i') }, cb);
 }
 
-var Movie = mongoose.model('Movie', movieSchema, 'Movie');
+var Movie = mongoose.model('Movie', movieSchema);
 
 module.exports = Movie;
