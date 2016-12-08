@@ -1,27 +1,28 @@
 (function () {
 	var skip = 0,
 		limit = 18,
-		sort = 'year',
-		order = 'desc',
+		sort = 'movie.title',
+		order = 1,
 		notDetected = true;
 
 
 
-	function getMovies(skip, limit) {
-		// console.log('limit', limit, 'skip', skip);
+	function getMovies(skip, limit, sort, order) {
+		console.log('limit', limit, 'skip', skip);
 		$.post('/api/library/movies/get', {
 			skip : skip,
 			limit : limit,
 			sort : sort,
 			order : order
 		}).done(function(data) {
+			console.log(data);
 			if (data.state === 'success') {
 				$.each(data.movies, function(index, movie) {
-					$('#getMovies').append('<div class="col-md-4 col-sm-6 col-xs-12"><div class="movie" id="' + movie._id + '"><div class="poster" style="background-image: url(' + movie.poster + ');"><div class="resolutions hidden"></div></div><div class="movie-infos"><h4><a href="/player/html5/' + movie._id + '/' + movie.resolutions[0].resolution + '">' + movie.title + '</a> (' + movie.year + ')</h4><small class="movie-basics text-muted"><span class="rated">' + movie.rated + '</span>' + movie.runtime + ' - ' + movie.genres + '</small><p class="imdb-rating"><strong>IMDB Rating: ' + movie.imdb.rating + '</strong>/10 (' + movie.imdb.votes + ')</p><p class="plot"><em>' + movie.plot + '</em></p><p class="director"><strong>Director: </strong>' + movie.director + '</p><p class="stars"><strong>Stars: </strong>' + movie.actors + '</p></div></div></div>');
+					$('#getMovies').append('<div class="col-md-4 col-sm-6 col-xs-12"><div class="movie" id="' + movie.movie._id + '"><div class="poster" style="background-image: url(' + movie.movie.poster + ');"><div class="resolutions hidden"></div></div><div class="movie-infos"><h4><a href="/player/html5/' + movie.torrent.id + '/' + movie.torrent.magnetLink + '">' + movie.movie.title + '</a> (' + movie.movie.year + ')</h4><small class="movie-basics text-muted"><span class="rated">' + movie.movie.rated + '</span>' + movie.movie.runtime + ' min' + ' - ' + movie.movie.genres + '</small><p class="imdb-rating"><strong>IMDB Rating: ' + movie.movie.imdb.rating + '</strong>/10 (' + movie.movie.imdb.votes + ')</p><p class="plot"><em>' + '<small class="movie-basics text-muted">' + movie.torrent.name + '</small>' + '</div></div></div>');
 
-					$.each(movie.resolutions, function(index, resolution) {
-						$('#getMovies #' + movie._id + ' .resolutions').append('<a href="/player/html5/' + movie._id + '/' + resolution.resolution + '" type="button" class="btn btn-resolution btn-sm"><i class="fa fa-play-circle" aria-hidden="true"></i> <strong>' + resolution.resolution + '</strong> <em>(' + resolution.seeds + ')</em></a>');
-					});
+					// $.each(movie.movie.resolutions, function(index, resolution) {
+					// 	$('#getMovies #' + movie.movie._id + ' .resolutions').append('<a href="/player/html5/' + movie.movie._id + '/' + resolution.resolution + '" type="button" class="btn btn-resolution btn-sm"><i class="fa fa-play-circle" aria-hidden="true"></i> <strong>' + resolution.resolution + '</strong> <em>(' + resolution.seeds + ')</em></a>');
+					// });
 				});
 
 				$('.poster').on({
@@ -41,7 +42,8 @@
 	}
 
 	$(document).ready(function() {
-		getMovies(skip, limit);
+		$('#getMovies').empty();
+		getMovies(skip, limit, sort, order);
 		skip += 18;
 	});
 
@@ -50,11 +52,11 @@
 			$(this).removeClass('btn-primary').addClass('btn-default');
 		});
 		$(this).removeClass('btn-default').addClass('btn-primary');
-		sort = 'title';
+		sort = 'movie.title';
 		skip = 0;
-		order = 'asc';
+		order = 1;
 		$('#getMovies').empty();
-		getMovies(skip, limit);
+		getMovies(skip, limit, sort, order);
 		skip += 18;
 	});
 
@@ -63,11 +65,11 @@
 			$(this).removeClass('btn-primary').addClass('btn-default');
 		});
 		$(this).removeClass('btn-default').addClass('btn-primary');
-		sort = 'title';
+		sort = 'movie.title';
 		skip = 0;
-		order = 'desc';
+		order = -1;
 		$('#getMovies').empty();
-		getMovies(skip, limit);
+		getMovies(skip, limit, sort, order);
 		skip += 18;
 	});
 
@@ -76,11 +78,11 @@
 			$(this).removeClass('btn-primary').addClass('btn-default');
 		});
 		$(this).removeClass('btn-default').addClass('btn-primary');
-		sort = 'imdb.rating';
+		sort = 'movie.imdb.rating';
 		skip = 0;
-		order = 'desc';
+		order = -1;
 		$('#getMovies').empty();
-		getMovies(skip, limit);
+		getMovies(skip, limit, sort, order);
 		skip += 18;
 	});
 
@@ -89,11 +91,11 @@
 			$(this).removeClass('btn-primary').addClass('btn-default');
 		});
 		$(this).removeClass('btn-default').addClass('btn-primary');
-		sort = 'year';
+		sort = 'movie.year';
 		skip = 0;
-		order = 'desc';
+		order = -1;
 		$('#getMovies').empty();
-		getMovies(skip, limit);
+		getMovies(skip, limit, sort, order);
 		skip += 18;
 	});
 

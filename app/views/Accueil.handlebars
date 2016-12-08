@@ -8,7 +8,7 @@
 							{{#if vu}}
 								<p class="vue">Déja vu!</p>
 							{{/if}}
-								<a href="/player/html5/{{torrent.id}}/{{torrent.magnetLink}}" class="myButton">Stream it!</a>
+								<a href="/app/player/{{torrent.id}}/{{torrent.magnetLink}}" class="myButton">Stream it!</a>
 						</div>
 						<div class="movie-infos">
 							<h4>
@@ -34,12 +34,4 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="/public/js/search.js"></script>
-
-<script type="text/javascript">
-    socket.on('getTest', function(data)
-    {
-        console.log("TEST");
-    });
-
-</script>
+<script type="text/javascript" src="/js/search.js"></script>

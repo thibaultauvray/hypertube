@@ -10,7 +10,6 @@ var mongoose = require('../mongoose'),
 	_ = require('lodash');
 const PirateBay = require('thepiratebay');
 
-//mongoose.connect('mongodb://localhost:27017/hypertube');
 var db = mongoose.connection;
 
 var omdbSearch = function(req, res, next) {
@@ -18,7 +17,7 @@ var omdbSearch = function(req, res, next) {
 	if (!err && user) {
 		var movies = [];
 		var vu = false;
-		// var tmp = [];	
+			
     	PirateBay.search(req.params.text, {
 		  category: 200,    // default - 'all' | 'all', 'audio', 'video', 'xxx', 
 		                    //                   'applications', 'games', 'other' 
@@ -51,7 +50,7 @@ var omdbSearch = function(req, res, next) {
 		      if (nightmare) {
 		        omdb.get(nightmare, function(err, movie) {  
 		          movies.push({movie, torrent, vu});
-		          db.collection('movies').findOne({'torrent.id':torrent.id}, function(err, result){
+		          Movie.findOne({'torrent.id':torrent.id}, function(err, result){
 		          	if (!result)
 		          		 db.collection('movies').save({movie,torrent});
 		          })
