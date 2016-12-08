@@ -47,7 +47,7 @@ var getCode42 = function(req, res, next) {
 								req.session.lastname = user.lastname;
 								req.session.language = user.language;
 
-								res.redirect('/app/library');
+								res.redirect('/app/accueil');
 							} else {
 								console.log(err);
 								res.redirect('/');
