@@ -1,5 +1,4 @@
 app/node_modules/
-<<<<<<< HEAD
 spider/node_modules
-=======
->>>>>>> 5a5bb91f3f06f2255494a14ee7689e1ae8357b91
+.idea/
+
