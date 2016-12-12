@@ -1,36 +1,81 @@
 <div class="container">
-    <div class="row stream">
-        <div id="videoContainer" class="video-container col-xs-12 nopadding ">
-            <div id="progressConvert">
-                <div id="convertPro" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+    <div class="row stream moviesList">
+        <div class="row thumbnails" id="getMovies">
+                <div class="movie">
+                    <div class="poster" style="background-image: url('{{ movie.poster}}');">
+                    </div>
+                    <div class="movie-infos">
+                        <h4>
+                            {{ movie.title }} {{#if movie.year.from}} ({{ movie.year.from }}) {{else}} ({{movie.year}}
+                            ) {{/if}}
+                        </h4>
+                        <small class="movie-basics text-muted">
+                                <span class="rated">{{#if movie.rated }} {{ movie.rated }} {{else}}
+                                    NOT RATED {{/if}}</span>
+                            {{ movie.runtime }}min - {{ movie.genres }} - Seeders: {{torrent.seeders}}
+                        </small>
+                        <p class="imdb-rating"><strong>IMDB
+                            Rating: {{#if movie.imdb.rating }} {{ movie.imdb.rating }}</strong>/10
+                                (votes: {{ movie.imdb.votes }}) {{else}} N/A {{/if}}</p>
+                        <!--p class="plot"><em>{{ movie.plot }}</em></p-->
+                        <!--p class="director"><strong>Director: </strong>{{ director }}</p>
+							<p class="stars"><strong>Stars: </strong>{{ actors }}</p-->
+                        <small class="movie-basics text-muted">{{torrent.name}}</small>
+                        {{#if movie.actors }}<p class="stars"><strong>Actors :</strong> {{movie.actors }}</p>{{/if}}
+                        {{#if movie.imdb }}{{#if movie.imdb.id }}<p><a
+                                href="http://www.imdb.com/title/{{movie.imdb.id}}">IMDB's page</a></p>{{/if}}{{/if}}
+
+                    </div>
+                    {{#if movie.plot }}
+                        <hr>
+                        <p class="plot"><strong>Plot: </strong>{{movie.plot}}</p>
+                    {{/if}}
+                </div>
+        </div>
+        <div id="videoContainer" class="video-container thumbnails row">
+            <div class="movie">
+                <div id="progressConvert">
+                    <div id="convertPro" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                         aria-valuemax="100" style="width: 0%;">
                     <span class="currentPercent" style="
     color: white;
     text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 "></span>
+                    </div>
                 </div>
-            </div>
-            <video id="video" class="video-js vjs-sublime-skin videojs-stream col-sm-12 " data-setup='{"example_option":true}' controls
-                   preload="none">
+                <div id="progressDL">
+                    <div id="dlProg" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                         aria-valuemax="100" style="width: 0%;">
+                    <span class="percentDL" style="
+    color: white;
+    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+"></span>
+                    </div>
+                </div>
+                <video id="video" class="video-js vjs-sublime-skin videojs-stream col-sm-12 "
+                       data-setup='{"example_option":true}' controls
+                       preload="none">
 
-                <track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>
-                <track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">
+                    <track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>
+                    <track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">
 
-                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </video>
-            <div id="progresBar">
-            <div class="progress col-xs-11 nopadding">
-                <div id="progressTime" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </video>
+                <div id="progresBar">
+                    <div class="progress col-xs-11 nopadding">
+                        <div id="progressTime" class="progress-bar" role="progressbar" aria-valuenow="60"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
                     <span class="currentTime" style="
     color: white;
     text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 "></span>
+                        </div>
+                    </div>
+                    <div id="duration" class="col-xs-1"></div>
                 </div>
+                <p id="mag" style="display:none">{{ magnet }}</p>
             </div>
-            <div id="duration" class="col-xs-1"></div>
-            </div>
-            <p id="mag" style="display:none">{{ magnet }}</p>
-
         </div>
 
 
@@ -38,8 +83,7 @@
     </div>
 </div>
 <script>
-    var minTOHHMM = (min) =>
-    {
+    var minTOHHMM = (min) => {
         var h = parseInt(min / 60);
         var min = parseInt(min - (60 * h));
         if (h == 0)
@@ -50,28 +94,28 @@
 
     }
     $('#duration').html(minTOHHMM({{ duration }}));
-    socket.on('getPercent', function(data)
-    {
-        var percent = parseInt(data * 20);
-        $('#convertPro').css('width', percent+'%');
-        $('.currentPercent').html(percent+"%");
+    socket.on('getPercent', function (data) {
+        $('#dlProg').css('width', data + '%');
+        $('.percentDL').html(data + "%");
 
     });
-    socket.on('convertDone', function(data)
-    {
+
+    socket.on('progressDL', function (data) {
+        $('#convertPro').css('width', data + '%');
+        $('.currentPercent').html(data + "%");
+    });
+
+    socket.on('convertDone', function (data) {
         $('#convertPro').css('width', '100%');
         $('.currentPercent').html("100%");
 
     });
-    socket.on('error', function(data)
-    {
+    socket.on('error', function (data) {
         var msg = "<div class='col-xs-12 alert alert-danger'>";
-        if(data == "badExt")
-        {
+        if (data == "badExt") {
             msg += "Impossible de lire ce format de fichier";
         }
-        else if(data == "unknown")
-        {
+        else if (data == "unknown") {
             msg += "Erreur inconnue est survenu";
         }
         msg += "</div>";
@@ -79,18 +123,15 @@
         $('.stream').prepend(msg);
 
     });
-    socket.on('getExt', function(data)
-    {
+    socket.on('getExt', function (data) {
         console.log(data);
-       if(data == "video/mp4" || data == "video/webm" || data == "video/ogg")
-       {
-           console.log('remove');
-           $('#video').removeClass('videojs-stream');
-           $('#progresBar').addClass('hidden');
-       }
+        if (data == "video/mp4" || data == "video/webm" || data == "video/ogg") {
+            console.log('remove');
+            $('#video').removeClass('videojs-stream');
+            $('#progresBar').addClass('hidden');
+        }
     });
-    socket.on('update', function (data)
-    {
+    socket.on('update', function (data) {
 //        console.log(data);
 //        $("#test").html(data);
     });
@@ -102,15 +143,15 @@
 
     var toHHMMSS = (secs) => {
         var sec_num = parseInt(secs, 10)
-        var hours   = Math.floor(sec_num / 3600) % 24
+        var hours = Math.floor(sec_num / 3600) % 24
         var minutes = Math.floor(sec_num / 60) % 60
         var seconds = sec_num % 60
-        return [hours,minutes,seconds]
+        return [hours, minutes, seconds]
                 .map(v => v < 10 ? "0" + v : v)
-    .filter((v,i) => v !== "00" || i > 0)
-    .join(":")
+                .filter((v, i) => v !== "00" || i > 0)
+                .join(":")
     }
-    var url = "http://localhost:3000/app/torrent/{{torrentId}}/{{duration}}/magnet"+$("#mag").html();
+    var url = "http://localhost:3000/app/torrent/{{torrentId}}/{{duration}}/magnet" + $("#mag").html();
     var player = videojs('video');
     player.src({
         src: url,
@@ -118,19 +159,17 @@
         withCredentials: true
     });
 
-    setInterval(function() {
+    setInterval(function () {
         var whereYouAt = player.currentTime();
         whereYouAt = parseInt(whereYouAt);
         var duration = $('#duration').html();
         var a = duration.split(':');
         var secondsTotal = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
         var percent = (whereYouAt * 100) / secondsTotal;
-        $('#progressTime').css('width', percent+'%');
+        $('#progressTime').css('width', percent + '%');
         $('.currentTime').html(toHHMMSS(whereYouAt));
 
     }, 1000);
-
-
 
 
 </script>
