@@ -62,6 +62,17 @@
 				</div>
 			{{/each}}
 		</div>
+		<div class="row center-block player-block">
+			<span class="part">Users who may have the same Library :</span>
+			<hr />
+			{{#each users}}
+				<div class="video-infos">
+					<a class="movie" href="/app/user/{{ _id }}">
+						<div class="poster" style="background-image: url('{{ avatar }}');"></div>
+					</a>
+				</div>
+			{{/each}}
+		</div>
 	</div>
 </div>
 
