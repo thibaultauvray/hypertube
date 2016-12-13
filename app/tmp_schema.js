@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-var movieSchema = new Schema(
+var tmpSchema = new Schema(
 {
 	_id 		: String,
 	movie 		: {
@@ -66,10 +66,10 @@ var movieSchema = new Schema(
 	}]
 });
 
-movieSchema.statics.findByTitle = function (name, cb) {
+tmpSchema.statics.findByTitle = function (name, cb) {
 	return this.find({ 'movie.title': new RegExp('^'+name+'$', 'i') }, cb);
 }
 
-var Movie = mongoose.model('Movie', movieSchema);
+var Tmp = mongoose.model('Tmp', tmpSchema, 'tmp');
 
-module.exports = Movie;
+module.exports = Tmp;
