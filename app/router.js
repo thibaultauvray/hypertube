@@ -6,9 +6,9 @@ var app = require('./express.js'),
 	forgotPassword = require('./server/forgotPassword'),
 	resetPassword = require('./server/resetPassword'),
 	library = require('./server/library'),
+	accueil = require('./server/accueil'),
 	player = require('./server/player'),
 	makeSearch = require('./server/makeSearch'),
-	stream = require('./server/stream.js'),
 	profile = require('./server/profile'),
 	user = require('./server/user');
 
@@ -22,6 +22,7 @@ var addNewUser = require('./server/api/addNewUser'),
 	addNewVisit = require('./server/api/addNewVisit'),
 	setLocale = require('./server/api/setLocale'),
 	getMovies = require('./server/api/getMovies'),
+	getSearch = require('./server/api/search'),
 	getSubtitles = require('./server/api/getSubtitles');
 
 var getCode42 = require('./server/oauth/42/getCode42'),
@@ -36,10 +37,10 @@ app.get('/users/login', login);
 app.get('/users/forgot-password', forgotPassword);
 app.get('/users/reset-password/:username/:token', resetPassword);
 app.get('/app/library', library);
+app.get('/app/accueil', accueil);
 app.get('/player/html5/:id/:magnet', player);
-//app.get('/player/html5/:text', player);
+app.get('/player/html5/:text', player);
 app.get('/app/search/:text', makeSearch);
-//app.get('/app/stream/:text', stream);
 app.get('/app/profile', profile);
 app.get('/app/user/:id', user);
 
@@ -54,6 +55,7 @@ app.post('/api/comment/delete', deleteComment);
 app.post('/api/movie/visit/add', addNewVisit);
 app.post('/api/user/lang/set', setLocale);
 app.post('/api/library/movies/get', getMovies);
+app.post('/api/search/movies/get', getSearch);
 app.post('/api/movie/subtitles/get', getSubtitles);
 
 // OAuth register and login routes
