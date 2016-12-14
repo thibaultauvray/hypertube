@@ -47,7 +47,7 @@ $(document).ready(function() {
 	$.post('/api/movie/visit/add', { movieID : $('#video').data('id') })
 		.done(function(data) {
 			if (data.state === 'success')
-				console.log('Movie added to you history');
+				console.log('Movie added to your history');
 		});
 });
 
