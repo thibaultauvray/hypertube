@@ -13,6 +13,7 @@ var user = function(req, res, next) {
 					for (var i = 0; i < user.history.length; i++) {
 						if (user.history[i].resolution === 'N/A')
 							user.history[i].resolution = 'undefined';
+						//penser à changer le lien +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 						user.history[i].link = '/player/html5/' + user.history[i].id + '/' + user.history[i].resolution;
 					}
 
