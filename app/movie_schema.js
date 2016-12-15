@@ -38,6 +38,7 @@ var movieSchema = new Schema(
 		name		: {type: String, required: true},
 		size 		: String,
 		path 		: {type		:String, default: null},
+		isDownload  : {type: Boolean, default: false},
 		category 	: {
 						id 		: String,
 						name 	: String

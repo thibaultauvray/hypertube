@@ -84,6 +84,7 @@
     </div>
 </div>
 <script>
+    var isDownload = {{ isDownload }};
     var minTOHHMM = (min) => {
         var h = parseInt(min / 60);
         var min = parseInt(min - (60 * h));
@@ -107,6 +108,7 @@
     });
 
     socket.on('convertDone', function (data) {
+        console.log("convert");
         $('#videoContainer').removeClass('hidden');
         $('#test').addClass('hidden');
     });
@@ -123,14 +125,12 @@
         $('.stream').prepend(msg);
 
     });
-    socket.on('getExt', function (data) {
-        console.log(data);
-        if (data == "video/mp4" || data == "video/webm" || data == "video/ogg") {
+
+        if (isDownload == true) {
             console.log('remove');
             $('#video').removeClass('videojs-stream');
             $('#progresBar').addClass('hidden');
         }
-    });
     socket.on('update', function (data) {
 //        console.log(data);
 //        $("#test").html(data);

@@ -1,33 +1,37 @@
 <div class="container-fluid library">
-	<div class="col-md-12 moviesList">
+    <div class="col-md-12 moviesList">
 
-		<div class="row thumbnails" id="getMovies">
-			{{#each history}}
-				<div class="col-md-4">
-					<div class="movie">
-						<div class="poster" style="background-image: url('{{ movie.poster}}');">
-							<a href="/app/player/{{torrent.id}}/{{torrent.magnetLink}}" class="myButton">Stream it!</a>
-						</div>
-						<div class="movie-infos">
-							<h4>
-								<!--a href="/app/stream/{{ result.magnetlink }}">{{ movie.title }}</a--> {{ movie.title }} {{#if movie.year.from}} ({{ movie.year.from }}) {{else}} ({{movie.year}}) {{/if}}
-							</h4>
-							<small class="movie-basics text-muted">
-								<span class="rated">{{#if movie.rated }} {{ movie.rated }} {{else}} NOT RATED {{/if}}</span>
-								{{ movie.runtime }}min - {{ movie.genres }} - Seeders: {{torrent.seeders}}
-							</small>
-							<p class="imdb-rating"><strong>IMDB Rating: {{#if movie.imdb.rating }} {{ movie.imdb.rating }}</strong>/10 (votes: {{ movie.imdb.votes }}) {{else}} N/A {{/if}}</p>
-							<!--p class="plot"><em>{{ movie.plot }}</em></p-->
-							<!--p class="director"><strong>Director: </strong>{{ director }}</p>
+        <div class="row thumbnails" id="getMovies">
+            {{#each history}}
+                <div class="col-md-4">
+                    <div class="movie">
+                        <div class="poster" style="background-image: url('{{ movie.poster}}');">
+                            <a href="/app/player/{{torrent.id}}/{{torrent.magnetLink}}" class="myButton">Stream it!</a>
+                        </div>
+                        <div class="movie-infos">
+                            <h4>
+                                <!--a href="/app/stream/{{ result.magnetlink }}">{{ movie.title }}</a--> {{ movie.title }} {{#if movie.year.from}}
+                                ({{ movie.year.from }}) {{else}} ({{movie.year}}) {{/if}}
+                            </h4>
+                            <small class="movie-basics text-muted">
+                                <span class="rated">{{#if movie.rated }} {{ movie.rated }} {{else}}
+                                    NOT RATED {{/if}}</span>
+                                {{ movie.runtime }}min - {{ movie.genres }} - Seeders: {{torrent.seeders}}
+                            </small>
+                            <p class="imdb-rating"><strong>IMDB
+                                Rating: {{#if movie.imdb.rating }} {{ movie.imdb.rating }}</strong>/10
+                                    (votes: {{ movie.imdb.votes }}) {{else}} N/A {{/if}}</p>
+                            <!--p class="plot"><em>{{ movie.plot }}</em></p-->
+                            <!--p class="director"><strong>Director: </strong>{{ director }}</p>
 							<p class="stars"><strong>Stars: </strong>{{ actors }}</p-->
-							<small class="movie-basics text-muted">{{torrent.name}}</small>
-							
-						</div>
-					</div>
-				</div>
-			{{/each}}
-		</div>
-	</div>
+                            <small class="movie-basics text-muted">{{torrent.name}}</small>
+
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="/js/library.js"></script>

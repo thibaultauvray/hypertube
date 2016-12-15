@@ -4,11 +4,11 @@ var mongoose = require('../mongoose'),
 	_ = require('lodash');
 
 
-var accueil = function(req, res, next) {	
+var accueil = function(req, res, next) {
 	var movies = [];
 	var vu = false;
-
 	User.findOne({ username : req.session.username }, function(err, user) {
+
 		if (!err && user) {
 			Top.find({'torrent.seeders':{$gt:'2000'}}).lean().exec(function(err, result){
 				if (result) {
@@ -27,6 +27,7 @@ var accueil = function(req, res, next) {
 					});
 				});
 				if (!err && movies && movies.length > 0) {
+					// console.log(global.client);
 					res.render('Accueil', {
 							isApp : true,
 							title : 'Hypertube - Accueil',
@@ -49,7 +50,7 @@ var accueil = function(req, res, next) {
 		} else {
 					console.log('User not found or not logged in, redirect to home page');
 					res.redirect('/');
-		};			
+		};
 	});
 }
 

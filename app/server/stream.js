@@ -21,7 +21,6 @@ var events = new event.EventEmitter();
 
 var gen = 0;
 var ffmpegHash = {};
-var path = '/tmp/tdl/';
 var dataHash = {};
 
 var Magnet = require('../schemas/magnet.js');
@@ -51,7 +50,6 @@ db.on('error', function (err) {
 exports.stream = function (req, res, next) {
     var torrentId = req.params.id;
     var already = false;
-    console.log(user);
     console.log("Movies = " + req.params.id);
     Movies.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
         console.log(movie);
@@ -78,11 +76,16 @@ exports.stream = function (req, res, next) {
         var magnet = movie.torrent.magnetLink;
         // TODO THROW ERROR WHEN IMDB ID NOT HERE
         // console.log(movie.movie.imdb);
+        var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
         imdb.getById(movie.movie.imdb.id).then(function (data) {
+            console.log(parseInt(data.runtime));
             res.render('stream', {
                 isApp: true,
                 title: 'Hypertube - Register',
                 magnet: magnet,
+                movie: movie.movie,
+                isDownload: isDownload,
+                torrent: movie.torrent,
                 torrentId: torrentId,
                 duration: parseInt(data.runtime),
                 uri: '/tmp/tdl/Rick_And_Morty_S01E08_HDTV_x264-MiNDTHEGAP_[eztv].mp4'
@@ -91,11 +94,14 @@ exports.stream = function (req, res, next) {
     });
 
 };
+var engineCount = 0;
+var engineHash = {};
+var enginePaths = {};
 
 
-var downloadTorrent = function (movie, magnet, io, res) {
+var downloadTorrent = function (movie, magnet, torrent_path, io, res) {
     console.log("==============================");
-    if (movie.torrent.path === undefined || movie.torrent.path === null) {
+    if (movie.torrent.isDownload === undefined || movie.torrent.isDownload === false) {
         var isDownload = false;
     }
     else {
@@ -103,6 +109,7 @@ var downloadTorrent = function (movie, magnet, io, res) {
     }
     var old_mime;
     return new Promise(function (fulfill, reject) {
+
         console.log("PATH MOVIE");
         console.log(movie.torrent.path);
 
@@ -111,14 +118,28 @@ var downloadTorrent = function (movie, magnet, io, res) {
             var original = true;
             var engine = torrentStream(magnet,
                 {
-                    path: path,
+                    path: torrent_path,
                     tmp: '/tmp/torrent-stream2'
                 });
             var movie_file;
             var file_size = 0;
+            enginePaths[torrent_path] = enginePaths[torrent_path] ? enginePaths[torrent_path] : 1;
+            engineHash[(engine.hashIndex = engineCount++)] = engine;
             engine.on('ready', function () {
 
+                for (var i = 0; i < engine.hashIndex; i++) {
+                    if (engineHash[i] && engineHash[i].path === engine.path) {
+                        console.log('spiderTorrent Notice: Engine', engine.hashIndex, 'not original: copying engine', i);
+                        engineHash[engine.hashIndex] = undefined;
+                        engine.destroy();
+                        engine = engineHash[i];
+                        original = false;
+                        // reject('Engine twice');
+                        break;
+                    }
+                }
                 engine.files.forEach(function (file) {
+
                     // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
                     if (validExtension(file.name) && file_size < file.length) {
                         file_size = file.length;
@@ -134,14 +155,20 @@ var downloadTorrent = function (movie, magnet, io, res) {
                         name: movie_file.name,
                         length: movie_file.length,
                         date: new Date,
-                        path: path + movie_file.path
+                        path: engine.path + '/' + movie_file.path
                     };
+                    fulfill(movie_data);
+                    Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.path': engine.path + '/' + movie_file.path, 'torrent.size' : movie_file.length}}, function (err, doc) {
+                        console.log('Size updated');
+                    });
+
                     console.log("PATH UPDATE");
                     console.log("=============");
                     console.log("MOVIE DATA");
                     console.log(movie_data);
                     var mime = validExtension(movie_file.name);
-                    io.emit('getExt', mime);
+                    if(res.io.sockets.connected[global.client])
+                        res.io.sockets.connected[global.client].emit('getExt', mime);
                     // ON ENVOIT REOTUR PROMISE LE FICHIER EN TRAIN DETRE TELECHARGE
                     console.log("MIMEUH" + mime);
                     // fulfill(movie_data);
@@ -163,24 +190,22 @@ var downloadTorrent = function (movie, magnet, io, res) {
                             // }
                             // console.log(pourcent);
                             // io.emit('update', parseInt((engine.swarm.downloaded * 100) / movie_file.length));
-                            // console.log('downloaded ' + piece_index + '(' + engine.swarm.downloaded + '/' + movie_file.length + ')');
+                            // console.log(parseInt((engine.swarm.downloaded * 100) / movie_file.length / 2));
+                            // res.io.sockets.connected[global.client].emit('progressDL', parseInt((engine.swarm.downloaded * 100) / movie_file.length / 2));
+
+                            console.log('downloaded ' + piece_index + '(' + engine.swarm.downloaded + '/' + movie_file.length + ')');
                         });
                         engine.on('idle', function () {
-                            // FICHIER TELECHARGE
-                            fulfill(movie_data);
-                            console.log("MIMEEEE");
-                            console.log(mime);
+                            console.log("FINISH");
                             if (mime == "video/mp4" || mime == "video/webm" || mime == "video/ogg") {
                                 // ON SAVE EN BDD SI LISIBLE DIRECTEMENT PAR NAV
-                                console.log("Save model");
                                 console.log(movie.torrent.id);
                                 console.log(movie_data.path);
-                                Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.path': movie_data.path}}, function (err, doc) {
-                                    console.log(movie_data);
-                                    console.log("YOLOOOOOOOOO");
+                                Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.isDownload': true}}, function (err, doc) {
+                                    console.log("YOLO");
                                     console.log(doc);
                                     console.log(err);
-                                })
+                                });
                             }
                             // ON SUPPRIMER LECOUTE DU TORRENT
                             engine.removeAllListeners();
@@ -211,7 +236,8 @@ var downloadTorrent = function (movie, magnet, io, res) {
                 console.log(doc);
                 console.log(err);
             })
-            io.emit('getExt', validExtension(movie.torrent.path));
+            if(res.io.sockets.connected[global.client])
+                res.io.sockets.connected[global.client].emit('getExt', validExtension(movie.torrent.path));
             console.log(movie_data);
             fulfill(movie_data);
             // ON ENVOIE LES DONNES DU FICHIER DU SERVER
@@ -227,19 +253,22 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
      data . path PAth + file
      */
     console.log("STREAM");
-    if (movie.torrent.path === undefined || movie.torrent.path === null) {
+    if (movie.torrent.isDownload === undefined || movie.torrent.isDownload === false) {
         var isdownload = false;
     }
     else {
         var isdownload = true;
     }
+    var range;
     var info = {};
+    var i;
+    var timer_id;
+
     info.file = data.name;
     info.path = data.path;
     info.size = data.length;
     info.duration = data.duration;
     info.modified = data.date;
-    var old = info.path;
     info.old_size = data.length;
     info.mime = validExtension(info.file);
     info.old_mime = info.mime;
@@ -254,74 +283,77 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
             console.log("CONVERTION");
             console.log(data);
             var key = ++gen;
+            var old = info.path;
             info.file = data.name;
+            info.size = data.length;
+
             // PATH COMPLET + NOM DU FICHIER '/tmp/tdl/movie.converted.mp4
             var converted_path = data.path + '.converted.mp4';
             // NOM FICHIER movie.converted.mp4
             var converted_file = data.name + '.converted.mp4';
-            info.size = data.length;
+
             if (ffmpegHash[old] === undefined) {
                 ffmpegHash[old] = key;
             }
             if (ffmpegHash[old] === key) {
                 var interval_id = setInterval(function () {
-                    var fails = 0;
-                    var busy = false;
-                    if (!busy) {
-                        busy = true;
-                        try {
-                            ffmpeg().input(old)
-                                .audioCodec('aac')
-                                .videoCodec('libx264')
-                                .output(converted_path)
-                                .on('codecData', function (data) {
-                                    clearInterval(interval_id);
-                                    console.log("DURATION ====" + data.duration);
-                                    console.log(data);
-                                    io.emit('getDuration', data.duration);
-                                    fill(dataHash[old]);
-                                    dataHash[old] = data;
-                                })
-                                .on("end", function (data) {
-                                    Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.path': converted_path}}, function (err, doc) {
-                                        console.log("YOLO");
-                                        console.log(doc);
-                                        console.log(err);
-                                    });
+                        var fails = 0;
+                        var busy = false;
+                        if (!busy) {
+                            busy = true;
+                            try {
+                                ffmpeg().input(old)
+                                    .audioCodec('aac')
+                                    .videoCodec('libx264')
+                                    .output(converted_path)
+                                    .on('codecData', function (data) {
+                                        clearInterval(interval_id);
+                                        console.log("DURATION ====" + data.duration);
+                                        console.log(data);
+                                        if(res.io.sockets.connected[global.client])
+                                            res.io.sockets.connected[global.client].emit('getDuration', data.duration);
+                                        // fill(dataHash[old]);
+                                        dataHash[old] = data;
                                     })
-                                    // .on("progress", function (data) {
-                                    //     console.log("PROGRESS");
-                                    //     console.log("duration" + duration);
-                                    //     console.log("OLD SIZE" + info.old_size);
-                                    //     console.log("DATA");
-                                    //     var minCon = HHMM(data.timemark);
-                                    //     var perCent = (minCon / duration) * 100;
-                                    //     console.log("PERCENT" + perCent);
-                                    //
-                                    //     if (perCent >= 5) {
-                                    //         io.emit("convertDone");
-                                    //         fill(dataHash[old]);
-                                    //     }
-                                    //     else
-                                    //         io.emit("getPercent", perCent);
-                                    //     console.log(data.timemark);
-                                    //     console.log(HHMM(data.timemark));
-                                    //     console.log("==============");
-                                    // })
-                                        .on("error", function (err, stdout, stderr) {
-                                            console.log("Erreur ffmpeg" + err);
-                                            console.log(stdout);
-                                            console.log(stderr);
-                                            busy = false;
-                                            ++fails;
-                                        })
-                                        .outputFormat('mp4')
-                                        .outputOptions('-movflags frag_keyframe+empty_moov')
-                                        .run();
-                                }
-                        catch
-                            (exception)
-                            {
+                                    .on("end", function (data) {
+                                        Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.isDownload': true}}, function (err, doc) {
+                                            console.log("YOLO");
+                                            console.log(doc);
+                                            console.log(err);
+                                        });
+                                    })
+                                    .on("progress", function (data) {
+                                        console.log("PROGRESS");
+                                        console.log("duration" + duration);
+                                        console.log("OLD SIZE" + info.old_size);
+                                        console.log("DATA");
+                                        var minCon = HHMM(data.timemark);
+                                        var perCent = (minCon / duration) * 100;
+                                        if (perCent >= 5) {
+                                            if(res.io.sockets.connected[global.client])
+                                                res.io.sockets.connected[global.client].emit("convertDone");
+                                            fill(dataHash[old]);
+                                        }
+                                        else {
+                                            if(res.io.sockets.connected[global.client])
+                                                res.io.sockets.connected[global.client].emit('progressDL', parseInt(( (perCent * 20))));
+                                        }
+                                        console.log(data.timemark);
+                                        console.log(HHMM(data.timemark));
+                                        console.log("==============");
+                                    })
+                                    .on("error", function (err, stdout, stderr) {
+                                        console.log("Erreur ffmpeg" + err);
+                                        console.log(stdout);
+                                        console.log(stderr);
+                                        busy = false;
+                                        ++fails;
+                                    })
+                                    .outputFormat('mp4')
+                                    .outputOptions('-movflags frag_keyframe+empty_moov')
+                                    .run();
+                            }
+                            catch(exception) {
                                 console.log(exception);
                                 ++fails;
                                 busy = false;
@@ -331,17 +363,11 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                                 reje('fluent-ffmpeg never launched without error');
                             }
                         }
-                    }
-                    ,
-                    3000
-                    );
+                    }, 3000);
             }
             else {
                 // SI DEJA EN TRAIN DETRE CONVERTIS PASSE ANCIENNE DATA
-                console.log("OLD");
-                console.log(dataHash[old]);
-                io.emit('getDuration', dataHash[old].duration);
-
+                // res.io.emit('getDuration', dataHash[old].duration);
                 fill(dataHash[old]);
             }
             info.file = converted_file;
@@ -360,7 +386,7 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
         }
     }).then(function (success) {
             new Promise(function (fulfill, reject) {
-                if (movie.torrent.path === undefined || movie.torrent.path === null) {
+                if (movie.torrent.isDownload === undefined || movie.torrent.isDownload === false) {
                     var isdownload = false;
                 }
                 else {
@@ -374,9 +400,13 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                         try {
                             info.size = fs.statSync(info.path).size;
                             console.log(info.path + ' size:' + info.size);
+                            if(res.io.sockets.connected[global.client])
+                                res.io.sockets.connected[global.client].emit('progressDL', parseInt((info.size * 100) / 5000000));
                             if (info.size > 5000000) {
                                 // on atend que le fichier soit assez gros pour le stream
                                 clearInterval(interval_id);
+                                if(res.io.sockets.connected[global.client])
+                                    res.io.sockets.connected[global.client].emit("convertDone");
                                 fulfill(info.size);
                                 return;
                             }
@@ -457,7 +487,6 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                                 header["Content-Length"] = info.length;
                                 res.writeHead(206, header);
                                 stream = fs.createReadStream(info.path, {flags: "r", start: info.start, end: info.end});
-                                res.openedFile = stream;
 
                                 // res.writeHead(206, {
                                 //     'Status' : '206 Partial Content',
@@ -469,17 +498,6 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                                 //     'Content-Type': 'video/mp4'
                                 // });
                                 stream.pipe(res);
-                                res.on('close', function () {
-                                    stream = null;
-                                    info = null;
-                                    console.log('response closed');
-                                    if (res.openedFile) {
-                                        res.openedFile.unpipe(this);
-                                        if (this.openedFile.fd) {
-                                            fs.close(this.openedFile.fd);
-                                        }
-                                    }
-                                });
 
                                 return true;
                             }
@@ -610,21 +628,43 @@ var setHeaderInfo = function (data, info, res, header) {
     // res.writeHead(code, header);
 }
 
+var i = 0;
+
 exports.torrent = function (req, res, next) {
+    i++;
     var io = req.io;
     var torrentId = req.params.torrentId;
     var url_parts = url.parse(req.url, true);
     var magnet = "magnet:" + url_parts.search;
     var duration = req.params.duration;
-    console.log("DURATIONNN " + duration);
+    var torrent_path = '/tmp/tdl/' + torrentId + '/';
     var range_string = req.headers.range;
     Movies.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
-        // res.on('close', function(){
-        //     console.log('response closed');
-        //     return false;
-        // });
-        // Download file
-        downloadTorrent(movie, magnet, io, res).then(
+
+        if (movie.torrent.path && movie.torrent.length)
+        {
+            console.log('spiderTorrent Notice: Movie data found for', movie.title);
+            var file_size;
+            try {
+                file_size = fs.statSync(movie.torrent.path).size;
+            } catch(exception) {
+                console.log('spiderTorrent Error:'.red, 'Movie size not found');
+                file_size = 0;
+            }
+            // console.log('spiderTorrent Notice: Movie size comparison:', file_size, resolution.data.length);
+            if (file_size >= movie.torrent.length && (enginePaths[torrent_path] === 1 || movie.torrent.downloaded)) {
+                /* Does not work: file always final size; poential fix? */
+                console.log('spiderTorrent Notice: Movie already torrented; streaming:', movie.title, resolution.resolution);
+                spiderStreamer({
+                    name: movie.torrent.name,
+                    length: movie.torrent.length,
+                    path: movie.torrent.path
+                }, req.query, range_string, res, movie, magnet, io, duration);
+                return true;
+            }
+        }
+
+        downloadTorrent(movie, magnet, torrent_path, io, res).then(
             /* Promise fulfill callback */
             function (data) {
                 // Neccessary for streaming video
@@ -673,7 +713,8 @@ var isNumber = function (n) {
 // HANDLE ERROR
 events.on('badExt', function (res, io) {
     console.log('error Pffff');
-    io.emit('error', 'badExt');
+    if(res.io.sockets.connected[global.client])
+        res.io.sockets.connected[global.client].emit('error', 'badExt');
 
     headerError(res, 403);
     res.end("<!DOCTYPE html><html lang=\"en\">" +
