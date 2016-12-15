@@ -3,22 +3,32 @@ var mongoose = require('../mongoose'),
 	User = require('../user_schema');
 
 var profile = function(req, res, next) {
+	var users = [];
+	var same_shit = false;
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			// for (var i = 0; i < user.history.length; i++) {
-			// 	// console.log(user.history[i]);
-			// 	if (user.history[i].resolution === 'N/A')
-			// 		user.history[i].resolution = 'undefined';
-			// 	user.history[i].link = '/player/html5/' + user.history[i].id + '/' + user.history[i].resolution;
-			// }
+			User.find({_id: {'$ne': user._id }}, function(err, users_b) {
+				users_b.forEach(function(user_b){
+					user_b.history.forEach(function(histo_b){	
+						user.history.forEach(function(histo){
+							if (histo_b.torrent.id == histo.torrent.id)
+								same_shit = true;
+						})
+					})
+					if (same_shit)
+						users.push(user_b);
+				})
+				res.render('profile', {
+					isApp : true,
+					title : 'Hypertube - Profile',
+					firstname : _.capitalize(user.firstname),
+					language : user.language,
+					user : user,
+					users: users
+				});
+			})
 
-			res.render('profile', {
-				isApp : true,
-				title : 'Hypertube - Profile',
-				firstname : _.capitalize(user.firstname),
-				language : user.language,
-				user : user
-			});
+			
 		} else {
 			console.log('ERROR : User not found, redirect to homepage...');
 			res.redirect('/');

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   player.js                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: glarivie <glarivie@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/07 16:49:11 by glarivie          #+#    #+#             */
-/*   Updated: 2016/06/13 21:02:03 by glarivie         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 var video = document.getElementById('video');
 var mustBeAdd = true;
 //var interval_id = setInterval(function() {
@@ -59,7 +47,7 @@ $(document).ready(function() {
 	$.post('/api/movie/visit/add', { movieID : $('#video').data('id') })
 		.done(function(data) {
 			if (data.state === 'success')
-				console.log('Movie added to you history');
+				console.log('Movie added to your history');
 		});
 });
 

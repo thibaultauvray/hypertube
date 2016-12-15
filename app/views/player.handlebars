@@ -9,27 +9,27 @@
 	</div>
 	<div class="row center-block player-block">
 		<div class="video">
-			<video id="video" data-id="{{ params.id }}" data-resolution="{{ params.resolution }}" controls preload="auto">
+			<video id="video" data-id="{{ params.id }}" data-resolution="{{ params.link }}" controls preload="auto">
 				<source src="http://localhost:8000/torrent?id={{ params.id }}&resolution={{ params.resolution }}" type="video/mp4" />
 			</video>
 		</div>
-		<span class="part">About movie</span>
+		<span class="part">About the movie</span>
 		<hr />
 		<div class="video-infos">
 			<div class="movie">
-				<div class="poster" style="background-image: url('{{ movie.poster }}');"></div>
+				<div class="poster" style="background-image: url('{{ movie.movie.poster }}');"></div>
 				<div class="movie-infos">
-					<h4>{{ movie.title }} ({{ movie.year }})</h4>
+					<h4>{{ movie.movie.title }} ({{ movie.movie.year }})</h4>
 					<small class="movie-basics text-muted">
-						<span class="rated">{{ movie.rated }}</span>
-						{{ movie.runtime }} - {{ movie.genres }}
+						<span class="rated">{{ movie.movie.rated }}</span>
+						{{ movie.movie.runtime }} - {{ movie.movie.genres }}
 					</small>
-					<p class="imdb-rating"><strong>IMDB Rating: {{ movie.imdb.rating }}</strong>/10 ({{ movie.imdb.votes }})</p>
-					<p class="plot"><strong>Synopsis:</strong> <em>{{ movie.plot }}</em></p>
-					<p class="director"><strong>Director: </strong>{{ movie.director }}</p>
-					<p class="stars"><strong>Stars: </strong>{{ movie.actors }}</p>
+					<p class="imdb-rating"><strong>IMDB Rating: {{ movie.movie.imdb.rating }}</strong>/10 ({{ movie.movie.imdb.votes }})</p>
+					<p class="plot"><strong>Synopsis:</strong> <em>{{ movie.movie.plot }}</em></p>
+					<p class="director"><strong>Director: </strong>{{ movie.movie.director }}</p>
+					<p class="stars"><strong>Stars: </strong>{{ movie.movie.actors }}</p>
 					<div class="other-resolutions">
-						{{#each movie.resolutions}}
+						{{#each movie.link}}
 							{{#if this.link}}
 								<a href="{{ this.link }}" type="button" class="btn btn-default btn-sm"><i class="fa fa-play-circle" aria-hidden="true"></i> <strong>{{ this.resolution }}</strong> <em>({{ this.seeds }})</em></a>
 							{{/if}}

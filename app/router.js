@@ -27,7 +27,9 @@ var addNewUser = require('./server/api/addNewUser'),
 	addNewVisit = require('./server/api/addNewVisit'),
 	setLocale = require('./server/api/setLocale'),
 	getMovies = require('./server/api/getMovies');
-	// getSubtitles = require('./server/api/getSubtitles');
+	getMovies = require('./server/api/getMovies'),
+	getSearch = require('./server/api/search'),
+	getSubtitles = require('./server/api/getSubtitles');
 
 var torrentTest = require('./server/streamtest');
 var stream = require('./server/stream.js');
@@ -76,8 +78,8 @@ app.get('/app/accueil', accueil);
 app.get('/app/player/:id/:magnet', stream.stream);
 app.get('/app/torrent/:torrentId/:duration/:magnet', stream.torrent)
 //app.get('/player/html5/:text', player);
+
 app.get('/app/search/:text', makeSearch);
-//app.get('/app/stream/:text', stream);
 app.get('/app/profile', profile);
 app.get('/app/user/:id', user);
 
@@ -95,7 +97,12 @@ app.post('/api/comment/delete', deleteComment);
 app.post('/api/movie/visit/add', addNewVisit);
 app.post('/api/user/lang/set', setLocale);
 app.post('/api/library/movies/get', getMovies);
+<<<<<<< HEAD
 // app.post('/api/movie/subtitles/get', getSubtitles);
+=======
+app.post('/api/search/movies/get', getSearch);
+app.post('/api/movie/subtitles/get', getSubtitles);
+>>>>>>> d953798214b538b5125203c91d329449d31d0d3b
 
 // OAuth register and login routes
 app.get('/users/register/42', getCode42);

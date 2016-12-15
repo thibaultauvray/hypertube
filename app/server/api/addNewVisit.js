@@ -8,30 +8,31 @@ var addNewVisit = function(req, res, next) {
 		if (!err && user) {
 			var history = user.history ? user.history : [];
 
-			Movie.findOne({ _id : req.body.movieID }, function(err, movie) {
+			Movie.findOne({ 'torrent.id' : req.body.movieID }, function(err, movie) {
 				if (!err && movie) {
 					var alreadyVisited = false;
 
 					for (var i = 0; i < history.length; i++) {
-						if (history[i].title === movie.title)
+						if (history[i].movie.title === movie.movie.title)
 							alreadyVisited = true;
 					}
 
 					if (!alreadyVisited) {
-						var movie_copy = {
-							id : movie._id,
-							title : movie.title,
-							poster : movie.poster,
-							resolution : movie.resolutions[0].resolution,
-							link : '/player/html5/' + movie._id + '/' + movie.resolutions[0].resolution
-						};
+						var movie_copy = new Movie(movie);
+						// var movie_copy = {
+						// 	id : movie._id,
+						// 	title : movie.movie.title,
+						// 	poster : movie.movie.poster,
+						// 	resolution : movie.movie.magnetLink,
+						// 	link : '/player/html5/' + movie.torrent.id + '/' + movie.torrent.magnetLink
+						// };
 
 						history.unshift(movie_copy);
 						history.splice(4);
 
 						User.update(
 							{ username : req.session.username },
-							{ $set : { history : history } },
+							{ $addToSet : { history : movie_copy } },
 							function() {
 								console.log(history[0].defaultLink);
 								console.log('SUCCESS : New movie added to user history');
