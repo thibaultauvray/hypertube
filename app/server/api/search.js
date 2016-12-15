@@ -5,22 +5,36 @@ var changeCase = require('change-case');
 var User = require('../../user_schema');
 var Movie = require('../../movie_schema');
 var Tmp = require('../../tmp_schema');
+var async = require("async");
 
 
 var getSearch = function(req, res, next) {
-    Tmp.find()
-    //.skip(req.body.skip)
-    .limit(18)
-    .sort({ [req.body.sort] : req.body.order })
-    //.lean()
-    .exec(function(err, movies) {
-        if (!err && movies && movies.length > 0) {
-            res.send({ state : 'success', movies : movies });
-        } else {
-            console.log('No movies found, infinite scroll stop.')
-            res.send({ state : 'No movies found' });
-        }
-    });
+    var movies = [];
+    
+    User.findOne({username: req.session.username}, function(err, user){
+        // console.log(req.body.order+ ' ' + req.body.sort);
+        Tmp.find()
+        //.skip()
+        // .limit(8)
+        .sort({ [req.body.sort] : req.body.order })
+        //.lean()
+        .exec(function(err, films) {
+            if (!err && films && films.length > 0) {
+                films.forEach(function(film){
+                    var vu = false;
+                    user.history.forEach(function(histo){
+                        if (histo.torrent.id === film.torrent.id)
+                            vu = true;
+                    })
+                    movies.push({movie: film.movie, torrent: film.torrent, vu: vu})
+                })
+                res.send({ state : 'success', movies : movies });
+            } else {
+                console.log('No movies found, infinite scroll stop.')
+                res.send({ state : 'No movies found' });
+            }
+        });
+    })
 };
 module.exports = getSearch;
 
