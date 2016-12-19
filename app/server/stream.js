@@ -47,11 +47,22 @@ db.on('error', function (err) {
     console.log('DB Connection error : ', err);
 });
 
+var compareDate = function (a, b)
+{
+    if (a.date < b.date)
+    {
+        return 1;
+    }
+    else {
+        return -1;
+    }
+}
+
 exports.stream = function (req, res, next) {
     var torrentId = req.params.id;
     var already = false;
     console.log("Movies = " + req.params.id);
-    Movies.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
+    Movies.findOne({'torrent.id': torrentId}).sort('comments.date').lean().exec(function (err, movie) {
         console.log(movie);
         Users.findOne({username: req.session.username}, function (err, user) {
             user.history.forEach(function (elem) {
@@ -77,6 +88,7 @@ exports.stream = function (req, res, next) {
         // TODO THROW ERROR WHEN IMDB ID NOT HERE
         // console.log(movie.movie.imdb);
         var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
+        console.log(movie.comments);
         imdb.getById(movie.movie.imdb.id).then(function (data) {
             console.log(parseInt(data.runtime));
             res.render('stream', {
@@ -85,6 +97,7 @@ exports.stream = function (req, res, next) {
                 magnet: magnet,
                 movie: movie.movie,
                 isDownload: isDownload,
+                comment: movie.comments.sort(compareDate),
                 torrent: movie.torrent,
                 torrentId: torrentId,
                 duration: parseInt(data.runtime),
@@ -101,6 +114,9 @@ var enginePaths = {};
 
 var downloadTorrent = function (movie, magnet, torrent_path, io, res) {
     console.log("==============================");
+    Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.date' : Date.now() }}, function (err, doc) {
+        console.log('Size updated');
+    });
     if (movie.torrent.isDownload === undefined || movie.torrent.isDownload === false) {
         var isDownload = false;
     }

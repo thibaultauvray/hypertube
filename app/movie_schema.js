@@ -52,7 +52,8 @@ var movieSchema = new Schema(
 					  },
 		uploader 	: String,
 		verified 	: Boolean,
-		uploaderLink: String
+		uploaderLink: String,
+		date:		 { type: Date }
 	},
 	comments: [{
 		id: String,
@@ -61,6 +62,7 @@ var movieSchema = new Schema(
 		user: {
 			id : String,
 			firstname: String,
+            username: String,
 			lastname: String,
 			avatar: String
 		}

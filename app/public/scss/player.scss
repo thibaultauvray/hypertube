@@ -1,113 +1,148 @@
 .player {
-	margin-top: 5%;
+  margin-top: 5%;
 
-	.alert {
-		width: 50vw;
-		box-shadow: 0 0 12px #DDD;
-		margin-bottom: 15px;
-		border: 1px solid #CCC;
-	}
+  .alert {
+    width: 50vw;
+    box-shadow: 0 0 12px #DDD;
+    margin-bottom: 15px;
+    border: 1px solid #CCC;
+  }
 
-	.player-block {
-		position: relative;
-		padding: 10px;
-		width: 50vw;
-		height: auto;
-		background-color: #FFF;
-		border-radius: 4px;
-		border: 1px solid #CCC;
-		box-shadow: 0 0 12px #DDD;
+  .player-block {
+    position: relative;
+    padding: 10px;
+    width: 50vw;
+    height: auto;
+    background-color: #FFF;
+    border-radius: 4px;
+    border: 1px solid #CCC;
+    box-shadow: 0 0 12px #DDD;
 
-		.part {
-			background-color: #FFF;
-			color: #DDD;
-			font-weight: 200;
-			font-size: small;
-			padding-left: 6px;
-			padding-right: 6px;
-			position: relative;
-			top: 4px;
-			left: 41.5%;
-			z-index: 1;
-		}
+    .part {
+      background-color: #FFF;
+      color: #DDD;
+      font-weight: 200;
+      font-size: small;
+      padding-left: 6px;
+      padding-right: 6px;
+      position: relative;
+      top: 4px;
+      left: 41.5%;
+      z-index: 1;
+    }
 
-		hr {
-			margin-top: -5px !important;
-		}
+    hr {
+      margin-top: -5px !important;
+    }
 
-		.video {
-			position: relative;
-			top: -10px;
-			left: -10px;
+    .video {
+      position: relative;
+      top: -10px;
+      left: -10px;
 
-			video {
-				background-color: #333;
-				width: 49.94vw;
-				height: auto;
-				border-radius: 4px 4px 0 0;
-			}
-		}
+      video {
+        background-color: #333;
+        width: 49.94vw;
+        height: auto;
+        border-radius: 4px 4px 0 0;
+      }
+    }
 
-		.video-infos {
+    .video-infos {
 
-			.movie {
-				margin-top: 10px;
-				margin-bottom: 20px;
-				position: relative;
+      .movie {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        position: relative;
 
-				.poster {
-					background-size: cover;
-					position: relative;
-					margin-right: 10px;
-					width: 138px;
-					height: 207px;
-					float: left;
-				}
+        .poster {
+          background-size: cover;
+          position: relative;
+          margin-right: 10px;
+          width: 138px;
+          height: 207px;
+          float: left;
+        }
 
-				.other-resolutions {
-					position: relative;
-					margin-top: 10px
-				}
+        .other-resolutions {
+          position: relative;
+          margin-top: 10px
+        }
 
-				.poster:hover, .poster:focus {
-					filter : grayscale(100%);
-					-webkit-filter : grayscale(100%);
-				}
+        .poster:hover, .poster:focus {
+          filter: grayscale(100%);
+          -webkit-filter: grayscale(100%);
+        }
 
-				.movie-infos {
-					height: 207px;
-				}
+        .movie-infos {
+          height: 207px;
+        }
 
-				.movie-basics {
-					font-size: 0.8vw;
+        .movie-basics {
+          font-size: 0.8vw;
 
-					.rated {
-						border: 1px solid #777;
-						padding: 1px 4px;
-						margin-right: 4px;
-						font-weight: bold;
-					}
-				}
+          .rated {
+            border: 1px solid #777;
+            padding: 1px 4px;
+            margin-right: 4px;
+            font-weight: bold;
+          }
+        }
 
-				.imdb-rating {
-					margin-top: 3px;
-					font-size: 0.95vw;
-					margin-bottom: 3px;
-				}
+        .imdb-rating {
+          margin-top: 3px;
+          font-size: 0.95vw;
+          margin-bottom: 3px;
+        }
 
-				h4 {
-					color: $primary;
-					margin-bottom: 2px;
-					margin-top: 4px;
-					font-size: 1.4vw;
-				}
+        h4 {
+          color: $primary;
+          margin-bottom: 2px;
+          margin-top: 4px;
+          font-size: 1.4vw;
+        }
 
-				.plot, .director, .stars {
-					font-size: 1vw;
-					margin-bottom: 2px;
-				}
-			}
-		}
+        .plot, .director, .stars {
+          font-size: 1vw;
+          margin-bottom: 2px;
+        }
+      }
+    }
 
-	}
+  }
+}
+
+.AllMsg {
+  .message {
+    display: inline-block;
+    width: 100%;
+    background: white;
+    border-radius: 11px;
+    border: 1px solid #CCC;
+    .info-com{
+      margin: 0;
+      text-align: center;
+      padding: 0;
+      .username{
+        color:  #337ab7;
+      }
+    }
+    .text{
+      padding-top: 10px;
+      min-height: 142px;
+      border-left: 1px solid #CCC;
+    }
+  }
+  .avatar {
+    display: inline-block;
+    padding-top: 10px;
+    height: 100%;
+    padding-bottom: 10px;
+    img {
+      width: auto;
+      height: auto;
+      max-width: 70px;
+      max-height: 80px;
+    }
+  }
 }

@@ -22,7 +22,7 @@ var addNewUser = require('./server/api/addNewUser'),
 	signInUser = require('./server/api/signInUser'),
 	sendMail = require('./server/api/sendMail'),
 	setNewPassword = require('./server/api/setNewPassword'),
-	addNewComment = require('./server/api/addNewComment'),
+	addComment = require('./server/api/addComment'),
 	deleteComment = require('./server/api/deleteComment'),
 	addNewVisit = require('./server/api/addNewVisit'),
 	setLocale = require('./server/api/setLocale'),
@@ -130,9 +130,11 @@ app.post('/api/user/new', addNewUser);
 app.post('/api/user/edit', editUser);
 app.post('/api/user/signin', signInUser);
 
+
+app.post('/api/comment/addComment', addComment);
+
 app.post('/api/user/send-mail', sendMail);
 app.post('/api/user/password/set', setNewPassword);
-app.post('/api/comment/new', addNewComment);
 app.post('/api/comment/delete', deleteComment);
 app.post('/api/movie/visit/add', addNewVisit);
 app.post('/api/user/lang/set', setLocale);

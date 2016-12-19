@@ -3,6 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     path = require('path'),
+    moment = require('moment'),
     hbs = require('express-handlebars');
 mongoose = require('./mongoose');
 var app = express();
@@ -11,6 +12,7 @@ const server = app.listen(3000, () => {
     console.log('listening on *:3000');
 });
 const io = require('socket.io')(server);
+
 
 
 
@@ -24,7 +26,11 @@ app.engine('handlebars', hbs({
             if (((parseInt(key) + 1) % 4) === 0)
                 return options.fn(this);
             return options.inverse(this);
-        }
+        },
+        formatTime: function (date, format) {
+            var mmnt = moment(date);
+            return mmnt.format(format);
+        },
     }
 }));
 
