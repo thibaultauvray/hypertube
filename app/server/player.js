@@ -34,7 +34,6 @@ var player = function(req, res, next) {
 						}
 					});
 				} else {
-					console.log('test');
 					console.log('Movie not found at this url');
 					res.redirect('/app/library');
 				}

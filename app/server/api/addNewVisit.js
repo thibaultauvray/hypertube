@@ -34,7 +34,7 @@ var addNewVisit = function(req, res, next) {
 							{ username : req.session.username },
 							{ $addToSet : { history : movie_copy } },
 							function() {
-								console.log(history[0].defaultLink);
+								// console.log(history[0].defaultLink);
 								console.log('SUCCESS : New movie added to user history');
 								res.send({ state : 'success' });
 							}
