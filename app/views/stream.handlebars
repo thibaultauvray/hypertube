@@ -81,6 +81,34 @@
                 <button class="col-xs-4 col-xs-offset-4" id="playMe">Lancer le film</button>
             </div>
         </div>
+
+        <div class="comments">
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <button type="button" id="addComment" class="btn btn-primary">Add my comment</button>
+            </div>
+            <div class="AllMsg">
+                {{#each comment}}
+                    <div class="message">
+                        <div class="avatar col-xs-12 col-sm-2 col-md-1 col-lg-1">
+                            <img class="img-thumbnail" src="{{this.user.avatar}}" alt="">
+                            <span class="col-sm-11 info-com">
+                                <span class="username">
+                                    <a href="/app/user/{{this.user.id}}">{{this.user.username}}</a>
+                                    </span>
+                                <span class="date">{{formatTime this.date "DD/MM/YY"}}</span>
+                            </span>
+                        </div>
+                        <div class="text col-xs-12 col-sm-10">
+                        <p>
+                        {{this.text}}
+                        </p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -95,6 +123,38 @@
         return (h + ":" + min + ":00");
 
     }
+
+    $('#addComment').on('click', function(e)
+    {
+        var text = $('#comment').val();
+        if(text) {
+            $.post('/api/comment/addComment', {comments: text, torrentId: {{torrentId}} })
+                    .done(function (data) {
+                        if (data != 'error')
+                        {
+                        var formattedDate = new Date(data.date);
+                        var d = formattedDate.getDate();
+                        var m =  formattedDate.getMonth();
+                        m += 1;  // JavaScript months are 0-11
+                        var y = formattedDate.getFullYear().toString().substr(2,2);
+                        var date = d + "/" + m + "/" + y;
+
+                        $('.AllMsg').prepend('<div class="message"><div class="avatar col-xs-12 col-sm-2 col-md-1 col-lg-1"><img class="img-thumbnail" src="'+data.user.avatar+'" alt=""><span class="col-sm-11 info-com"><span class="username">'+ data.user.username +'</span><br><span class="date">' + date + '</span></span></div><div class="text col-xs-12 col-sm-10"> <p>' +  data.text + ' </p> </div> </div>');
+                        $('.comments').prepend('<div class="alert alert-success">Votre commentaire a été envoyé avec succès</div>');
+                        $('#comment').val('');
+                        }
+                        else
+                        {
+                            $('.comments').prepend('<div class="alert alert-danger">Une erreur inconnu est survenu</div>');
+                        }
+                    });
+        }
+        else
+        {
+            alert('Vous commentaire est trop court');
+        }
+        e.preventDefault();
+    })
     $('#duration').html(minTOHHMM({{ duration }}));
     socket.on('getPercent', function (data) {
         $('#dlProg').css('width', data + '%');
@@ -126,7 +186,7 @@
 
     });
 
-        if (isDownload == true) {
+    if (isDownload == true) {
             console.log('remove');
             $('#video').removeClass('videojs-stream');
             $('#progresBar').addClass('hidden');

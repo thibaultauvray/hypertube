@@ -141,8 +141,47 @@
     img {
       width: auto;
       height: auto;
-      max-width: 70px;
+      max-width: 60px;
       max-height: 80px;
     }
   }
 }
+
+@media screen and (max-width: 767px) {
+  .AllMsg {
+    .message {
+      display: inline-block;
+      width: 100%;
+      background: white;
+      border-radius: 11px;
+      border: 1px solid #CCC;
+      .info-com{
+        margin: 0;
+        text-align: center;
+        padding: 0;
+        .username{
+          color:  #337ab7;
+        }
+      }
+      .text{
+        border-left:none;
+        min-height: auto;
+        padding-top: 10px;
+      }
+    }
+    .avatar {
+      border-bottom: 1px solid #CCC;
+      display: inline-block;
+      padding-top: 10px;
+      height: 100%;
+      padding-bottom: 10px;
+      img {
+        width: auto;
+        height: auto;
+        max-width: 60px;
+        max-height: 80px;
+      }
+    }
+  }
+}
+
