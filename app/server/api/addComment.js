@@ -13,7 +13,7 @@ var addComment = function(req, res, next)
             console.log(req.body.torrentId);
             var comment = {
                 date: Date.now(),
-                text: protect.protectEntry(req.body.comments),
+                text: req.body.comments,
                 user: {
                     id: user._id,
                     firstname: user.firstname,
@@ -25,8 +25,10 @@ var addComment = function(req, res, next)
             Movies.update({'torrent.id': req.body.torrentId}, {$addToSet: {'comments': comment}}, function (err, doc) {
                 if (!err)
                     res.send(comment);
-                else
+                else {
+                    console.log("pwet");
                     res.send('error');
+                }
             });
         }
         else {

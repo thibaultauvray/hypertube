@@ -1,3 +1,5 @@
+<script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.2/dist/showdown.min.js"></script>
+
 <div class="container">
     <div class="row stream moviesList">
         <div class="row thumbnails" id="getMovies">
@@ -84,6 +86,9 @@
 
         <div class="comments">
             <div class="form-group">
+                <div id="preview">
+
+                </div>
                 <label for="comment">Comment:</label>
                 <textarea class="form-control" rows="5" id="comment"></textarea>
                 <button type="button" id="addComment" class="btn btn-primary">Add my comment</button>
@@ -100,10 +105,8 @@
                                 <span class="date">{{formatTime this.date "DD/MM/YY"}}</span>
                             </span>
                         </div>
-                        <div class="text col-xs-12 col-sm-10">
-                        <p>
-                        {{this.text}}
-                        </p>
+                        <div id='markdown' class="text col-xs-12 col-sm-10">
+                            {{this.text}}
                         </div>
                     </div>
                 {{/each}}
@@ -112,6 +115,38 @@
     </div>
 </div>
 <script>
+
+    var protectEntry = function(message) {
+        // Return a the same string with escaped "<script>" tags to avoid code injection
+        message = message.replace(/&amp/g, '&');
+        message = message.replace(/&lt;/g, '<');
+        message = message.replace(/&gt;/g, '>');
+        return (message);
+    }
+    window.onload = function() {
+        var converter = new showdown.Converter();
+        var pad = document.getElementById('comment');
+        var markdownArea = document.getElementById('preview');
+        $('.text').each(function(elem)
+        {
+            console.log($(this).text());
+            html = converter.makeHtml($(this).text().trim());
+            console.log(html);
+            $(this).html(html);
+
+        })
+
+        var convertTextAreaToMarkdown = function(){
+            var markdownText = pad.value;
+            html = converter.makeHtml(markdownText);
+            markdownArea.innerHTML = html;
+        };
+
+        pad.addEventListener('input', convertTextAreaToMarkdown);
+
+        convertTextAreaToMarkdown();
+    };
+
     var isDownload = {{ isDownload }};
     var minTOHHMM = (min) => {
         var h = parseInt(min / 60);
@@ -124,9 +159,11 @@
 
     }
 
+
     $('#addComment').on('click', function(e)
     {
         var text = $('#comment').val();
+        console.log(text);
         if(text) {
             $.post('/api/comment/addComment', {comments: text, torrentId: {{torrentId}} })
                     .done(function (data) {
@@ -138,8 +175,10 @@
                         m += 1;  // JavaScript months are 0-11
                         var y = formattedDate.getFullYear().toString().substr(2,2);
                         var date = d + "/" + m + "/" + y;
+                        var converter = new showdown.Converter();
+                        var text = converter.makeHtml(data.text);
 
-                        $('.AllMsg').prepend('<div class="message"><div class="avatar col-xs-12 col-sm-2 col-md-1 col-lg-1"><img class="img-thumbnail" src="'+data.user.avatar+'" alt=""><span class="col-sm-11 info-com"><span class="username">'+ data.user.username +'</span><br><span class="date">' + date + '</span></span></div><div class="text col-xs-12 col-sm-10"> <p>' +  data.text + ' </p> </div> </div>');
+                        $('.AllMsg').prepend('<div class="message"><div class="avatar col-xs-12 col-sm-2 col-md-1 col-lg-1"><img class="img-thumbnail" src="'+data.user.avatar+'" alt=""><span class="col-sm-11 info-com"><span class="username">'+ data.user.username +'</span><br><span class="date">' + date + '</span></span></div><div class="text col-xs-12 col-sm-10"> <p>' +  text + ' </p> </div> </div>');
                         $('.comments').prepend('<div class="alert alert-success">Votre commentaire a été envoyé avec succès</div>');
                         $('#comment').val('');
                         }

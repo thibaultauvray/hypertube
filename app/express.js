@@ -6,6 +6,7 @@ var express = require('express'),
     moment = require('moment'),
     hbs = require('express-handlebars');
 mongoose = require('./mongoose');
+var marked = require('marked');
 var app = express();
 global.client;
 const server = app.listen(3000, () => {
@@ -31,6 +32,10 @@ app.engine('handlebars', hbs({
             var mmnt = moment(date);
             return mmnt.format(format);
         },
+        markdown: function(text) {
+            var text = marked(text);
+            return text;
+        }
     }
 }));
 
