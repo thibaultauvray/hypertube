@@ -87,6 +87,10 @@ exports.stream = function (req, res, next) {
         var magnet = movie.torrent.magnetLink;
         // TODO THROW ERROR WHEN IMDB ID NOT HERE
         // console.log(movie.movie.imdb);
+        if(!movie.comments)
+            comment = null;
+        else
+            comment = movie.comments.sort(compareDate);
         var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
         console.log(movie.comments);
         imdb.getById(movie.movie.imdb.id).then(function (data) {
@@ -97,7 +101,7 @@ exports.stream = function (req, res, next) {
                 magnet: magnet,
                 movie: movie.movie,
                 isDownload: isDownload,
-                comment: movie.comments.sort(compareDate),
+                comment: comment,
                 torrent: movie.torrent,
                 torrentId: torrentId,
                 duration: parseInt(data.runtime),
