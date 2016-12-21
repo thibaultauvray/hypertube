@@ -3,6 +3,8 @@
 		$('li.profile-nav').addClass('active');
 	if (location.pathname === '/app/library')
 		$('li.library-nav').addClass('active');
+	if (location.pathname === '/app/search')
+		$('li.library-nav').addClass('active');
 
 	$(document).ready(function() {
 		if ($('#lang-choice').data('user-lang') === 'EN')
@@ -39,4 +41,5 @@
 				}
 			});
 	});
+
 })();

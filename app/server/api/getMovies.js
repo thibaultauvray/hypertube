@@ -32,38 +32,80 @@ var getMovies = function(req, res, next) {
 	var movies = [];
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			res.send({ state : 'success', movies : user.history.sort(function(a,b){
-					if (req.body.sort == 'movie.title'){
-						if (req.body.order == 1){
-							if (a.movie.title > b.movie.title)
+			if (req.body.genres != 'All'){
+				user.history.forEach(function(movie){
+					movie.movie.genres.forEach(function(genre){
+						if (req.body.genres === genre)
+							movies.push(movie);
+					})
+					
+				})
+				res.send({ state : 'success', movies : movies.sort(function(a,b){
+						if (req.body.sort == 'movie.title'){
+							if (req.body.order == 1){
+								if (a.movie.title > b.movie.title)
+									return 1;
+								if (a.movie.title < b.movie.title)
+									return -1;
+								return 0;
+							} else {
+								if (a.movie.title < b.movie.title)
+									return 1;
+								if (a.movie.title > b.movie.title)
+									return -1;
+								return 0;
+							}
+						}
+						if (req.body.sort == 'movie.imdb.rating'){
+							if (a.movie.imdb.rating < b.movie.imdb.rating)
 								return 1;
-							if (a.movie.title < b.movie.title)
-								return -1;
-							return 0;
-						} else {
-							if (a.movie.title < b.movie.title)
-								return 1;
-							if (a.movie.title > b.movie.title)
+							if (a.movie.imdb.rating > b.movie.imdb.rating)
 								return -1;
 							return 0;
 						}
-					}
-					if (req.body.sort == 'movie.imdb.rating'){
-						if (a.movie.imdb.rating < b.movie.imdb.rating)
-							return 1;
-						if (a.movie.imdb.rating > b.movie.imdb.rating)
-							return -1;
-						return 0;
-					}
-					if (req.body.sort == 'movie.year'){
-						if (a.movie.year < b.movie.year)
-							return 1;
-						if (a.movie.year > b.movie.year)
-							return -1;
-						return 0;
-					}
-				})
-			});
+						if (req.body.sort == 'movie.year'){
+							if (a.movie.year < b.movie.year)
+								return 1;
+							if (a.movie.year > b.movie.year)
+								return -1;
+							return 0;
+						}
+					})
+				});
+			} else {
+				res.send({ state : 'success', movies : user.history.sort(function(a,b){
+						if (req.body.sort == 'movie.title'){
+							if (req.body.order == 1){
+								if (a.movie.title > b.movie.title)
+									return 1;
+								if (a.movie.title < b.movie.title)
+									return -1;
+								return 0;
+							} else {
+								if (a.movie.title < b.movie.title)
+									return 1;
+								if (a.movie.title > b.movie.title)
+									return -1;
+								return 0;
+							}
+						}
+						if (req.body.sort == 'movie.imdb.rating'){
+							if (a.movie.imdb.rating < b.movie.imdb.rating)
+								return 1;
+							if (a.movie.imdb.rating > b.movie.imdb.rating)
+								return -1;
+							return 0;
+						}
+						if (req.body.sort == 'movie.year'){
+							if (a.movie.year < b.movie.year)
+								return 1;
+							if (a.movie.year > b.movie.year)
+								return -1;
+							return 0;
+						}
+					})
+				});
+			}
  		}
  	});
 }
