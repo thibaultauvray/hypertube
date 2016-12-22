@@ -16,28 +16,30 @@
 			</li>
 			{{#if isLibrary}}
 				<li class="btn-group hidden-xs hidden-sm hidden-md" id="filters" role="group" aria-label="...">
-					<button id="filter-a-z" type="button" class="btn btn-default"><i class="fa fa-video-camera" aria-hidden="true"></i> A - Z</button>
-					<button id="filter-z-a" type="button" class="btn btn-default"><i class="fa fa-video-camera" aria-hidden="true"></i> Z - A</button>
+					<button id="filter-a-z" type="button" class="btn btn-default"><i class="fa fa-film" aria-hidden="true"></i> A - Z</button>
+					<button id="filter-z-a" type="button" class="btn btn-default"><i class="fa fa-film" aria-hidden="true"></i> Z - A</button>
 					<button id="filter-note" type="button" class="btn btn-default"><i class="fa fa-star" aria-hidden="true"></i> Rating</button>
 					<button id="filter-year" type="button" class="btn btn-default"><i class="fa fa-calendar" aria-hidden="true"></i> Year</button>
-					<select class="selectpicker form-control" id="genres" name="genres">
-						<OPTION VALUE="All" id="All"><strong>--- All Genres ---</strong></OPTION>
-						<OPTION VALUE="Action" id="Action">Action</OPTION>
-						<OPTION VALUE="Adventure" id="Adventure">Adventure</OPTION>
-						<OPTION VALUE="Animation" id="Animation">Animation</OPTION>
-						<OPTION VALUE="Biography" id="Biography">Biography</OPTION>
-						<OPTION VALUE="Comedy" id="Comedy">Comedy</OPTION>
-						<OPTION VALUE="Crime" id="Crime">Crime</OPTION>
-						<OPTION VALUE="Drama" id="Drama">Drama</OPTION>
-						<OPTION VALUE="Family" id="Family">Family</OPTION>
-						<OPTION VALUE="Fantasy" id="Fantasy">Fantasy</OPTION>
-						<OPTION VALUE="Horror" id="Horror">Horror</OPTION>
-						<OPTION VALUE="Music" id="Music">Music</OPTION>
-						<OPTION VALUE="Mystery" id="Mystery">Mystery</OPTION>
-						<OPTION VALUE="Romance" id="Romance">Romance</OPTION>
-						<OPTION VALUE="Sci-Fi" id="Sci-Fi">Sci-Fi</OPTION>
-						<OPTION VALUE="Thriller" id="Thriller">Thriller</OPTION>
-					</SELECT>
+					<div class="btn-group">
+						<select class="selectpicker form-control" id="genres" name="genres">
+							<OPTION VALUE="All">All Genres</i></OPTION>
+							<OPTION VALUE="Action" >Action</OPTION>
+							<OPTION VALUE="Adventure" >Adventure</OPTION>
+							<OPTION VALUE="Animation" >Animation</OPTION>
+							<OPTION VALUE="Biography" >Biography</OPTION>
+							<OPTION VALUE="Comedy" >Comedy</OPTION>
+							<OPTION VALUE="Crime" >Crime</OPTION>
+							<OPTION VALUE="Drama" >Drama</OPTION>
+							<OPTION VALUE="Family" >Family</OPTION>
+							<OPTION VALUE="Fantasy" >Fantasy</OPTION>
+							<OPTION VALUE="Horror" >Horror</OPTION>
+							<OPTION VALUE="Music" >Music</OPTION>
+							<OPTION VALUE="Mystery" >Mystery</OPTION>
+							<OPTION VALUE="Romance" >Romance</OPTION>
+							<OPTION VALUE="Sci-Fi" >Sci-Fi</OPTION>
+							<OPTION VALUE="Thriller" >Thriller</OPTION>
+						</SELECT>
+					</div>
 				</li>
 			{{/if}}
 			<ul class="nav navbar-nav navbar-right">
