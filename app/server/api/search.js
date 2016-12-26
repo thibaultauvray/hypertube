@@ -23,7 +23,7 @@ var getSearch = function(req, res, next) {
                     films.forEach(function(film){
                         var vu = false;
                         user.history.forEach(function(histo){
-                            if (histo.torrent.id === film.torrent.id)
+                            if (histo.torrent.id === film.torrent.id && histo.torrent.name === film.torrent.name)
                                 vu = true;
                         })
                         movies.push({movie: film.movie, torrent: film.torrent, vu: vu})
@@ -45,7 +45,7 @@ var getSearch = function(req, res, next) {
                         films.forEach(function(film){
                             var vu = false;
                             user.history.forEach(function(histo){
-                                if (histo.torrent.id === film.torrent.id)
+                                if (histo.torrent.id === film.torrent.id && histo.torrent.name === film.torrent.name)
                                     vu = true;
                             })
                             movies.push({movie: film.movie, torrent: film.torrent, vu: vu})

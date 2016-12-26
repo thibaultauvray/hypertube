@@ -28,28 +28,18 @@ var omdbSearch = function(req, res, next) {
 		var Query_regex = new RegExp(req.params.text,'i');
 		
 		mongoose.connection.db.dropCollection('tmp', function(err, result) {});
+
 	    ///////////test dans la DB avant tout
 	    Movie.find({'movie.title': Query_regex}, function(err, results){
 	    	if (results.length > 0) {
 	    		
 	    		results.forEach(function(result){
-	    			var movie = result.movie;
-	    			var torrent = result.torrent;
 	    			movies.push(movie, torrent, vu);
-	    			var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
+	    			var film = new Tmp({_id: mongoose.Types.ObjectId(), movie: result.movie, torrent: result.torrent});
 					film.save(function(err) {
 					  	// if (err) console.log(err);
 					})	
 	    		})
-	   //  		movies.forEach(function(film){
-	   //  			console.log(film);
-				// 	user.history.forEach(function(histo){
-				// 		console.log(film.torrent);
-				// 		if (film.torrent.id == histo.torrent.id){
-				// 			film.vu = true
-				// 		}
-				// 	});
-				// });
 	    		res.render('search', {
 										isApp : true,
 										isLibrary : true,
@@ -113,14 +103,6 @@ var omdbSearch = function(req, res, next) {
 						    })
 						    .end()
 					  	}, function(err) {
-					  		movies.forEach(function(film){
-								user.history.forEach(function(histo){
-									if (film.torrent.id == histo.torrent.id){
-										film.vu = true
-									}
-								});
-							});
-
 					      	res.render('search', {
 										isApp : true,
 										isLibrary : true,
@@ -151,13 +133,12 @@ var omdbSearch = function(req, res, next) {
 										uploadDate 	: data.date_uploaded,
 										magnetLink 	: result.magnet,
 									}
-									console.log(torrent);
 									var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
 									movies.push({movie, torrent, vu});
 									film.save(function(err) {
 									          	// if (err) console.log(err);
 									})
-									Movie.findOne({'torrent.id':torrent.id}, function(err, result){
+									Movie.findOne({'torrent.id':torrent.id, 'torrent.name':torrent.name}, function(err, result){
 								      	if (!result){
 									      		var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent});
 									      		film.save(function(err){
@@ -169,13 +150,6 @@ var omdbSearch = function(req, res, next) {
 							})
 							
 						})
-						movies.forEach(function(film){
-							user.history.forEach(function(histo){
-								if (film.torrent.id == histo.torrent.id){
-									film.vu = true
-								}
-							});
-						});
 						res.render('search', {
 										isApp : true,
 										isLibrary : true,
