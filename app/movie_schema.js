@@ -53,6 +53,10 @@ var movieSchema = new Schema(
 		verified 	: Boolean,
 		uploaderLink: String
 	},
+	subtitles : {
+		en : String,
+		fr : String
+	},
 	comments: [{
 		id: String,
 		date: Date,

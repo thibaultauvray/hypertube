@@ -574,3 +574,27 @@ footer {
   text-decoration:none;
   text-shadow:1px 2px 0px #2f6627;
 }
+
+.btn-facebook {
+  background: #3b5998 !important;
+  color: white;
+  border: #3b5999;
+}
+.btn-facebook:hover {
+  color: #fff;
+  background: #355088 !important;
+}
+
+#search-li {
+  list-style-type: none;
+  display: inline;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+.dropdown-menu li {
+  margin-left: 5%;
+}
+.dropdown-menu li button {
+  border-radius: 4px !important;
+}

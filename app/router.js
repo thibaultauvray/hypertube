@@ -10,6 +10,7 @@ var app = require('./express.js'),
 	player = require('./server/player'),
 	makeSearch = require('./server/makeSearch'),
 	profile = require('./server/profile'),
+	passport = require('passport');
 	user = require('./server/user');
 
 var addNewUser = require('./server/api/addNewUser'),
@@ -65,3 +66,5 @@ app.get('/users/register/42', getCode42);
 app.get('/users/login/42', getCode42);
 app.get('/users/login/twitter', twitter.requestToken);
 app.get('/users/signin/twitter', twitter.accessToken);
+app.use(passport.initialize());
+require("./server/oauth/facebook/facebook")(app, passport);
