@@ -23,6 +23,7 @@ var addNewUser = require('./server/api/addNewUser'),
 	setLocale = require('./server/api/setLocale'),
 	getMovies = require('./server/api/getMovies'),
 	getSearch = require('./server/api/search'),
+	getUsers = require('./server/api/profile'),
 	getSubtitles = require('./server/api/getSubtitles');
 
 var getCode42 = require('./server/oauth/42/getCode42'),
@@ -57,6 +58,7 @@ app.post('/api/user/lang/set', setLocale);
 app.post('/api/library/movies/get', getMovies);
 app.post('/api/search/movies/get', getSearch);
 app.post('/api/movie/subtitles/get', getSubtitles);
+app.post('/api/users/shares/get', getUsers);
 
 // OAuth register and login routes
 app.get('/users/register/42', getCode42);

@@ -15,6 +15,22 @@
 		avatar : $('.avatar-field').data('avatar')
 	};
 
+	function getUsers() {
+		$.post('/api/users/shares/get', {})
+		.done(function(data){
+			if (data.state === 'add') {
+				$('#getUsers').empty();
+				$.each(data.users, function(index, user) {
+					$('#getUsers').append('<div class="video-infos" ><a class="movie" href="/app/user/'+ user._id +'"><div class="poster" style="background-image: url(\'' + user.avatar + '\');"></div></a></div>');
+				})
+			}
+		})
+	}
+
+	$(document).ready(function() {
+		getUsers();
+	});
+
 	$('div.password-field > input#password').on('change keyup input', function(e) {
 		if (lib.isValidPassword(lib.protectEntry(e.target.value))) {
 			$('div.password-field').removeClass('has-error').addClass('has-success');

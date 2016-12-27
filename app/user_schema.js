@@ -13,7 +13,6 @@ var userSchema = mongoose.Schema({
 	avatar : String,
 	language : { type : String, required : true, default : 'EN' },
 	history : Array,
-	social : Array
 });
 
 var User = mongoose.model('User', userSchema);

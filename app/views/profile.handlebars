@@ -65,16 +65,16 @@
 		<div class="row center-block player-block" >
 			<span class="part" >Users sharing interests :</span>
 			<hr />
-
+			<div id="getUsers">
 			{{#each user.social}}
-				<div class="video-infos" id="getUsers">
+				<div class="video-infos" >
 					<a class="movie" href="/app/user/{{ _id }}">
 						<div class="poster" style="background-image: url('{{ avatar }}');"></div>
 					</a>
 				</div>
 			
 			{{/each}}
-							
+			</div>				
 		</div>
 			
 			
