@@ -156,9 +156,9 @@ nav {
     .profile .profile-info .public-user {
       padding-left: 25px; }
     .profile .profile-info .gradient-filter {
-      background: -moz-linear-gradient(left, black 0%, black 60%, transparent 100%);
-      background: -webkit-linear-gradient(left, black 0%, black 60%, transparent 100%);
-      background: linear-gradient(to right, black 0%, black 60%, transparent 100%);
+      background: -moz-linear-gradient(left, black 0%, black 40%, transparent 100%);
+      background: -webkit-linear-gradient(left, black 0%, black 40%, transparent 100%);
+      background: linear-gradient(to right, black 0%, black 40%, transparent 100%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00000000',GradientType=1 );
       min-height: 250px;
       width: 100%;
