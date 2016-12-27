@@ -4,9 +4,6 @@ var mongoose = require('../mongoose'),
 	User = require('../user_schema');
 
 var profile = function(req, res, next) {
-	var alreadyThere = false;
-	var same_shit = false;
-	var users = [];
 
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
