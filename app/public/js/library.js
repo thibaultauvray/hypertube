@@ -23,7 +23,6 @@
 			order : order,
 			genres: genres
 		}).done(function(data) {
-			console.log(data);
 			if (data.state === 'success') {
 				$.each(data.movies, function(index, movie) {
 					$('#getMovies').append('<div class="col-md-4 col-sm-6 col-xs-12"><div class="movie" id="' + movie.torrent.id + '"><div class="poster" style="background-image: url(' + movie.movie.poster + ');"><div class="resolutions hidden"></div></div><div class="movie-infos"><h4><a href="/player/html5/' + movie.torrent.id + '/' + movie.torrent.magnetLink + '">' + movie.movie.title + '</a> (' + movie.movie.year + ')</h4><small class="movie-basics text-muted"><span class="rated">' + movie.movie.rated + '</span>' + movie.movie.runtime + ' min' + ' - ' + movie.movie.genres + '</small><p class="imdb-rating"><strong>IMDB Rating: ' + movie.movie.imdb.rating + '</strong>/10 (' + movie.movie.imdb.votes + ')</p><p class="plot"><em>' + '<small class="movie-basics text-muted">' + movie.torrent.name + '</small>' + '</div></div></div>');
