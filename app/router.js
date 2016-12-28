@@ -10,7 +10,8 @@ var app = require('./express.js'),
 	player = require('./server/player'),
 	makeSearch = require('./server/makeSearch'),
 	profile = require('./server/profile'),
-	passport = require('passport');
+	passport = require('passport'),
+	movieCompletion = require('./server/api/completion'),
 	user = require('./server/user');
 
 var addNewUser = require('./server/api/addNewUser'),
@@ -45,6 +46,7 @@ app.get('/player/html5/:text', player);
 app.get('/app/search/:text/:search', makeSearch);
 app.get('/app/profile', profile);
 app.get('/app/user/:id', user);
+app.get('/api/movies/completion/:query', movieCompletion);
 
 // Api routes
 app.post('/api/user/new', addNewUser);

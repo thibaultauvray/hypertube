@@ -20,6 +20,15 @@
 			$('#search-btn').removeAttr('disabled');
 			$('#search-yts').removeAttr('disabled');
 			$('#search-tpb').removeAttr('disabled');
+			$("#moviesList").empty();
+			$.get("/api/movies/completion/"+ $(this).val(), function (data) {
+				datalist = document.getElementById("moviesList");
+				data.movies.forEach(function (e) {
+					var opt = document.createElement('option');
+					opt.value = e.title;
+					datalist.appendChild(opt);
+				});
+			});
 			query = lib.protectEntry($(this).val());
 		} else {
 			$('#search-btn').attr('disabled', true);

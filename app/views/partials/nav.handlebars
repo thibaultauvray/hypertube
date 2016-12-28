@@ -6,7 +6,8 @@
 		<div class="collapse navbar-collapse" id="menu-left">
 			<form class="navbar-form navbar-left" id="search-form" role="search" onkeypress="return event.keyCode != 13;">
 				<div class="form-group">
-					<input id="search-field" type="text" class="form-control" placeholder="Search" />
+					<input id="search-field" type="text" list="moviesList" class="form-control" placeholder="Search" />
+					<datalist id="moviesList"></datalist>
 				</div>
                 
                 <li class="dropdown" id="search-li">
