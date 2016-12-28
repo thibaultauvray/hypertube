@@ -44,7 +44,7 @@
 				break;
 		}
 		if (query && query.length > 0)
-		window.location = '/app/search/' + query;
+		window.location = '/app/search/' + query + '/' + search;
 	});
 
 	$('#lang-choice > button').on('click', function() {

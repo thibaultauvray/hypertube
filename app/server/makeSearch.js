@@ -55,7 +55,7 @@ var omdbSearch = function(req, res, next) {
 				})	    		
 	    	} else {
 	    		///////////// ici choix du moteur de recherche    	    
-				if (req.params.search == "tpb") {
+				if (req.params.search === "tpb") {
 					//////////////////////////////////////// 1er Moteur de Recherche: "PirateBay"
 				    PirateBay.search(req.params.text, {
 						category: 200,    // default - 'all' | 'all', 'audio', 'video', 'xxx', 

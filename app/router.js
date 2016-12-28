@@ -42,7 +42,7 @@ app.get('/app/library', library);
 app.get('/app/accueil', accueil);
 app.get('/player/html5/:id/:magnet', player);
 app.get('/player/html5/:text', player);
-app.get('/app/search/:text', makeSearch);
+app.get('/app/search/:text/:search', makeSearch);
 app.get('/app/profile', profile);
 app.get('/app/user/:id', user);
 
