@@ -18,14 +18,31 @@
 	$('#search-field').on('input change', function() {
 		if ($(this).val().length > 0) {
 			$('#search-btn').removeAttr('disabled');
+			$('#search-yts').removeAttr('disabled');
+			$('#search-tpb').removeAttr('disabled');
 			query = lib.protectEntry($(this).val());
-		} else
+		} else {
 			$('#search-btn').attr('disabled', true);
+			$('#search-yts').attr('disabled', true);
+			$('#search-tpb').attr('disabled', true);
+		}
 	});
 
 	$('#search-form').on('submit', function(e) {
 		e.preventDefault();
 
+		var btn = $(this).find("button[type=submit]:focus");
+		switch (btn[0].id){
+			case "search-btn":
+				search = "yts";
+				break;
+			case "search-yts":
+				search = "yts";
+				break;
+			case "search-tpb":
+				search = "tpb";
+				break;
+		}
 		if (query && query.length > 0)
 		window.location = '/app/search/' + query;
 	});

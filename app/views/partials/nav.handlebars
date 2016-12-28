@@ -4,11 +4,21 @@
 			<a class="navbar-brand" href="/app/accueil">HYPER<strong>TUBE</strong></a>
 		</div>
 		<div class="collapse navbar-collapse" id="menu-left">
-			<form class="navbar-form navbar-left" id="search-form" role="search">
+			<form class="navbar-form navbar-left" id="search-form" role="search" onkeypress="return event.keyCode != 13;">
 				<div class="form-group">
 					<input id="search-field" type="text" class="form-control" placeholder="Search" />
 				</div>
-				<button id="search-btn" type="submit" class="btn btn-default" disabled><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                
+                <li class="dropdown" id="search-li">
+                    <button id="search-btn" type="submit" class="btn btn-default"  disabled>
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                
+                    <ul class="dropdown-menu">
+                        <li><button id="search-yts" type="submit" class="btn btn-default"  disabled>Yts</button></li>
+                        <li><button id="search-tpb" type="submit" class="btn btn-default"  disabled>The Pirate Bay</button></li>
+                    </ul>
+                </li>
 			</form>
 			<li class="btn-group hidden-xs hidden-sm" id="lang-choice" data-user-lang="{{ language }}" role="group" aria-label="...">
 				<button id="EN" data-lang="EN" type="button" class="btn btn-default"><i class="famfamfam-flag-us"></i></button>

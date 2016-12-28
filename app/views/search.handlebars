@@ -1,6 +1,16 @@
 <div class="container-fluid library">
 	<div class="col-md-12 moviesList">
-			<div class="row thumbnails" id="getMovies"></div>
+		<div class="row">
+            <div class="col-sm-offset-4 col-sm-4 text-center">
+                <label for="amount">Note range:</label>
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;background-color: rgba(0,0,0,0);">
+                <div id="slider-range"></div>
+                <label for="amount-yea">Year range:</label>
+                <input type="text" id="amount-year" readonly style="border:0; color:#f6931f; font-weight:bold;background-color: rgba(0,0,0,0);">
+                <div id="year-range"></div>
+            </div>
+        </div>
+		<div class="row thumbnails" id="getMovies"></div>
 	</div>
 </div>
 

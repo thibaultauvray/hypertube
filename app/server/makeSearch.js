@@ -12,6 +12,14 @@ var mongoose = require('../mongoose'),
 
 const PirateBay = require('thepiratebay');
 const Yts = require('yify-search');
+const OS = require('opensubtitles-api');
+
+const OpenSubtitles = new OS({
+	useragent: "OSTestUserAgentTemp",
+	username: 'nocalis',
+	password: require('crypto').createHash('md5').update('azerty').digest('hex'),
+	ssl: true
+});
 
 var db = mongoose.connection;
 
@@ -21,9 +29,6 @@ var omdbSearch = function(req, res, next) {
 		var movies = [];
 		var vu = false;
 		var i = 0;
-		//////////////////////////////
-		var recherche = 1;		//variable test pour le choix du moteur de recherche
-		/////////////////////////////
 		
 		var Query_regex = new RegExp(req.params.text,'i');
 		
@@ -31,10 +36,9 @@ var omdbSearch = function(req, res, next) {
 
 	    ///////////test dans la DB avant tout
 	    Movie.find({'movie.title': Query_regex}, function(err, results){
-	    	if (results.length > 0) {
-	    		
+	    	if (results.length > 0) { 		
 	    		results.forEach(function(result){
-	    			movies.push(movie, torrent, vu);
+	    			movies.push({movie: result.movie, torrent: result.torrent, vu});
 	    			var film = new Tmp({_id: mongoose.Types.ObjectId(), movie: result.movie, torrent: result.torrent});
 					film.save(function(err) {
 					  	// if (err) console.log(err);
@@ -51,7 +55,7 @@ var omdbSearch = function(req, res, next) {
 				})	    		
 	    	} else {
 	    		///////////// ici choix du moteur de recherche    	    
-				if (recherche == 2) {
+				if (req.params.search == "tpb") {
 					//////////////////////////////////////// 1er Moteur de Recherche: "PirateBay"
 				    PirateBay.search(req.params.text, {
 						category: 200,    // default - 'all' | 'all', 'audio', 'video', 'xxx', 
@@ -89,12 +93,35 @@ var omdbSearch = function(req, res, next) {
 									        film.save(function(err) {
 									          	// if (err) console.log(err);
 									        })
+
 									        Movie.findOne({'torrent.id':torrent.id}, function(err, result){
 									          	if (!result){
-									          		var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent});
-									          		film.save(function(err){
-									          			// if (err) console.log(err);
-												    });
+									          		OpenSubtitles.login()
+													.then(function (res) {
+														OpenSubtitles.search({
+															imdbid: nightmare
+														}).then(function (data) {
+															/*var file = fs.createWriteStream("f.txt");
+															 var request = http.get(subtitles.fr.url, function(response) {
+															 response.pipe(file);
+															 });*/
+															if (Object.keys(data).length === 0 || (!data.en && !data.fr))
+																subtitles = {en : "", fr:""};
+															else if (data.en && data.fr)
+																subtitles = {en: data.en.url , fr : data.fr.url };
+															else if (data.en)
+																subtitles = {en: data.en.url , fr : "" };
+															else if (data.fr)
+																subtitles = {en: "" , fr : data.fr.url };
+															var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
+															film.save(function(err){
+																// if (err) {
+																// 	console.log('---------\n');
+																// 	console.log(err);
+																// }
+															});
+														});
+													});
 									          	}
 									        })
 									    })
@@ -138,12 +165,34 @@ var omdbSearch = function(req, res, next) {
 									film.save(function(err) {
 									          	// if (err) console.log(err);
 									})
-									Movie.findOne({'torrent.id':torrent.id, 'torrent.name':torrent.name}, function(err, result){
-								      	if (!result){
-									      		var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent});
-									      		film.save(function(err){
-									      			// if (err) console.log(err);
-								    		});
+									Movie.findOne({'torrent.id':torrent.id, 'torrent.name':torrent.name}, function(err, rees){
+								      	if (!rees){
+									      	OpenSubtitles.login()
+											.then(function (res) {
+												OpenSubtitles.search({
+													imdbid: result.imdb_code
+												}).then(function (data) {
+													/*var file = fs.createWriteStream("f.txt");
+													 var request = http.get(subtitles.fr.url, function(response) {
+													 response.pipe(file);
+													 });*/
+													if (Object.keys(data).length === 0 || (!data.en && !data.fr))
+														subtitles = {en : "", fr:""};
+													else if (data.en && data.fr)
+														subtitles = {en: data.en.url , fr : data.fr.url };
+													else if (data.en)
+														subtitles = {en: data.en.url , fr : "" };
+													else if (data.fr)
+														subtitles = {en: "" , fr : data.fr.url };
+													var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
+													film.save(function(err){
+														//  		if (err) {
+														// 	console.log('---------\n');
+														// 	console.log(err);
+														// }
+													});
+												});
+											});
 									   	}
 									})
 								})
