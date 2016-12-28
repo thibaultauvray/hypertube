@@ -438,6 +438,9 @@ nav {
   border-width: 8px; }
 
 @media only screen and (max-width: 768px) {
+  .moviesList {
+    margin-top: 18%;
+  }
   .homepage .jumbotron {
     max-width: 99vw; }
     .homepage .jumbotron h1 {
@@ -489,7 +492,7 @@ nav {
         font-size: 2vw; } }
 
 body {
-  background-image: url("../img/bg.jpg"); 
+  background-image: url("../img/hacker.jpg"); 
 }
 
 footer {
