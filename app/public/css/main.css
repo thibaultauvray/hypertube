@@ -441,6 +441,18 @@ nav {
   .moviesList {
     margin-top: 18%;
   }
+   #search-form {
+    text-align: center;
+  }
+  .navbar-right {
+    text-align: right;
+  }
+  nav .navbar-form button {
+    border-radius: 0 4px 4px 0;
+    position: relative;
+    left: -4px;
+    top: -1px;
+  }
   .homepage .jumbotron {
     max-width: 99vw; }
     .homepage .jumbotron h1 {
