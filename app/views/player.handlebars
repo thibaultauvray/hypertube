@@ -24,7 +24,7 @@
 						<span class="rated">{{ movie.movie.rated }}</span>
 						{{ movie.movie.runtime }} - {{ movie.movie.genres }}
 					</small>
-					<p class="imdb-rating"><strong>IMDB Rating: {{ movie.movie.imdb.rating }}</strong>/10 ({{ movie.movie.imdb.votes }})</p>
+					<p class="imdb-rating"><strong>IMDB Rating: {{#if movie.movie.imdb.rating }} {{ movie.movie.imdb.rating }}</strong>/10 (votes: {{ movie.movie.imdb.votes }}) {{else}} N/A {{/if}}</p>
 					<p class="plot"><strong>Synopsis:</strong> <em>{{ movie.movie.plot }}</em></p>
 					<p class="director"><strong>Director: </strong>{{ movie.movie.director }}</p>
 					<p class="stars"><strong>Stars: </strong>{{ movie.movie.actors }}</p>
