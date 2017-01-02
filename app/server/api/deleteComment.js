@@ -13,15 +13,10 @@ var deleteComment = function(req, res, next) {
 						isDelete = false;
 
 					for (var index = 0; index < comments.length; index++) {
-						// console.log(comments[index].id + ' | ' + req.body.commentID + ' | ... | ' + comments[index].user.id + ' | ' + user._id);
 						if (comments[index].id === req.body.commentID && comments[index].user.id == user._id) {
 							comments.splice(index, 1);
 							isDelete = true;
 						}
-						// if (comments[index].user.id == user._id)
-						// 	console.log('true');
-						// else
-						// 	console.log('false');
 					}
 
 					if (isDelete) {
