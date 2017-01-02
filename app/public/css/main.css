@@ -487,7 +487,7 @@ nav {
 
 @media only screen and (max-width: 1000px) {
   .player {
-    margin-top: 8%; }
+    margin-top: 15%; }
     .player .alert {
       width: 75vw; }
     .player .player-block {

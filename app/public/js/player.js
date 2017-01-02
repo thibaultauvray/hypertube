@@ -4,21 +4,21 @@ var mustBeAdd = true;
 	video.load();
 //}, 10000);
 
-$.post('/api/movie/subtitles/get', {
-	movieID : $('#video').data('id'),
-	movieResolution : $('#video').data('resolution')
-}).done(function(data) {
-	if (data.state === 'success')
-		track = document.createElement('track');
-		track.kind = 'captions';
-		track.srclang = $('#lang-choice').data('user-lang').toLowerCase();
-		track.src = '/sub/sub.vtt';
-		track.addEventListener('load', function() {
-			this.mode = 'showing';
-			video.textTracks[0].mode = 'showing';
-		});
-		video.appendChild(track);
-	});
+// $.post('/api/movie/subtitles/get', {
+// 	movieID : $('#video').data('id'),
+// 	movieResolution : $('#video').data('resolution')
+// }).done(function(data) {
+// 	if (data.state === 'success')
+// 		track = document.createElement('track');
+// 		track.kind = 'captions';
+// 		track.srclang = $('#lang-choice').data('user-lang').toLowerCase();
+// 		track.src = '/sub/sub.vtt';
+// 		track.addEventListener('load', function() {
+// 			this.mode = 'showing';
+// 			video.textTracks[0].mode = 'showing';
+// 		});
+// 		video.appendChild(track);
+// 	});
 
 video.onloadedmetadata = function() {
 	//clearInterval(interval_id);
@@ -97,7 +97,7 @@ $('#comment-btn').on('click', function() {
 			if (data.state === 'success') {
 				$('#comment-area').val('');
 				$(self).html('<i class="fa fa-comment" aria-hidden="true"></i> Add my comment');
-				$('#comments-list').prepend('<div class="col-md-12 comment-block" id="' + data.comment.id + '"><div class="avatar img-rounded img-responsive" style="background-image: url(' + data.comment.user.avatar + ');"></div><div class="panel panel-default content"><div class="panel-heading username"><strong><a href="/user/' + data.comment.user.id + '">' + data.comment.user.firstname + ' ' + data.comment.user.lastname + '</a></strong> <small class="text-muted date">' + $.format.prettyDate(data.comment.date) + '</small></div><div class="panel-body text"><em>' + data.comment.text + '</em></div></div></div>');
+				$('#comments-list').prepend('<div class="col-md-12 comment-block" id="' + data.comment.id + '"><img class="avatar img-rounded img-responsive" src="' + data.comment.user.avatar + '"/><div class="panel panel-default content"><div class="panel-heading username"><strong><a href="/user/' + data.comment.user.id + '">' + data.comment.user.firstname + ' ' + data.comment.user.lastname + '</a></strong> <small class="text-muted date">' + $.format.prettyDate(data.comment.date) + '</small></div><div class="panel-body text"><em>' + data.comment.text + '</em></div></div></div>');
 			}
 		});
 });

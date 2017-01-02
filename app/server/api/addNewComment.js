@@ -7,7 +7,8 @@ var mongoose = require('../../mongoose'),
 var addNewComment = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			Movie.findOne({ _id : req.body.id }, function(err, movie) {
+			// console.log(req.body);
+			Movie.findOne({ 'torrent.id' : req.body.id }, function(err, movie) {
 				if (!err && movie) {
 					var comments = movie.comments,
 						comment = {
@@ -25,7 +26,7 @@ var addNewComment = function(req, res, next) {
 					comments.unshift(comment);
 
 					Movie.update(
-						{ _id : req.body.id },
+						{ 'torrent.id' : req.body.id },
 						{ $set : { comments : comments } },
 						function() {
 							console.log('SUCCESS : comment has been posted');

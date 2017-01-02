@@ -7,21 +7,26 @@ var mhash = require('mhash'),
 var deleteComment = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			Movie.findOne({ _id : req.body.movieID }, function(err, movie) {
+			Movie.findOne({ 'torrent.id' : req.body.movieID }, function(err, movie) {
 				if (!err && movie) {
 					var comments = movie.comments,
 						isDelete = false;
 
 					for (var index = 0; index < comments.length; index++) {
+						// console.log(comments[index].id + ' | ' + req.body.commentID + ' | ... | ' + comments[index].user.id + ' | ' + user._id);
 						if (comments[index].id === req.body.commentID && comments[index].user.id == user._id) {
 							comments.splice(index, 1);
 							isDelete = true;
 						}
+						// if (comments[index].user.id == user._id)
+						// 	console.log('true');
+						// else
+						// 	console.log('false');
 					}
 
 					if (isDelete) {
 						Movie.update(
-							{ _id : req.body.movieID },
+							{ 'torrent.id' : req.body.movieID },
 							{ $set : { comments : comments } },
 							function() {
 								console.log('SUCCESS : comment has been deleted');
