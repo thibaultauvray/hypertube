@@ -66,7 +66,8 @@ app.post('/api/users/shares/get', getUsers);
 // OAuth register and login routes
 app.get('/users/register/42', getCode42);
 app.get('/users/login/42', getCode42);
-app.get('/users/login/twitter', twitter.requestToken);
-app.get('/users/signin/twitter', twitter.accessToken);
+// app.get('/users/login/twitter', twitter.requestToken);
+// app.get('/users/signin/twitter', twitter.accessToken);
 app.use(passport.initialize());
 require("./server/oauth/facebook/facebook")(app, passport);
+require("./server/oauth/twitter/twitter_passport")(app, passport);
