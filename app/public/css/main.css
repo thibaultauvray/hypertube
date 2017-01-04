@@ -1,6 +1,6 @@
 .homepage .jumbotron {
   max-width: 49vw;
-  background-image: url("../img/home-bg4.jpg");
+  background-image: url("../img/home-bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -16,6 +16,8 @@
     width: 76%; }
 
 .userpage .jumbotron {
+  background: url(../img/home-bg4.jpg) center no-repeat;
+  background-size: cover;
   max-width: 55vw;
   background-color: #FFF;
   box-shadow: 0 0 12px #CCC;
@@ -541,7 +543,9 @@ nav {
         font-size: 2vw; } }
 
 body {
-  background-image: url("../img/hacker.jpg"); 
+  background: url("../img/pirate.jpg") no-repeat center fixed; 
+  background-size: cover;
+  background-color: #000
 }
 
 footer {
