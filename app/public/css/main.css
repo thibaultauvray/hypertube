@@ -504,7 +504,9 @@ nav {
         font-size: 2vw; } }
 
 body {
-  background-image: url("../img/hacker.jpg"); 
+  background: url("../img/pirate.jpg") no-repeat center fixed; 
+  background-size: cover;
+  background-color: #000
 }
 
 footer {
