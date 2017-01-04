@@ -16,6 +16,8 @@
     width: 76%; }
 
 .userpage .jumbotron {
+  background: url(../img/home-bg4.jpg) center no-repeat;
+  background-size: cover;
   max-width: 55vw;
   background-color: #FFF;
   box-shadow: 0 0 12px #CCC;
