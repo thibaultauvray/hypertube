@@ -52,7 +52,8 @@ var movieSchema = new Schema(
 					  },
 		uploader 	: String,
 		verified 	: Boolean,
-		uploaderLink: String
+		uploaderLink: String,
+		date:		 { type: Date }
 	},
 	subtitles : {
 		en : String,
