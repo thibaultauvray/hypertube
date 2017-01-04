@@ -5,8 +5,14 @@ var express = require('express'),
 	path = require('path'),
 	hbs = require('express-handlebars');
 	mongoose = require('./mongoose');
-
 var app = express();
+
+global.client;
+const server = app.listen(3000, () => {
+    console.log('listening on *:3000');
+});
+const io = require('socket.io')(server);
+
 
 app.set('view engine', 'handlebars'); // Set template engine
 app.engine('handlebars', hbs({
@@ -19,6 +25,15 @@ app.engine('handlebars', hbs({
 		}
 	}
 }));
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    console.log(socket.handshake.sessionID);
+    global.client = socket.id;
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
 
 process.env.NODE_ENV = 'production';
 app.enable('view cache');
@@ -35,6 +50,7 @@ app.use(session({
 }));
 
 app.use(function (req, res, next) {
+    res.io = io;
 	var views = req.session.views ;
 	if (!views) {
 		views = req.session.views = {};
@@ -46,8 +62,5 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.listen(3000, function () {
-	console.log('Listening on port 3000');
-});
 
 module.exports = app;

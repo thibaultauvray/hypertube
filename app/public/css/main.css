@@ -335,7 +335,6 @@ nav {
       padding-right: 6px;
       position: relative;
       top: 4px;
-      left: 41.5%;
       z-index: 1; }
     .player .player-block hr {
       margin-top: -5px !important; }
@@ -386,6 +385,44 @@ nav {
       .player .player-block .video-infos .movie .plot, .player .player-block .video-infos .movie .director, .player .player-block .video-infos .movie .stars {
         font-size: 1vw;
         margin-bottom: 2px; }
+
+        .stream #progressConvert {
+  border: 1px solid #18aba9;
+  margin-bottom: 10px; }
+  .stream #progressConvert .progress-bar {
+    background-color: #ff8f00; }
+
+.stream .wait .loadingText {
+  text-align: center;
+  margin: 0px 0;
+  color: #777;
+  font-weight: bold; }
+
+.stream .wait #waiting {
+  margin-bottom: 12px; }
+
+.stream .wait .movie {
+  height: 100px !important;
+  min-height: 0; }
+
+.stream .wait #playMe {
+  background-color: orange;
+  border: 2px solid #18aba9;
+  color: white;
+  font-family: Trebuchet MS; }
+
+.stream .video-container .movie {
+  min-height: 500px;
+  height: 500px !important;
+  padding-bottom: 30px; }
+
+.stream .thumbnails {
+  padding: 0 !important; }
+  .stream .thumbnails .movie-infos {
+    max-height: 207px;
+    height: 207px; }
+  .stream .thumbnails .movie {
+    height: auto; }
 
 .comments .btn {
   margin-top: 10px;

@@ -86,3 +86,51 @@
 		}
 	}
 }
+
+.stream {
+  #progressConvert {
+    border: 1px solid #18aba9;
+    margin-bottom: 10px;
+    .progress-bar {
+      background-color: #ff8f00;
+    }
+  }
+  .wait {
+    .loadingText {
+      text-align: center;
+      margin: 0px 0;
+      color: #777;
+      font-weight: bold;
+    }
+    #waiting {
+      margin-bottom: 12px;
+    }
+    .movie {
+      height: 100px !important;
+      min-height: 0;
+    }
+    #playMe {
+      background-color: orange;
+      border: 2px solid #18aba9;
+      color: white;
+      font-family: Trebuchet MS;
+    }
+  }
+  .video-container {
+    .movie {
+      min-height: 500px;
+      height: 500px !important;
+      padding-bottom: 30px;
+    }
+  }
+  .thumbnails {
+    padding: 0 !important;
+    .movie-infos {
+      max-height: 207px;
+      height: 207px;
+    }
+    .movie {
+      height: auto;
+    }
+  }
+}

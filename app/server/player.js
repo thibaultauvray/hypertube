@@ -2,6 +2,9 @@ var mongoose = require('../mongoose'),
 	User = require('../user_schema'),
 	Movie = require('../movie_schema'),
 	_ = require('lodash');
+	
+var imdb = require('imdb-api');	
+
 
 var player = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
@@ -21,18 +24,24 @@ var player = function(req, res, next) {
 					// 			movie.resolutions[j].resolution = 'N/A';
 					// 	}
 					// }
-
-					res.render('player', {
-						isApp : true,
-						title : 'Hypertube - Player',
-						firstname : _.capitalize(user.firstname),
-						language : user.language,
-						movie : movie,
-						params : {
-							id : req.params.id,
-							resolution : req.params.link
-						}
-					});
+			        var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
+	                imdb.getById(movie.movie.imdb.id).then(function (data) {
+						res.render('player', {
+							isApp : true,
+							title : 'Hypertube - Player',
+							firstname : _.capitalize(user.firstname),
+							language : user.language,
+			                isDownload: isDownload,
+							movie : movie,
+							magnet: movie.magnet,
+							torrentId: req.params.id,
+			                duration: parseInt(data.runtime),
+							params : {
+								id : req.params.id,
+								resolution : req.params.link
+							}
+						});
+				});
 				} else {
 					console.log('Movie not found at this url');
 					res.redirect('/app/library');

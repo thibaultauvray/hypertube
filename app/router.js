@@ -28,10 +28,51 @@ var addNewUser = require('./server/api/addNewUser'),
 	getUsers = require('./server/api/profile'),
 	getSubtitles = require('./server/api/getSubtitles');
 
+var stream = require('./server/stream.js');
+
 var getCode42 = require('./server/oauth/42/getCode42'),
 	loginApi42 = require('./server/oauth/42/loginApi42'),
+	cron = require('node-cron'),
 	twitter = require('./server/oauth/twitter/twitter');
 
+/*
+* CRON DELETE MOVIES IN SERVER IF < 30 DAY WITHOUT PLAY
+*/
+var deleteFolderRecursive = function(path) {
+	if( fs.existsSync(path) ) {
+		fs.readdirSync(path).forEach(function(file,index){
+			var curPath = path + "/" + file;
+			if(fs.lstatSync(curPath).isDirectory()) { // recurse
+				deleteFolderRecursive(curPath);
+			} else { // delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		fs.rmdirSync(path);
+	}
+};
+
+cron.schedule('35 12 * * *', function(){
+	var d = new Date();
+	d.setMonth(d.getMonth() - 1);
+	Movies.find({'torrent.date' : {$lt: d} }, function (err, doc)
+	{
+		doc.forEach(function(elem)
+		{
+			var path = elem.torrent.path;
+			deleteFolderRecursive('/tmp/tdl/'+elem.torrent.id);
+			console.log(path);
+			Movies.update({'torrent.id' : elem.torrent.id}, {$set : {'torrent.date' : Date.now(), 'torrent.path' : null}}, function(err, doc)
+			{
+			})
+		});
+		console.log(doc.length + "Film supprime");
+	});
+});
+
+/*
+* ROUTES 
+*/
 // App routes
 app.get('/', home);
 app.get('/logout', logout);
@@ -41,8 +82,10 @@ app.get('/users/forgot-password', forgotPassword);
 app.get('/users/reset-password/:username/:token', resetPassword);
 app.get('/app/library', library);
 app.get('/app/accueil', accueil);
-app.get('/player/html5/:id/:magnet', player);
-app.get('/player/html5/:text', player);
+app.get('/app/player/:id/:magnet', player);
+app.get('/app/torrent/:torrentId/:duration', stream.torrent)
+
+// app.get('/player/html5/:text', player);
 app.get('/app/search/:text/:search', makeSearch);
 app.get('/app/profile', profile);
 app.get('/app/user/:id', user);
