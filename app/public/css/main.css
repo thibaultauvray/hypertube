@@ -15,6 +15,10 @@
   .homepage .jumbotron .btn {
     width: 76%; }
 
+  .nopadding{
+    padding: 0 !important;
+  }
+
 .userpage .jumbotron {
   background: url(../img/home-bg4.jpg) center no-repeat;
   background-size: cover;
@@ -388,6 +392,9 @@ nav {
         font-size: 1vw;
         margin-bottom: 2px; }
 
+      .paddingGene{
+        padding: 10px;
+      }
         .stream #progressConvert {
   border: 1px solid #18aba9;
   margin-bottom: 10px; }
@@ -422,7 +429,8 @@ nav {
   padding: 0 !important; }
   .stream .thumbnails .movie-infos {
     max-height: 207px;
-    height: 207px; }
+    height: 207px;
+  }
   .stream .thumbnails .movie {
     height: auto; }
 
