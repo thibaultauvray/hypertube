@@ -1,6 +1,6 @@
 .homepage .jumbotron {
   max-width: 49vw;
-  background-image: url("../img/home-bg.jpg");
+  background-image: url("../img/lord.gif");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -499,6 +499,9 @@ nav {
     position: relative;
     left: -4px;
     top: -1px;
+  }
+  .homepage .jumbotron .btn-link {
+    background-color: #2b333f;
   }
   .homepage .jumbotron {
     max-width: 99vw; }
