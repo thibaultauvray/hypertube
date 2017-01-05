@@ -371,7 +371,7 @@ nav {
         filter: grayscale(100%);
         -webkit-filter: grayscale(100%); }
       .player .player-block .video-infos .movie .movie-infos {
-        height: 207px; }
+         }
       .player .player-block .video-infos .movie .movie-basics {
         font-size: 0.8vw; }
         .player .player-block .video-infos .movie .movie-basics .rated {
