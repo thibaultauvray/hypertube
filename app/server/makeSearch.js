@@ -13,7 +13,9 @@ var mongoose = require('../mongoose'),
 const PirateBay = require('thepiratebay');
 const Yts = require('yify-search');
 const OS = require('opensubtitles-api');
-
+var request = require('request');
+var srt2vtt = require('srt-to-vtt');
+var fs = require("fs");
 const OpenSubtitles = new OS({
 	useragent: "OSTestUserAgentTemp",
 	username: 'nocalis',
@@ -113,6 +115,17 @@ var omdbSearch = function(req, res, next) {
 																subtitles = {en: data.en.url , fr : "" };
 															else if (data.fr)
 																subtitles = {en: "" , fr : data.fr.url };
+															path = __dirname + "/../public/subtitles/" + torrent.id + "/";
+															console.log(path);
+															if (!fs.existsSync(path)){
+																fs.mkdirSync(path);
+															}
+															Object.keys(subtitles).forEach(function(e){
+																console.log(subtitles[e]);
+																if (subtitles[e].length != 0) {
+																	request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
+																}
+															});
 															var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
 															film.save(function(err){
 																// if (err) {
@@ -184,6 +197,15 @@ var omdbSearch = function(req, res, next) {
 														subtitles = {en: data.en.url , fr : "" };
 													else if (data.fr)
 														subtitles = {en: "" , fr : data.fr.url };
+													path = __dirname + "/../public/subtitles/" + torrent.id + "/";
+													if (!fs.existsSync(path)){
+														fs.mkdirSync(path);
+													}
+													Object.keys(subtitles).forEach(function(e){
+														if (subtitles[e].length != 0) {
+															request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
+														}
+													});
 													var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
 													film.save(function(err){
 														//  		if (err) {

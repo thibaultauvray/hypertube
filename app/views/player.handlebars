@@ -1,4 +1,4 @@
-<div class="container-fluid player">
+<div class="container-fluid player" xmlns="http://www.w3.org/1999/html">
 	<div id="metadata" class="alert alert-info alert-dismissible center-block hidden" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<i class="fa fa-database" aria-hidden="true"></i>&nbsp; Video metadata successfully loaded !
@@ -14,9 +14,13 @@
                 <video id="video" class="video-js vjs-sublime-skin videojs-stream col-sm-12 "
                        data-setup='{"example_option":true}' controls
                        preload="none">
+                    {{log subtitles}}
 
-                    <track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>
-                    <track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">
+                    {{#eachProp subtitles}}
+                        <track label="{{lang}}" kind="captions" srclang="{{key}}" src="{{src}}">
+                    {{/eachProp}}
+                    <!--<track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>-->
+                    <!--<track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">-->
 
                     To view this video please enable JavaScript, and consider upgrading to a web browser that
                     <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>

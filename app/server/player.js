@@ -25,6 +25,10 @@ var player = function(req, res, next) {
 					// 	}
 					// }
 			        var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
+					subtitles = [];
+					subtitles['en'] = movie.subtitles.en && movie.subtitles.en.length != 0 ? movie.subtitles.en : null;
+					subtitles['fr'] = movie.subtitles.fr && movie.subtitles.fr.length != 0 ? movie.subtitles.fr : null;
+					subtitles['id'] = req.params.id;
 	                imdb.getById(movie.movie.imdb.id).then(function (data) {
 						res.render('player', {
 							isApp : true,
@@ -33,6 +37,7 @@ var player = function(req, res, next) {
 							language : user.language,
 			                isDownload: isDownload,
 							movie : movie,
+							subtitles : subtitles,
 							magnet: movie.magnet,
 							torrentId: req.params.id,
 			                duration: parseInt(data.runtime),

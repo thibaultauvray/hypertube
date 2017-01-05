@@ -15,6 +15,7 @@ const io = require('socket.io')(server);
 
 
 app.set('view engine', 'handlebars'); // Set template engine
+app.use('/subs', express.static(__dirname + '/public/subtitles'));
 app.engine('handlebars', hbs({
 	defaultLayout : 'main',
 	helpers : {
@@ -22,6 +23,24 @@ app.engine('handlebars', hbs({
 			if (((parseInt(key) + 1) % 4) === 0)
 				return options.fn(this);
 			return options.inverse(this);
+		},
+		"log" : function (thing) {
+			console.log(thing);
+		},
+		"eachProp" : function(arr, options) {
+			var ret = "";
+			id = arr['id'];
+			path = "/subs/" + id + "/" + id +"-";
+			for (i in arr){
+				if (i != 'id' && arr[i] != null) {
+					if (i == 'fr')
+						ret = ret + options.fn({key: i, value: arr[i], id:id, lang:"French", src:path+i+".vtt"});
+					else if (i == 'en')
+						ret = ret + options.fn({key: i, value: arr[i], id:id, lang:"English", src:path+i+".vtt"});
+				}
+			}
+
+			return ret;
 		}
 	}
 }));
