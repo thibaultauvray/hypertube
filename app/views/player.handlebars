@@ -7,7 +7,7 @@
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp; Video is ready to play !
 	</div>
-	<div class="row center-block stream player-block">
+	<div class="row center-block stream player-block nopadding">
 		<div id="videoContainer" class="video-container thumbnails">
             <div class="movie">
 
@@ -41,10 +41,10 @@
 		<span class="part">About the movie</span>
 		<hr />
 		<div class="video-infos">
-			<div class="movie">
+			<div class="movie paddingGene">
 				<div class="poster" style="background-image: url('{{ movie.movie.poster }}');"></div>
 				<div class="movie-infos">
-					<h4>{{ movie.movie.title }} ({{ movie.movie.year }})</h4>
+					<h4 style="margin-top: -6px;">{{ movie.movie.title }} ({{ movie.movie.year }})</h4>
 					<small class="movie-basics text-muted">
 						<span class="rated">{{ movie.movie.rated }}</span>
 						{{ movie.movie.runtime }} - {{ movie.movie.genres }}
@@ -65,7 +65,7 @@
 		</div>
 		<span class="part">Comments</span>
 		<hr />
-		<div class="comments">
+		<div class="comments paddingGene">
 			<div class="form-group">
 				<textarea class="form-control" rows="3" id="comment-area"></textarea>
 				<button id="comment-btn" type="button" class="btn btn-primary" disabled><i class="fa fa-comment" aria-hidden="true"></i> Add my comment</button>

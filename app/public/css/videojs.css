@@ -337,6 +337,7 @@ Skin Style Starts
 
 #video {
     width: 100%;
+    border-radius: 3px 3px 0 0;
     height: 100%;
     margin-bottom: 5px;
 }
