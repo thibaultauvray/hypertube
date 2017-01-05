@@ -243,10 +243,12 @@ var omdbSearch = function(req, res, next) {
 															else if (data.fr)
 																subtitles = {en: "" , fr : data.fr.url };
 															path = __dirname + "/../public/subtitles/" + torrent.id + "/";
+
 															if (!fs.existsSync(path)){
 																fs.mkdirSync(path);
 															}
 															Object.keys(subtitles).forEach(function(e){
+
 																if (subtitles[e].length != 0) {
 																	request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
 																}
@@ -260,9 +262,11 @@ var omdbSearch = function(req, res, next) {
 															});
 														});
 													});
+
 											   	}
 											})
 										})
+
 									})
 								}
 								callback(null);

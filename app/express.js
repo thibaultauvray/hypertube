@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
     // console.log(socket.handshake.sessionID);
     global.client = socket.id;
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        // console.log('user disconnected');
     });
 });
 

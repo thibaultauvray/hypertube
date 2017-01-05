@@ -1,4 +1,4 @@
-<div class="container-fluid player">
+<div class="container-fluid player" xmlns="http://www.w3.org/1999/html">
 	<div id="metadata" class="alert alert-info alert-dismissible center-block hidden" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<i class="fa fa-database" aria-hidden="true"></i>&nbsp; Video metadata successfully loaded !
@@ -7,16 +7,20 @@
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp; Video is ready to play !
 	</div>
-	<div class="row center-block stream player-block">
+	<div class="row center-block stream player-block nopadding">
 		<div id="videoContainer" class="video-container thumbnails">
             <div class="movie">
 
                 <video id="video" class="video-js vjs-sublime-skin videojs-stream col-sm-12 "
                        data-setup='{"example_option":true}' controls
                        preload="none">
+                    {{log subtitles}}
 
-                    <track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>
-                    <track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">
+                    {{#eachProp subtitles}}
+                        <track label="{{lang}}" kind="captions" srclang="{{key}}" src="{{src}}">
+                    {{/eachProp}}
+                    <!--<track label="English" kind="captions" srclang="en" src="http://localhost:3000/test.vtt" default>-->
+                    <!--<track label="French" kind="captions" srclang="fr" src="http://localhost:3000/test.vtt">-->
 
                     To view this video please enable JavaScript, and consider upgrading to a web browser that
                     <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -37,10 +41,10 @@
 		<span class="part">About the movie</span>
 		<hr />
 		<div class="video-infos">
-			<div class="movie">
+			<div class="movie paddingGene">
 				<div class="poster" style="background-image: url('{{ movie.movie.poster }}');"></div>
 				<div class="movie-infos">
-					<h4>{{ movie.movie.title }} ({{ movie.movie.year }})</h4>
+					<h4 style="margin-top: -6px;">{{ movie.movie.title }} ({{ movie.movie.year }})</h4>
 					<small class="movie-basics text-muted">
 						<span class="rated">{{ movie.movie.rated }}</span>
 						{{ movie.movie.runtime }} - {{ movie.movie.genres }}
@@ -61,7 +65,7 @@
 		</div>
 		<span class="part">Comments</span>
 		<hr />
-		<div class="comments">
+		<div class="comments paddingGene">
 			<div class="form-group">
 				<textarea class="form-control" rows="3" id="comment-area"></textarea>
 				<button id="comment-btn" type="button" class="btn btn-primary" disabled><i class="fa fa-comment" aria-hidden="true"></i> Add my comment</button>
