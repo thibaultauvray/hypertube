@@ -99,7 +99,10 @@ var omdbSearch = function(req, res, next) {
 	                                            file_size = file.length;
 	                                            movie_file = file;
 	                                        }
+
 	                                });
+	                                engine.removeAllListeners();
+                                    engine.destroy();
 	                                    // })
 	                                if (validExtension(movie_file.name)) {
 								    	var imdb = new Nightmare({executionTimeout: 1000 })
@@ -199,15 +202,16 @@ var omdbSearch = function(req, res, next) {
 							if (result.magnet){
 								var engine = torrentStream(result.magnet);
 								engine.on('ready', function () {
-	                                        engine.files.forEach(function (file) {
-	                                            // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
-	                                            if (file_size < file.length) {
-	                                                file_size = file.length;
-	                                                movie_file = file;
-	                                            }
+	                                engine.files.forEach(function (file) {
+	                                    // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
+	                                    if (file_size < file.length) {
+	                                        file_size = file.length;
+	                                        movie_file = file;
+	                                    }
 
-	                                        });
-	                                    // })
+	                                });
+	                                engine.removeAllListeners();
+                                    engine.destroy();    
 	                                if (validExtension(movie_file.name)) {    
 										result.torrents.forEach(function(data){
 											
