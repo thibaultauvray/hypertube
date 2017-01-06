@@ -14,7 +14,6 @@
                 <video id="video" data-id="{{ torrentId }}" class="video-js vjs-sublime-skin col-sm-12 "
                        data-setup='{"example_option":true}' controls
                        preload="none">
-                    {{log subtitles}}
 
                     {{#eachProp subtitles}}
                         <track label="{{lang}}" kind="captions" srclang="{{key}}" src="{{src}}">
@@ -61,7 +60,7 @@
 			</div>
 			<div id="comments-list" class="row">
 				{{#each movie.comments}}
-					<div class="col-md-12 comment-block" id="{{ this.id }}">
+					<div class="col-md-12 col-sm-12 comment-block" id="{{ this.id }}">
 						<div class="avatar img-rounded img-responsive" style="background-image: url('{{ this.user.avatar }}');"></div>
 
 
