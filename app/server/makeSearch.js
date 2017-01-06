@@ -172,6 +172,7 @@ var omdbSearch = function(req, res, next) {
 									    .end()
 									}
 						  		})
+					  		}
 					  	}, function(err) {
 					      	res.render('search', {
 										isApp : true,
@@ -181,7 +182,6 @@ var omdbSearch = function(req, res, next) {
 										language : user.language,
 										movies : movies
 							});
-						}
 					  }); 
 					})
 					.catch(err => {
