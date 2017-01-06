@@ -16,8 +16,7 @@ var userSchema = mongoose.Schema({
 	avatar : String,
 	language : { type : String, required : true, default : 'EN' },
 	history : Array,
-	likes: Array,
-	dislikes: Array
+	votes: Array
 });
 
 var User = mongoose.model('User', userSchema);
