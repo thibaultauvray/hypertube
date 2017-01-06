@@ -44,7 +44,9 @@ var player = function(req, res, next) {
 							params : {
 								id : req.params.id,
 								resolution : req.params.link
-							}
+							},
+							likes : movie.like,
+							dislikes: movie.dislike
 						});
 				});
 				} else {

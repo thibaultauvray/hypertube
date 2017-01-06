@@ -12,7 +12,8 @@ var app = require('./express.js'),
 	profile = require('./server/profile'),
 	passport = require('passport'),
 	movieCompletion = require('./server/api/completion'),
-	user = require('./server/user');
+	user = require('./server/user'),
+	vote = require('./server/vote');
 
 var addNewUser = require('./server/api/addNewUser'),
 	editUser = require('./server/api/editUser'),
@@ -101,6 +102,8 @@ app.post('/api/movie/visit/add', addNewVisit);
 app.post('/api/user/lang/set', setLocale);
 app.post('/api/library/movies/get', getMovies);
 app.post('/api/search/movies/get', getSearch);
+
+app.post("/api/vote", vote);
 
 app.post('/api/users/shares/get', getUsers);
 

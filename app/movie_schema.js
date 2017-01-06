@@ -69,7 +69,9 @@ var movieSchema = new Schema(
 			lastname: String,
 			avatar: String
 		}
-	}]
+	}],
+	like: {type: Number, default: 0},
+	dislike: {type: Number, default: 0}
 });
 
 movieSchema.statics.findByTitle = function (name, cb) {
