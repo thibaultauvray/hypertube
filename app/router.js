@@ -26,9 +26,7 @@ var addNewUser = require('./server/api/addNewUser'),
 	getMovies = require('./server/api/getMovies'),
 	getSearch = require('./server/api/search'),
 	getUsers = require('./server/api/profile'),
-
-
-var stream = require('./server/stream.js');
+    stream = require('./server/stream.js');
 
 var getCode42 = require('./server/oauth/42/getCode42'),
 	loginApi42 = require('./server/oauth/42/loginApi42'),
