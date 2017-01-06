@@ -87,6 +87,25 @@ $('#comment-area').on('input keyup change', function() {
 		$('#comment-btn').attr('disabled', true);
 });
 
+$(".fa-thumbs-down").on('click', function () {
+	console.log('Downvote');
+	$.post('/api/vote', {torrentId: $('#video').data('id'), vote: "down"}).done(function (res) {
+		console.log(res.dislikes);
+		// if (res.state == 'success'){
+			$("span#dislikes").text(res.dislikes);
+		// }
+	});
+});
+$(".fa-thumbs-up").on('click', function () {
+	console.log('Upvote');
+	$.post('/api/vote', {torrentId: $('#video').data('id'), vote: "up"}).done(function (res) {
+		console.log(res.likes);
+		// if (res.state == 'success'){
+			$("span#likes").text(res.likes);
+		// }
+	});
+});
+
 $('#comment-btn').on('click', function() {
 	var self = this;
 	$(self).html('<i class="fa fa-refresh" aria-hidden="true"></i> Loading...');
