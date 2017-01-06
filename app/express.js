@@ -69,7 +69,10 @@ app.use(session({
 }));
 
 app.use(function (req, res, next) {
-    res.io = io;
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Credentials', true);
+
+	res.io = io;
 	var views = req.session.views ;
 	if (!views) {
 		views = req.session.views = {};

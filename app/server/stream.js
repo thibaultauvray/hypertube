@@ -124,6 +124,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res) {
                         date: new Date,
                         path: engine.path + '/' + movie_file.path
                     };
+                    console.log(movie_file.length);
                     fulfill(movie_data);
                     Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.path': engine.path + '/' + movie_file.path, 'torrent.size' : movie_file.length}}, function (err, doc) {
                         console.log('Size updated');
@@ -210,12 +211,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res) {
 }
 
 
-var streamMovie = function (data, query, range_string, res, movie, magnet, io, duration) {
-    /*
-     DATA.NAME = File name
-     Data.lenght = size;
-     data . path PAth + file
-     */
+var streamMovie = function (req, data, query, range_string, res, movie, magnet, io, duration) {
     console.log("STREAM");
     if (movie.torrent.isDownload === undefined || movie.torrent.isDownload === false) {
         var isdownload = false;
@@ -283,7 +279,6 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                     info.size = fs.statSync(info.path).size;
                     fulfill(info.size);
                 }
-
             }).then(
                 function (suceed) {
                     console.log("INFO FILE + ");
@@ -293,39 +288,40 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                         var stat = fs.statSync(info.path);
                         var total = stat.size;
                         console.log(range_string);
-                        if (range_string) {
-                            info.start = 0;
-                            info.end = info.size - 1;
-                            if (range_string && (range = range_string.match(/bytes=(.+)-(.+)?/)) !== null) {
-                                info.start = isNumber(range[1]) && range[1] >= 0 && range[1] < info.end ? range[1] - 0 : info.start;
-                                info.end = isNumber(range[2]) && range[2] > info.start && range[2] <= info.end ? range[2] - 0 : info.end;
-                                info.rangeRequest = true;
+                        if (info.mime !== 'video/x-matroska') {
+                            if (range_string) {
+                                info.start = 0;
+                                info.end = info.size - 1;
+                                if (range_string && (range = range_string.match(/bytes=(.+)-(.+)?/)) !== null) {
+                                    info.start = isNumber(range[1]) && range[1] >= 0 && range[1] < info.end ? range[1] - 0 : info.start;
+                                    info.end = isNumber(range[2]) && range[2] > info.start && range[2] <= info.end ? range[2] - 0 : info.end;
+                                    info.rangeRequest = true;
 
-                            } else if (query.start || query.end) {
-                            // This is a range request, but doesn't get range headers. So there.
-                            info.start = isNumber(query.start) && query.start >= 0 && query.start < info.end ? query.start - 0 : info.start;
-                            info.end = isNumber(query.end) && query.end > info.start && query.end <= info.end ? query.end - 0 : info.end;
-                            }
-                            info.length = info.end - info.start + 1;
-                            var header;
-                            header = {
-                                "Cache-Control": "public; max-age=3600",
-                                Connection: "keep-alive",
-                                "Content-Type": info.mime,
-                                "Content-Disposition": "inline; filename=" + info.file + ";",
-                                "Accept-Ranges": "bytes"
-                            };
-                            header.Status = "206 Partial Content";
-                            header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
-                            header.Pragma = "public";
-                            header["Content-Transfer-Encoding"] = "binary";
-                            header["Content-Length"] = info.length;
-                            res.writeHead(206, header);
-                            stream = fs.createReadStream(info.path, {flags: "r", start: info.start, end: info.end});
-                            stream.pipe(res);
+                                } else if (query.start || query.end) {
+                                    // This is a range request, but doesn't get range headers. So there.
+                                    info.start = isNumber(query.start) && query.start >= 0 && query.start < info.end ? query.start - 0 : info.start;
+                                    info.end = isNumber(query.end) && query.end > info.start && query.end <= info.end ? query.end - 0 : info.end;
+                                }
+                                info.length = info.end - info.start + 1;
+                                var header;
+                                header = {
+                                    "Cache-Control": "public; max-age=3600",
+                                    Connection: "keep-alive",
+                                    "Content-Type": info.mime,
+                                    "Content-Disposition": "inline; filename=" + info.file + ";",
+                                    "Accept-Ranges": "bytes"
+                                };
+                                header.Status = "206 Partial Content";
+                                header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
+                                header.Pragma = "public";
+                                header["Content-Transfer-Encoding"] = "binary";
+                                header["Content-Length"] = info.length;
+                                res.writeHead(206, header);
+                                stream = fs.createReadStream(info.path, {flags: "r", start: info.start, end: info.end});
+                                stream.pipe(res);
 
-                            return true;
-                            // Si fichier convertis
+                                return true;
+                                // Si fichier convertis
 
                                 // // if (range_string && (range = range_string.match(/bytes=(.+)-(.+)?/)) !== null) {
                                 // //
@@ -362,14 +358,77 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
                                 // stream.pipe(res);
                                 //
                                 // return true;
-                        }
-                        else {
-                            stream = fs.createReadStream(info.path);
-                            res.writeHead(200, {'Content-Length': total, 'Content-Type': 'video/mp4'});
-                            stream.pipe(res);
-                            return true;
+                            }
+                            else {
+                                stream = fs.createReadStream(info.path);
+                                res.writeHead(200, {'Content-Length': total, 'Content-Type': 'video/mp4'});
+                                stream.pipe(res);
+                                return true;
 
                             }
+                        }
+                        else
+                        {
+                            var stat = fs.statSync(info.path);
+                            var total = stat.size;
+                            var total2 = total;
+                            // if (sizeTorrent[params.movie] != undefined)
+                                // total = sizeTorrent[params.movie];
+
+                            //console.log(stat.size);
+                            if (req.headers['range']) {
+                                var range = req.headers.range;
+                                var parts = range.replace(/bytes=/, "").split("-");
+                                var partialstart = parts[0];
+                                var partialend = parts[1];
+
+                                var start = parseInt(partialstart, 10);
+                                var end = partialend ? parseInt(partialend, 10) : total-1;
+                                var chunksize = (end-start)+1;
+                                //console.log('RANGE: ' + start + ' - ' + end + ' = ' + chunksize);
+                                if (start >= total2){
+                                    //console.log('euh2', start, total2, total);
+                                    res.writeHead(400);
+                                    res.end();
+                                } else if (start <= end) {
+                                    var file = fs.createReadStream(info.path, {start: start, end: end, autoClose:true});
+                                    //console.log(start, end);
+                                    var stat = fs.statSync(info.path);
+                                    var total = stat.size;
+
+                                    // if (sizeTorrent[params.movie] != undefined)
+                                    //     total = sizeTorrent[params.movie];
+                                    res.writeHead(206, {
+                                        'transferMode.dlna.org': 'Streaming',
+                                        'Cache-Control': 'private, no-cache, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
+                                        'Expires' : '-1',
+                                        'Access-Control-Allow-Origin' : '*',
+                                        'Pragma' : 'no-cache',
+                                        'Content-Range': 'bytes ' + start + '-' + end + '/' + total ,
+                                        'Accept-Ranges': 'bytes',
+                                        'Content-Length': chunksize,
+                                        'Content-Type': 'video/x-matroska',
+                                        'Connection': 'keep-alive'
+                                    });
+                                    file.pipe(res);
+                                } else {
+                                    //console.log('euh');
+                                    res.writeHead(400);
+                                    res.end();
+                                }
+                            } else {
+                                //console.log('ALL: ' + total);
+                                res.writeHead(200, {
+                                    'Cache-Control': 'private, no-cache, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
+                                    'Expires' : '-1',
+                                    'Pragma' : 'no-cache',
+                                    'Access-Control-Allow-Origin' : '*',
+                                    'Content-Length': total,
+                                    'Content-Type': 'video/x-matroska'
+                                });
+                                fs.createReadStream(params.movie).pipe(res);
+                            }
+                        }
 
 
 
@@ -393,38 +452,6 @@ var streamMovie = function (data, query, range_string, res, movie, magnet, io, d
 
 }
 
-// var setHeaderInfo = function (info, res, header) {
-//     var code = 200;
-//     var header;
-//     var stat = fs.statSync(info.path);
-//     var total = stat.size;
-//
-//     if (header) {
-//         var parts = header.replace(/bytes=/, "").split("-");
-//         var partialstart = parts[0];
-//         var partialend = parts[1];
-//
-//         var start = parseInt(partialstart, 10);
-//         var end = partialend ? parseInt(partialend, 10) : total - 1;
-//
-//         var chunksize = (end - start) + 1;
-//         res.writeHead(206, {
-//             'transferMode.dlna.org': 'Streaming',
-//             'Cache-Control': 'private, no-cache, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
-//             'Expires' : '-1',
-//             'Access-Control-Allow-Origin' : '*',
-//             'Pragma' : 'no-cache',
-//             'Content-Range': 'bytes' + start + '-' + end + '/' + total,
-//             'Accept-Ranges': 'bytes',
-//             'Content-Length': chunksize,
-//             'Content-Type': 'video/x-matroska'
-//         });
-//     }
-//     else {
-//         res.writeHead(200, {'Content-Length': total, 'Content-Type': 'video/x-matroska'});
-//     }
-//     return true;
-// }
 
 var i = 0;
 
@@ -465,7 +492,7 @@ exports.torrent = function (req, res, next) {
             /* Promise fulfill callback */
             function (data) {
                 // Neccessary for streaming video
-                streamMovie(data, req.query, range_string, res, movie, magnet, io, duration);
+                streamMovie(req, data, req.query, range_string, res, movie, magnet, io, duration);
             },
             // Error TODO
             function (err) {
