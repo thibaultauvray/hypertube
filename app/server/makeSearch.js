@@ -90,87 +90,88 @@ var omdbSearch = function(req, res, next) {
 					.then(torrents => {
 						async.each(torrents, function(torrent, callback) {
 					    	var file_size = 0;
-							var engine = torrentStream(torrent.magnetLink);
-							engine.on('ready', function () {
-                                engine.files.forEach(function (file) {
-                                    // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
-                                    if (file_size < file.length) {
-                                            file_size = file.length;
-                                            movie_file = file;
-                                        }
-                                });
-                                    // })
-                                if (validExtension(movie_file.name)) {
-							    	var imdb = new Nightmare({executionTimeout: 1000 })
-								    .useragent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36")
-								    .goto(torrent.link)
-								    //.wait()
-								    .evaluate( function() {
-								      if (document.querySelector("dd > a[title=IMDB]"))
-								        return (document.querySelector("dd > a[title=IMDB]").href.match(/((tt[0-9]{7,8})\/)/)[0].slice(0, -1));
-								      else if (document.querySelector("pre").innerText.match(/((tt[0-9]{7,8})\/)/))
-								        return (document.querySelector("pre").innerText.match(/((tt[0-9]{7,8})\/)/)[0].slice(0, -1));
-								      else
-								        return (null);
-								    })
-								    .run(function(err, nightmare) {
-								    	if (err) return console.log(err);
-								    		if (nightmare) {
-										        omdb.get(nightmare, function(err, movie) {
-										        	movies.push({movie, torrent, vu});
-											       	var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
-											        film.save(function(err) {
-											          	// if (err) console.log(err);
-											        })
+							if (torrent.magnetLink) {
+								var engine = torrentStream(torrent.magnetLink);
+								engine.on('ready', function () {
+	                                engine.files.forEach(function (file) {
+	                                    // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
+	                                    if (file_size < file.length) {
+	                                            file_size = file.length;
+	                                            movie_file = file;
+	                                        }
+	                                });
+	                                    // })
+	                                if (validExtension(movie_file.name)) {
+								    	var imdb = new Nightmare({executionTimeout: 1000 })
+									    .useragent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36")
+									    .goto(torrent.link)
+									    //.wait()
+									    .evaluate( function() {
+									      if (document.querySelector("dd > a[title=IMDB]"))
+									        return (document.querySelector("dd > a[title=IMDB]").href.match(/((tt[0-9]{7,8})\/)/)[0].slice(0, -1));
+									      else if (document.querySelector("pre").innerText.match(/((tt[0-9]{7,8})\/)/))
+									        return (document.querySelector("pre").innerText.match(/((tt[0-9]{7,8})\/)/)[0].slice(0, -1));
+									      else
+									        return (null);
+									    })
+									    .run(function(err, nightmare) {
+									    	if (err) return console.log(err);
+									    		if (nightmare) {
+											        omdb.get(nightmare, function(err, movie) {
+											        	movies.push({movie, torrent, vu});
+												       	var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
+												        film.save(function(err) {
+												          	// if (err) console.log(err);
+												        })
 
-											        Movie.findOne({'torrent.id':torrent.id}, function(err, result){
-											          	if (!result){
-											          		OpenSubtitles.login()
-															.then(function (res) {
-																OpenSubtitles.search({
-																	imdbid: nightmare
-																}).then(function (data) {
-																	/*var file = fs.createWriteStream("f.txt");
-																	 var request = http.get(subtitles.fr.url, function(response) {
-																	 response.pipe(file);
-																	 });*/
-																	if (Object.keys(data).length === 0 || (!data.en && !data.fr))
-																		subtitles = {en : "", fr:""};
-																	else if (data.en && data.fr)
-																		subtitles = {en: data.en.url , fr : data.fr.url };
-																	else if (data.en)
-																		subtitles = {en: data.en.url , fr : "" };
-																	else if (data.fr)
-																		subtitles = {en: "" , fr : data.fr.url };
-																	path = __dirname + "/../public/subtitles/" + torrent.id + "/";
-																	console.log(path);
-																	if (!fs.existsSync(path)){
-																		fs.mkdirSync(path);
-																	}
-																	Object.keys(subtitles).forEach(function(e){
-																		console.log(subtitles[e]);
-																		if (subtitles[e].length != 0) {
-																			request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
+												        Movie.findOne({'torrent.id':torrent.id}, function(err, result){
+												          	if (!result){
+												          		OpenSubtitles.login()
+																.then(function (res) {
+																	OpenSubtitles.search({
+																		imdbid: nightmare
+																	}).then(function (data) {
+																		/*var file = fs.createWriteStream("f.txt");
+																		 var request = http.get(subtitles.fr.url, function(response) {
+																		 response.pipe(file);
+																		 });*/
+																		if (Object.keys(data).length === 0 || (!data.en && !data.fr))
+																			subtitles = {en : "", fr:""};
+																		else if (data.en && data.fr)
+																			subtitles = {en: data.en.url , fr : data.fr.url };
+																		else if (data.en)
+																			subtitles = {en: data.en.url , fr : "" };
+																		else if (data.fr)
+																			subtitles = {en: "" , fr : data.fr.url };
+																		path = __dirname + "/../public/subtitles/" + torrent.id + "/";
+																		console.log(path);
+																		if (!fs.existsSync(path)){
+																			fs.mkdirSync(path);
 																		}
-																	});
-																	var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
-																	film.save(function(err){
-																		// if (err) {
-																		// 	console.log('---------\n');
-																		// 	console.log(err);
-																		// }
+																		Object.keys(subtitles).forEach(function(e){
+																			console.log(subtitles[e]);
+																			if (subtitles[e].length != 0) {
+																				request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
+																			}
+																		});
+																		var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
+																		film.save(function(err){
+																			// if (err) {
+																			// 	console.log('---------\n');
+																			// 	console.log(err);
+																			// }
+																		});
 																	});
 																});
-															});
-											          	}
-											        })
-											    })
-									      	}  
-								      	callback(null);
-								    })
-								    .end()
-								}
-					  		})
+												          	}
+												        })
+												    })
+										      	}  
+									      	callback(null);
+									    })
+									    .end()
+									}
+						  		})
 					  	}, function(err) {
 					      	res.render('search', {
 										isApp : true,
@@ -180,6 +181,7 @@ var omdbSearch = function(req, res, next) {
 										language : user.language,
 										movies : movies
 							});
+						}
 					  }); 
 					})
 					.catch(err => {
@@ -193,84 +195,87 @@ var omdbSearch = function(req, res, next) {
 						// results.forEach(function(result){
 						async.each(results, function(result, callback){
 							var file_size = 0;
-							var engine = torrentStream(result.magnet);
-							engine.on('ready', function () {
-                                        engine.files.forEach(function (file) {
-                                            // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
-                                            if (file_size < file.length) {
-                                                file_size = file.length;
-                                                movie_file = file;
-                                            }
+							// console.log(result.magnet);
+							if (result.magnet){
+								var engine = torrentStream(result.magnet);
+								engine.on('ready', function () {
+	                                        engine.files.forEach(function (file) {
+	                                            // ON SELECTIONNE LE PLUS GROS FICHIER AVEC EXTENSION VALABLE
+	                                            if (file_size < file.length) {
+	                                                file_size = file.length;
+	                                                movie_file = file;
+	                                            }
 
-                                        });
-                                    // })
-                                if (validExtension(movie_file.name)) {    
-									result.torrents.forEach(function(data){
-										
-										omdb.get(result.imdb_code, function(err, movie) {		
-											var torrent =  
-											{
-												id 			: result.id,
-												name 		: data.quality,
-												size 		: data.size,
-												seeders 	: data.seeds,
-												leechers	: data.peers,
-												uploadDate 	: data.date_uploaded,
-												magnetLink 	: result.magnet,
-											}
-											var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
-											movies.push({movie, torrent, vu});
-											film.save(function(err) {
-											          	// if (err) console.log(err);
-											})
-											Movie.findOne({'torrent.id':torrent.id, 'torrent.name':torrent.name}, function(err, rees){
-										      	if (!rees){
-											      	OpenSubtitles.login()
-													.then(function (res) {
-														OpenSubtitles.search({
-															imdbid: result.imdb_code
-														}).then(function (data) {
-															/*var file = fs.createWriteStream("f.txt");
-															 var request = http.get(subtitles.fr.url, function(response) {
-															 response.pipe(file);
-															 });*/
-															if (Object.keys(data).length === 0 || (!data.en && !data.fr))
-																subtitles = {en : "", fr:""};
-															else if (data.en && data.fr)
-																subtitles = {en: data.en.url , fr : data.fr.url };
-															else if (data.en)
-																subtitles = {en: data.en.url , fr : "" };
-															else if (data.fr)
-																subtitles = {en: "" , fr : data.fr.url };
-															path = __dirname + "/../public/subtitles/" + torrent.id + "/";
+	                                        });
+	                                    // })
+	                                if (validExtension(movie_file.name)) {    
+										result.torrents.forEach(function(data){
+											
+											omdb.get(result.imdb_code, function(err, movie) {		
+												var torrent =  
+												{
+													id 			: result.id,
+													name 		: data.quality,
+													size 		: data.size,
+													seeders 	: data.seeds,
+													leechers	: data.peers,
+													uploadDate 	: data.date_uploaded,
+													magnetLink 	: result.magnet,
+												}
+												var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
+												movies.push({movie, torrent, vu});
+												film.save(function(err) {
+												          	// if (err) console.log(err);
+												})
+												Movie.findOne({'torrent.id':torrent.id, 'torrent.name':torrent.name}, function(err, rees){
+											      	if (!rees){
+												      	OpenSubtitles.login()
+														.then(function (res) {
+															OpenSubtitles.search({
+																imdbid: result.imdb_code
+															}).then(function (data) {
+																/*var file = fs.createWriteStream("f.txt");
+																 var request = http.get(subtitles.fr.url, function(response) {
+																 response.pipe(file);
+																 });*/
+																if (Object.keys(data).length === 0 || (!data.en && !data.fr))
+																	subtitles = {en : "", fr:""};
+																else if (data.en && data.fr)
+																	subtitles = {en: data.en.url , fr : data.fr.url };
+																else if (data.en)
+																	subtitles = {en: data.en.url , fr : "" };
+																else if (data.fr)
+																	subtitles = {en: "" , fr : data.fr.url };
+																path = __dirname + "/../public/subtitles/" + torrent.id + "/";
 
-															if (!fs.existsSync(path)){
-																fs.mkdirSync(path);
-															}
-															Object.keys(subtitles).forEach(function(e){
-
-																if (subtitles[e].length != 0) {
-																	request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
+																if (!fs.existsSync(path)){
+																	fs.mkdirSync(path);
 																}
-															});
-															var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
-															film.save(function(err){
-																//  		if (err) {
-																// 	console.log('---------\n');
-																// 	console.log(err);
-																// }
+																Object.keys(subtitles).forEach(function(e){
+
+																	if (subtitles[e].length != 0) {
+																		request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
+																	}
+																});
+																var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
+																film.save(function(err){
+																	//  		if (err) {
+																	// 	console.log('---------\n');
+																	// 	console.log(err);
+																	// }
+																});
 															});
 														});
-													});
 
-											   	}
+												   	}
+												})
 											})
-										})
 
-									})
-								}
-								callback(null);
-							})
+										})
+									}
+									callback(null);
+								})
+							}
 						}, function(err){
 							res.render('search', {
 											isApp : true,

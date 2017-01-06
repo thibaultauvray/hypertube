@@ -1,8 +1,8 @@
-var video = document.getElementById('video');
-var mustBeAdd = true;
-//var interval_id = setInterval(function() {
-	video.load();
-//}, 10000);
+// var video = document.getElementById('video');
+// var mustBeAdd = true;
+// //var interval_id = setInterval(function() {
+// 	video.load();
+// //}, 10000);
 
 // $.post('/api/movie/subtitles/get', {
 // 	movieID : $('#video').data('id'),
@@ -20,24 +20,24 @@ var mustBeAdd = true;
 // 		video.appendChild(track);
 // 	});
 
-video.onloadedmetadata = function() {
-	//clearInterval(interval_id);
-	$('#metadata').removeClass('hidden');
-	video.oncanplay = function() {
-		$('#ready').removeClass('hidden');
-		// console.log('video is ready to play.');
-		video.play();
-	};
-};
+// video.onloadedmetadata = function() {
+// 	//clearInterval(interval_id);
+// 	$('#metadata').removeClass('hidden');
+// 	video.oncanplay = function() {
+// 		$('#ready').removeClass('hidden');
+// 		// console.log('video is ready to play.');
+// 		video.play();
+// 	};
+// };
 
-video.addEventListener('ended', function() {
-	var time = video.currentTime;
-	//console.log(time);
-	if (time < 3600) {
-		video.load();
-		video.currentTime = time;
-	}
-}, false);
+// video.addEventListener('ended', function() {
+// 	var time = video.currentTime;
+// 	//console.log(time);
+// 	if (time < 3600) {
+// 		video.load();
+// 		video.currentTime = time;
+// 	}
+// }, false);
 
 $(document).ready(function() {
 	$('small.date').each(function() {

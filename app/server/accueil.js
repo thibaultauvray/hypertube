@@ -10,7 +10,7 @@ var accueil = function(req, res, next) {
 
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			Top.find({'torrent.seeders':{$gt:'2000'}}).lean().exec(function(err, result){
+			Top.find({'torrent.seeders':{$gt:'100'}}).lean().exec(function(err, result){
 				if (result) {
 					result.forEach(function(film) {
 						var movie = film.movie;
