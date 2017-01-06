@@ -97,7 +97,7 @@ $('#comment-btn').on('click', function() {
 			if (data.state === 'success') {
 				$('#comment-area').val('');
 				$(self).html('<i class="fa fa-comment" aria-hidden="true"></i> Add my comment');
-				$('#comments-list').prepend('<div class="col-md-12 comment-block" id="' + data.comment.id + '"><img class="avatar img-rounded img-responsive" src="' + data.comment.user.avatar + '"/><div class="panel panel-default content"><div class="panel-heading username"><strong><a href="/user/' + data.comment.user.id + '">' + data.comment.user.firstname + ' ' + data.comment.user.lastname + '</a></strong> <small class="text-muted date">' + $.format.prettyDate(data.comment.date) + '</small></div><div class="panel-body text"><em>' + data.comment.text + '</em></div></div></div>');
+				$('#comments-list').prepend('<div class="col-md-12 col-sm-12 comment-block" id="' + data.comment.id + '"><img class="avatar img-rounded img-responsive" src="' + data.comment.user.avatar + '"/><div class="panel panel-default content"><div class="panel-heading username"><strong><a href="/user/' + data.comment.user.id + '">' + data.comment.user.firstname + ' ' + data.comment.user.lastname + '</a></strong> <small class="text-muted date">' + $.format.prettyDate(data.comment.date) + '</small></div><div class="panel-body text"><em>' + data.comment.text + '</em></div></div></div>');
 			}
 		});
 });
