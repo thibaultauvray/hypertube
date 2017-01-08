@@ -104,7 +104,7 @@ var omdbSearch = function(req, res, next) {
 	                                engine.removeAllListeners();
                                     engine.destroy();
 	                                    // })
-	                                if (validExtension(movie_file.name)) {
+	                                if (ext = validExtension(movie_file.name)) {
 								    	var imdb = new Nightmare({executionTimeout: 1000 })
 									    .useragent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36")
 									    .goto(torrent.link)
@@ -122,7 +122,7 @@ var omdbSearch = function(req, res, next) {
 									    		if (nightmare) {
 											        omdb.get(nightmare, function(err, movie) {
 											        	movies.push({movie, torrent, vu});
-												       	var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
+												       	var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent, ext});
 												        film.save(function(err) {
 												          	// if (err) console.log(err);
 												        })
@@ -157,7 +157,7 @@ var omdbSearch = function(req, res, next) {
 																				request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
 																			}
 																		});
-																		var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
+																		var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles, ext});
 																		film.save(function(err){
 																			// if (err) {
 																			// 	console.log('---------\n');
@@ -212,7 +212,7 @@ var omdbSearch = function(req, res, next) {
 	                                });
 	                                engine.removeAllListeners();
                                     engine.destroy();    
-	                                if (validExtension(movie_file.name)) {    
+	                                if (ext = validExtension(movie_file.name)) {
 										result.torrents.forEach(function(data){
 											
 											omdb.get(result.imdb_code, function(err, movie) {		
@@ -226,7 +226,7 @@ var omdbSearch = function(req, res, next) {
 													uploadDate 	: data.date_uploaded,
 													magnetLink 	: result.magnet,
 												}
-												var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
+												var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent, ext});
 												movies.push({movie, torrent, vu});
 												film.save(function(err) {
 												          	// if (err) console.log(err);
@@ -261,7 +261,7 @@ var omdbSearch = function(req, res, next) {
 																		request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
 																	}
 																});
-																var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles});
+																var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles, ext});
 																film.save(function(err){
 																	//  		if (err) {
 																	// 	console.log('---------\n');

@@ -70,6 +70,7 @@ var movieSchema = new Schema(
 			avatar: String
 		}
 	}],
+	ext : String,
 	like: {type: Number, default: 0},
 	dislike: {type: Number, default: 0}
 });

@@ -63,7 +63,10 @@ var tmpSchema = new Schema(
 			lastname: String,
 			avatar: String
 		}
-	}]
+	}],
+	ext : String,
+	like: {type: Number, default: 0},
+	dislike: {type: Number, default: 0}
 });
 
 tmpSchema.statics.findByTitle = function (name, cb) {
