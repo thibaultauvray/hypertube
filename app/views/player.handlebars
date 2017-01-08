@@ -11,7 +11,7 @@
 		<div id="videoContainer" class="video-container thumbnails">
             <div class="movie">
 
-                <video id="video" data-id="{{ torrentId }}" class="video-js vjs-sublime-skin col-sm-12 "
+                <video id="video" data-id="{{ torrentId }}" class="video-js isDownload-{{ isDownload }}  vjs-sublime-skin col-sm-12 "
                        controls
                        preload="none">
 
@@ -30,7 +30,7 @@
             <i class="fa fa-thumbs-up fa-3x" aria-hidden="true" style="color:#00A000"></i><span id="likes">{{likes}}</span>
             <i class="fa fa-thumbs-down fa-3x" aria-hidden="true" style="color:#9d1e15"></i><span id="dislikes">{{dislikes}}</span>
         </div>
-		<span class="part">About the movie</span>
+		<span class="part">About the movie {{isDownload}}</span>
 		<hr />
 		<div class="video-infos">
 			<div class="movie paddingGene">
@@ -109,7 +109,7 @@ if (isDownload == true) {
         withCredentials: true
     });
 
-var enabled = false;
+var enabled = {{ isDownload }};
 
 videojs("video").ready(function () {
     this.disableProgress();

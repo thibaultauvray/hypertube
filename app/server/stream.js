@@ -330,7 +330,7 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                     console.log("INFO FILE + ");
                     console.log(info);
                     try {
-                        if (info.mime !== 'video/x-matroska') {
+                        if (info.mime !== 'video/x-matroska' || isdownload) {
                             var stat = fs.statSync(info.path);
                             var total = stat.size;
                             var total2 = total;
@@ -397,16 +397,18 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                         }
                         else
                         {
-                            console.log("Growing FILEE");
-                            res.writeHead(200, {
-                                'transferMode.dlna.org': 'Streaming',
-                                'contentFeatures.dlna.org': 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
-                                "Cache-Control": "private",
-                                "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
-                                'Content-Type': 'video/mp4'
-                            });
-                            file = GrowingFile.open(info.path);
-                            file.pipe(res);
+                            if (!isdownload) {
+                                console.log("Growing FILEE");
+                                res.writeHead(200, {
+                                    'transferMode.dlna.org': 'Streaming',
+                                    'contentFeatures.dlna.org': 'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
+                                    "Cache-Control": "private",
+                                    "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
+                                    'Content-Type': 'video/mp4'
+                                });
+                                file = GrowingFile.open(info.path);
+                                file.pipe(res);
+                            }
 
                         }
                     }
