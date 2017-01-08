@@ -24,7 +24,12 @@ var player = function(req, res, next) {
 					// 			movie.resolutions[j].resolution = 'N/A';
 					// 	}
 					// }
+					var disabled = true;
 			        var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
+					if (!isDownload && movie.ext == 'video/x-matroska')
+					{
+						var disabled = false;
+					}
 					subtitles = [];
 					subtitles['en'] = movie.subtitles.en && movie.subtitles.en.length != 0 ? movie.subtitles.en : null;
 					subtitles['fr'] = movie.subtitles.fr && movie.subtitles.fr.length != 0 ? movie.subtitles.fr : null;
@@ -35,7 +40,7 @@ var player = function(req, res, next) {
 							title : 'Hypertube - Player',
 							firstname : _.capitalize(user.firstname),
 							language : user.language,
-			                isDownload: isDownload,
+			                isDownload: disabled,
 							movie : movie,
 							subtitles : subtitles,
 							magnet: movie.magnet,
