@@ -16,7 +16,10 @@ var userSchema = mongoose.Schema({
 	avatar : String,
 	language : { type : String, required : true, default : 'EN' },
 	history : Array,
-	votes: Array
+	votes: [{
+		which : {type: String, default: "none"},
+		torrentId : {type: Number, default: 0}
+	}]
 });
 
 var User = mongoose.model('User', userSchema);
