@@ -121,7 +121,7 @@ var vote = function (req, res) {
                             var dislike = movie.dislike + 1;
                             var like = movie.like;
                         } else if (req.body.vote == 'up') {
-                            var like = movie.dislike + 1;
+                            var like = movie.like + 1;
                             var dislike = movie.dislike;
                         }
                         Movie.update({'torrent.id': req.body.torrentId}, {
