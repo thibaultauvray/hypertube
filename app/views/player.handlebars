@@ -14,7 +14,6 @@
                 <video id="video" data-id="{{ torrentId }}" class="video-js isDownload-{{ isDownload }}  vjs-sublime-skin col-sm-12 "
                        controls
                        preload="none">
-
                     {{#eachProp subtitles}}
                         <track label="{{lang}}" kind="captions" srclang="{{key}}" src="{{src}}">
                     {{/eachProp}}
@@ -101,13 +100,13 @@ if (isDownload == true) {
             $('#progresBar').addClass('hidden');
 }
 
-	 var url = "http://localhost:3000/app/torrent/{{torrentId}}/{{duration}}";
-	 var player = videojs('video');
-    player.src({
-        src: url,
-        type: 'video/mp4',
-        withCredentials: true
-    });
+var url = "http://localhost:3000/app/torrent/{{torrentId}}/{{duration}}";
+var player = videojs('video');
+player.src({
+    src: url,
+    type: 'video/mp4',
+    withCredentials: true
+});
 
 if ({{ isDownload }}== false ) {
     var enabled = {{ isDownload }};

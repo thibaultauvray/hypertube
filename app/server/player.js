@@ -26,7 +26,7 @@ var player = function(req, res, next) {
 					// }
 					var disabled = true;
 			        var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
-					if (!isDownload && movie.ext == 'video/x-matroska')
+					if (!isDownload)
 					{
 						var disabled = false;
 					}
