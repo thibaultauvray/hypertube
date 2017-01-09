@@ -109,19 +109,21 @@ if (isDownload == true) {
         withCredentials: true
     });
 
-var enabled = {{ isDownload }};
+if ({{ isDownload }}== false ) {
+    var enabled = {{ isDownload }};
 
-videojs("video").ready(function () {
-    this.disableProgress();
+    videojs("video").ready(function () {
+        this.disableProgress();
 
-    if(enabled){
-        this.disableProgress.enable();
-    }
-    else{
-        this.disableProgress.disable();
-    }
-});
+        if (enabled) {
+            this.disableProgress.enable();
+        }
+        else {
+            this.disableProgress.disable();
+        }
+    });
 
+}
 
 
 </script>

@@ -66,49 +66,49 @@ var engineHash = {};
 var enginePaths = {};
 
 var downloadHeader = function(res, info, data) {
-        var code = 200;
-        var header;
+    var code = 200;
+    var header;
 
-        // 'Connection':'close',
-        // 'Cache-Control':'private',
-        // 'Transfer-Encoding':'chunked'
+    // 'Connection':'close',
+    // 'Cache-Control':'private',
+    // 'Transfer-Encoding':'chunked'
 
-        if (settings.forceDownload) {
-            header = {
-                Expires: 0,
-                "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
-                //"Cache-Control": "private",
-                "Content-Type": info.mime,
-                "Content-Disposition": "attachment; filename=" + info.file + ";"
-            };
-        } else {
-            header = {
-                "Cache-Control": "public; max-age=" + settings.maxAge,
-                Connection: "keep-alive",
-                "Content-Type": info.mime,
-                "Content-Disposition": "inline; filename=" + info.file + ";",
-                "Accept-Ranges": "bytes"
-            };
+    if (settings.forceDownload) {
+        header = {
+            Expires: 0,
+            "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
+            //"Cache-Control": "private",
+            "Content-Type": info.mime,
+            "Content-Disposition": "attachment; filename=" + info.file + ";"
+        };
+    } else {
+        header = {
+            "Cache-Control": "public; max-age=" + settings.maxAge,
+            Connection: "keep-alive",
+            "Content-Type": info.mime,
+            "Content-Disposition": "inline; filename=" + info.file + ";",
+            "Accept-Ranges": "bytes"
+        };
 
-            if (info.rangeRequest) {
-                // Partial http response
-                code = 206;
-                header.Status = "206 Partial Content";
-                header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
-            }
+        if (info.rangeRequest) {
+            // Partial http response
+            code = 206;
+            header.Status = "206 Partial Content";
+            header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
         }
+    }
 
-        header.Pragma = "public";
-        header["Last-Modified"] = info.modified.toUTCString();
-        header["Content-Transfer-Encoding"] = "binary";
-        header["Content-Length"] = info.length;
-        if(settings.cors){
-            header["Access-Control-Allow-Origin"] = "*";
-            header["Access-Control-Allow-Headers"] = "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept";
-        }
-        header.Server = settings.server;
+    header.Pragma = "public";
+    header["Last-Modified"] = info.modified.toUTCString();
+    header["Content-Transfer-Encoding"] = "binary";
+    header["Content-Length"] = info.length;
+    if(settings.cors){
+        header["Access-Control-Allow-Origin"] = "*";
+        header["Access-Control-Allow-Headers"] = "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept";
+    }
+    header.Server = settings.server;
 
-        res.writeHead(code, header);
+    res.writeHead(code, header);
 };
 
 
@@ -303,7 +303,7 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                             console.log(info.path + ' size:' + info.size);
                             // if(res.io.sockets.connected[global.client])
                             //     res.io.sockets.connected[global.client].emit('progressDL', parseInt((info.size * 100) / 5000000));
-                             if (info.size > 10000000) {
+                             if (info.size > 5000000) {
                                 // on atend que le fichier soit assez gros pour le stream
                                 clearInterval(interval_id);
                                 if(res.io.sockets.connected[global.client])
@@ -339,48 +339,71 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
 
                             //console.log(stat.size);
                             if (req.headers['range']) {
-                                var range = req.headers.range;
-                                var parts = range.replace(/bytes=/, "").split("-");
-                                var partialstart = parts[0];
-                                var partialend = parts[1];
+                                info.rangeRequest = false;
+                                info.start = 0;
+                                info.end = info.size - 1;
+                                if (range_string && (range = range_string.match(/bytes=(.+)-(.+)?/)) !== null) {
+                                    info.start = isNumber(range[1]) && range[1] >= 0 && range[1] < info.end ? range[1] - 0 : info.start;
+                                    info.end = isNumber(range[2]) && range[2] > info.start && range[2] <= info.end ? range[2] - 0 : info.end;
+                                    info.rangeRequest = true;
+                                } else if (query.start || query.end) {
+                                    // This is a range request, but doesn't get range headers. So there.
+                                    info.start = isNumber(query.start) && query.start >= 0 && query.start < info.end ? query.start - 0 : info.start;
+                                    info.end = isNumber(query.end) && query.end > info.start && query.end <= info.end ? query.end - 0 : info.end;
+                                }
 
-                                var start = parseInt(partialstart, 10);
-                                var end = partialend ? parseInt(partialend, 10) : total - 1;
-                                var chunksize = (end - start) + 1;
-                                //console.log('RANGE: ' + start + ' - ' + end + ' = ' + chunksize);
-                                if (start >= total2) {
-                                    //console.log('euh2', start, total2, total);
-                                    res.writeHead(400);
-                                    res.end();
-                                } else if (start <= end) {
-                                    var file = fs.createReadStream(info.path, {
-                                        start: start,
-                                        end: end,
-                                        autoClose: true
+                                info.length = info.end - info.start + 1;
+
+                                console.log('spiderStreamer Notice: Header Info:', info);
+
+                                console.log('spiderStreamer Notice: Sending header');
+                                downloadHeader(res, info);
+                                try {
+                                    stream = fs.createReadStream(info.path, {
+                                        flags: "r",
+                                        start: info.start,
+                                        end: info.end
                                     });
-                                    //console.log(start, end);
-                                    var stat = fs.statSync(info.path);
-                                    var total = stat.size;
-                                    console.log(total);
-                                    // if (sizeTorrent[params.movie] != undefined)
-                                    //     total = sizeTorrent[params.movie];
-                                    res.writeHead(206, {
-                                        'transferMode.dlna.org': 'Streaming',
-                                        'Cache-Control': 'private, no-cache, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
-                                        'Expires': '-1',
-                                        'Access-Control-Allow-Origin': '*',
-                                        'Pragma': 'no-cache',
-                                        'Content-Range': 'bytes ' + start + '-' + end + '/' + data.length,
-                                        'Accept-Ranges': 'bytes',
-                                        'Content-Length': chunksize,
-                                        'Content-Type': 'video/x-matroska',
-                                        'Connection': 'keep-alive'
-                                    });
-                                    file.pipe(res);
-                                } else {
-                                    //console.log('euh');
-                                    res.writeHead(400);
-                                    res.end();
+                                    console.log('spiderStreamer Notice: Piping stream...');
+                                    stream.pipe(res);
+                                    console.log('spiderStreamer Notice: Pipe set');
+                                }
+                                catch(exception) {
+                                    stream = null;
+                                    i = 0;
+                                    console.log('spiderStreamer Error:'.red, exception);
+                                    console.log('spiderStreamer Notice: Retrying... i:', i);
+                                    timer_id = setInterval(function() {
+                                        ++i;
+                                        if (stream === null) {
+                                            if (i === 5) {
+                                                clearInterval(timer_id);
+                                                console.error('spiderStreamer Error:'.red, 'Could not stream file:', info.path);
+                                                /* Can't set headers after they are sent. */
+                                                // handler.emit("badFile", res);
+                                                return;
+                                            }
+
+                                            try {
+                                                stream = fs.createReadStream(info.path, { flags: "r", start: info.start, end: info.end });
+                                            } catch(exception) {
+                                                console.log('spiderStreamer Error:'.red, exception);
+                                                console.log('spiderStreamer Notice: Retrying in 3 seconds... i:', i);
+                                                stream = null
+                                            }
+                                            if (stream !== null) {
+                                                clearInterval(timer_id);
+                                                if (settings.throttle) {
+                                                    stream = stream.pipe(new Throttle(settings.throttle));
+                                                }
+                                                console.log('spiderStreamer Notice: Piping stream...');
+                                                stream.pipe(res);
+                                                console.log('spiderStreamer Notice: Pipe set');
+                                            }
+                                        } else if (stream !== null) {
+                                            clearInterval(timer_id);
+                                        }
+                                    }, 3000);
                                 }
                             } else {
                                 //console.log('ALL: ' + total);
