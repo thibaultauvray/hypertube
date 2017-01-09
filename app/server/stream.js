@@ -94,7 +94,7 @@ var downloadHeader = function(res, info, data) {
             // Partial http response
             code = 206;
             header.Status = "206 Partial Content";
-            header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + info.size;
+            header["Content-Range"] = "bytes " + info.start + "-" + info.end + "/" + data.length;
         }
     }
 
@@ -190,7 +190,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res) {
                     console.log("MIMEUH" + mime);
                     // fulfill(movie_data);
                     if (original) {
-                        // movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
+                        movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
                         engine.on('download', function (piece_index) {
                             // // ENVOIE POURCENTAGE TELECHARGE
                             // var pourcent = parseInt((engine.swarm.downloaded * 100) / movie_file.length);
@@ -209,7 +209,6 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res) {
                             // io.emit('update', parseInt((engine.swarm.downloaded * 100) / movie_file.length));
                             // console.log(parseInt((engine.swarm.downloaded * 100) / movie_file.length / 2));
                             // res.io.sockets.connected[global.client].emit('progressDL', parseInt((engine.swarm.downloaded * 100) / movie_file.length / 2));
-
                             console.log('downloaded ' + piece_index + '(' + engine.swarm.downloaded + '/' + movie_file.length + ')');
                         });
                         engine.on('idle', function () {
@@ -331,9 +330,6 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                     console.log(info);
                     try {
                         if (info.mime !== 'video/x-matroska' || isdownload) {
-                            var stat = fs.statSync(info.path);
-                            var total = stat.size;
-                            var total2 = total;
                             // if (sizeTorrent[params.movie] != undefined)
                             //     total = sizeTorrent[params.movie];
 
@@ -357,7 +353,7 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                                 console.log('spiderStreamer Notice: Header Info:', info);
 
                                 console.log('spiderStreamer Notice: Sending header');
-                                downloadHeader(res, info);
+                                downloadHeader(res, info, data);
                                 try {
                                     stream = fs.createReadStream(info.path, {
                                         flags: "r",
