@@ -65,4 +65,5 @@ var vote = function (req, res) {
     })
 }
 
+
 module.exports = vote;
