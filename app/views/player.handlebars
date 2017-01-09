@@ -107,7 +107,10 @@ player.src({
     type: 'video/mp4',
     withCredentials: true
 });
-
+player.on('error', function(err)
+{
+    $('.player').prepend('<div class="alert alert-danger row center-block"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>Une erreur inconnue est survenue, veuillez réessayer</div>');
+})
 if ({{ isDownload }}== false ) {
     var enabled = {{ isDownload }};
 
