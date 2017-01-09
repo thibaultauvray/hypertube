@@ -94,11 +94,6 @@
 <script src="/js/videojs.disableProgress.js"></script>
 
 <script type="text/javascript">
-var isDownload = {{ isDownload }};
-if (isDownload == true) {
-            $('#video').removeClass('videojs-stream');
-            $('#progresBar').addClass('hidden');
-}
 
 var url = "http://localhost:3000/app/torrent/{{torrentId}}/{{duration}}";
 var player = videojs('video');
