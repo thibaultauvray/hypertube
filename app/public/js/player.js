@@ -80,7 +80,7 @@ $('.delete-comment').on({
 });
 
 $('#comment-area').on('input keyup change', function() {
-	if ($(this).val().length > 0) {
+	if ($(this).val().trim().length > 0) {
 		$('#comment-btn').removeAttr('disabled');
 		state.comment = lib.protectEntry($(this).val());
 	} else
