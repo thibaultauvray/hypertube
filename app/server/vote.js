@@ -73,7 +73,6 @@ var vote = function (req, res) {
         if (!err && user) {
             Movie.findOne({'torrent.id': req.body.torrentId}, function (error, movie) {
                 if (!error && movie) {
-                    console.log(req.body.vote, " movie.like " + movie.like , " movie.dislike " + movie.dislike);
                     var voted = false;
                     var tmpVotes = user.votes;
                     var update = false;
