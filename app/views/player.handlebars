@@ -104,7 +104,7 @@ player.src({
 });
 player.on('error', function(err)
 {
-    $('.player').prepend('<div class="alert alert-danger row center-block"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>Une erreur inconnue est survenue, veuillez réessayer</div>');
+    $('.player').prepend('<div class="alert alert-danger row center-block"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>Fichier endommagé ou corrompu, veuillez réessayer</div>');
 })
 if ({{ isDownload }}== false ) {
     var enabled = {{ isDownload }};
