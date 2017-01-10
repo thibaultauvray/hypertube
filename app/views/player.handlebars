@@ -31,7 +31,7 @@
             <i class="fa fa-thumbs-up fa-3x" aria-hidden="true" style="color:#00A000"></i><span id="likes">{{likes}}</span>
             <i class="fa fa-thumbs-down fa-3x" aria-hidden="true" style="color:#9d1e15"></i><span id="dislikes">{{dislikes}}</span>
             <div class="sharer">
-                <a href="javacsript:void(0);" share-url="localhost:3000/app/player/16307190" share-text="Check out this website" share-hashtags="SocialShareTool, Tooling" share-via="twitterUserName" class="share share-twitter icon twitter">
+                <a href="javacsript:void(0);" share-url="" share-text="Check out this website" share-hashtags="SocialShareTool, Tooling" share-via="twitterUserName" class="share share-twitter icon twitter">
                 
             </a>
                 <a id="fb-share-button" class="icon facebook">&#xf09a;</a>
@@ -123,7 +123,7 @@
     $('#fb-share-button').click(function() {
         FB.ui({
                     method: 'feed',
-                    link: "http://127.0.0.1:3000/app/player/16307190",
+                    link: "http://127.0.0.1:3000/app/player/{{torrentId}}",
                     picture: '{{ movie.movie.poster }}',
                     name: "{{ movie.movie.title}} - Hypertube",
                     description: "{{ movie.movie.plot}}"
