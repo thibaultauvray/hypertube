@@ -30,6 +30,7 @@ var player = function(req, res, next) {
 					{
 						var disabled = false;
 					}
+					var ext = movie.ext ? movie.ext : "null";
 					subtitles = [];
 					subtitles['en'] = movie.subtitles.en && movie.subtitles.en.length != 0 ? movie.subtitles.en : null;
 					subtitles['fr'] = movie.subtitles.fr && movie.subtitles.fr.length != 0 ? movie.subtitles.fr : null;
@@ -42,6 +43,7 @@ var player = function(req, res, next) {
 							language : user.language,
 			                isDownload: disabled,
 							movie : movie,
+							ext: ext,
 							subtitles : subtitles,
 							magnet: movie.magnet,
 							torrentId: req.params.id,

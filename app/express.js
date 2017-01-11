@@ -3,9 +3,14 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
 	path = require('path'),
-	hbs = require('express-handlebars');
-	mongoose = require('./mongoose');
+	hbs = require('express-handlebars'),
+    fs = require('fs'),
+    cron = require('node-cron'),
+    mongoose = require('./mongoose');
 var app = express();
+var mongoose = require('./mongoose');
+var Movies = require('./movie_schema');
+
 
 global.client;
 const server = app.listen(3000, () => {
@@ -44,6 +49,50 @@ app.engine('handlebars', hbs({
 		}
 	}
 }));
+
+var db = mongoose.connection;
+
+db.on('error', function (err) {
+    console.log('DB Connection error : ', err);
+});
+
+/*
+ * CRON DELETE MOVIES IN SERVER IF < 30 DAY WITHOUT PLAY
+ */
+var deleteFolderRecursive = function(path) {
+    if( fs.existsSync(path) ) {
+        fs.readdirSync(path).forEach(function(file,index){
+            var curPath = path + "/" + file;
+            if(fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+};
+// Tous les jorus a minuit
+cron.schedule('0 0 * * *', function(){
+    var d = new Date();
+    console.log("CRON")
+    d.setMonth(d.getMonth() - 1);
+    console.log(d);
+    Movies.find({'torrent.date' : {$lt: d} }, function (err, doc)
+    {
+        console.log(doc);
+        doc.forEach(function(elem)
+        {
+            var path = elem.torrent.path;
+            deleteFolderRecursive('/tmp/tdl/'+elem.torrent.id);
+            console.log(path);
+            Movies.update({'torrent.id' : elem.torrent.id}, {$set : {'torrent.date' : Date.now(), 'torrent.path' : null, 'torrent.isDownload' : false}}, function(err, doc)
+            {
+            })
+        });
+        console.log(doc.length + "Film supprime");
+    });
+});
 
 io.on('connection', (socket) => {
     // console.log('a user connected');

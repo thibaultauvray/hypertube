@@ -5,6 +5,7 @@ var imdb = require('imdb-api');
 var promise = require('promise');
 var settings = require('./config.json');
 var url = require('url');
+var mongoose = require('../mongoose');
 
 var torrentStream = require('torrent-stream');
 var mimeTypes = require('./mine-type.js');
@@ -264,7 +265,7 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                             console.log(info.path + ' size:' + info.size);
                             // if(res.io.sockets.connected[global.client])
                             //     res.io.sockets.connected[global.client].emit('progressDL', parseInt((info.size * 100) / 5000000));
-                            if (info.size > 5000000) {
+                            if (info.size > 10000000) {
                                 // on atend que le fichier soit assez gros pour le stream
                                 clearInterval(interval_id);
                                 if (res.io.sockets.connected[global.client])

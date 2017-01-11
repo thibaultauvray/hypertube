@@ -28,8 +28,15 @@
         <div class="center-block text-center">
             <i class="fa fa-thumbs-up fa-3x" aria-hidden="true" style="color:#00A000"></i><span id="likes">{{likes}}</span>
             <i class="fa fa-thumbs-down fa-3x" aria-hidden="true" style="color:#9d1e15"></i><span id="dislikes">{{dislikes}}</span>
+            <div class="sharer">
+                <a href="javacsript:void(0);" share-url="" share-text="Check out this website" share-hashtags="SocialShareTool, Tooling" share-via="twitterUserName" class="share share-twitter icon twitter">
+                
+            </a>
+                <a id="fb-share-button" class="icon facebook">&#xf09a;</a>
+            </div>
         </div>
-		<span class="part">About the movie</span>
+
+        <span class="part">About the movie</span>
 		<hr />
 		<div class="video-infos">
 			<div class="movie paddingGene">
@@ -88,12 +95,60 @@
 
 <script type="text/javascript" src="//cdn.embed.ly/player-0.0.11.min.js"></script>
 <script type="text/javascript" src="/js/mylib.js"></script>
+<script type="text/javascript" src="/js/jquery.browser.min.js"></script>
 <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/3.6.12/videojs-contrib-hls.js"></script>
 <script type="text/javascript" src="/js/player.js"></script>
 <script src="/js/videojs.disableProgress.js"></script>
+<script src="/js/socialshare.js"></script>
 
 <script type="text/javascript">
+    console.log($.browser.name);
+
+    if ($.browser.name != "chrome" && "{{ext}}" != 'video/mp4')
+    {
+        $('#video').addClass('hidden');
+        $('.player').prepend('<div class="alert alert-danger row center-block"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>Navigateur incompatible avec ce fichier, veuillez utiliser Chrome</div>');
+
+    }
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1613889238920050',
+            xfbml      : true,
+            version    : 'v2.3'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    $('#fb-share-button').click(function() {
+        FB.ui({
+                    method: 'feed',
+                    link: "http://127.0.0.1:3000/app/player/{{torrentId}}",
+                    picture: '{{ movie.movie.poster }}',
+                    name: "{{ movie.movie.title}} - Hypertube",
+                    description: "{{ movie.movie.plot}}"
+                }, function(response){
+                    console.log(response);
+                }
+        );
+    });
+
+    $(".share-twitter").on("click", function() {
+        SocialShare.share("twitter", {
+            url: "",
+            text: "{{ movie.movie.title }}",
+            hashtags: "Hypertube",
+            via: "Hypertube"
+        });
+    });
+
 
 var url = "/app/torrent/{{torrentId}}/{{duration}}";
 var player = videojs('video');
