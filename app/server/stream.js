@@ -143,21 +143,6 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                     if (original) {
                         movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
                         engine.on('download', function (piece_index) {
-                            // // ENVOIE POURCENTAGE TELECHARGE
-                            // var pourcent = parseInt((engine.swarm.downloaded * 100) / movie_file.length);
-                            // console.log(pourcent);
-                            // if (mime != "video/mp4" && mime != "video/webm" && mime != "video/ogg") {
-                            //     if (pourcent > 5) {
-                            //         // console.log("Fill");
-                            //         // console.log(movie_data);
-                            //         // fulfill(movie_data);
-                            //     }
-                            // }
-                            // else {
-                            //     fulfill(movie_data);
-                            // }
-                            // console.log(pourcent);
-                            // console.log(parseInt((engine.swarm.downloaded * 100) / movie_file.length / 2));
                             if(!firstDL && piece_index == 0)
                             {
                                 fulfill(movie_data);
@@ -177,7 +162,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                             // ON SAVE EN BDD SI LISIBLE DIRECTEMENT PAR NAV
                             console.log(movie.torrent.id);
                             console.log(movie_data.path);
-                            Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.isDownload': true}}, function (err, doc) {
+                            Movies.update({'torrent.id': movie.torrent.id}, {$set: {'torrent.isDownload': true, 'torrent.path' : engine.path + '/' + movie_file.path, 'torrent.size' : movie_file.length}}, function (err, doc) {
                                 console.log(doc);
                                 console.log(err);
                             });
@@ -314,54 +299,6 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                                     'Content-Type': 'video/mp4'
                                 });
                                 stream.pipe(res);
-
-                                // try {
-                                //     stream = fs.createReadStream(info.path, {
-                                //         flags: "r",
-                                //         start: info.start,
-                                //         end: info.end
-                                //     });
-                                //     console.log('spiderStreamer Notice: Piping stream...');
-                                //     stream.pipe(res);
-                                //     console.log('spiderStreamer Notice: Pipe set');
-                                // }
-                                // catch(exception) {
-                                //     stream = null;
-                                //     i = 0;
-                                //     console.log('spiderStreamer Error:'.red, exception);
-                                //     console.log('spiderStreamer Notice: Retrying... i:', i);
-                                //     timer_id = setInterval(function() {
-                                //         ++i;
-                                //         if (stream === null) {
-                                //             if (i === 5) {
-                                //                 clearInterval(timer_id);
-                                //                 console.error('spiderStreamer Error:'.red, 'Could not stream file:', info.path);
-                                //                 /* Can't set headers after they are sent. */
-                                //                 // handler.emit("badFile", res);
-                                //                 return;
-                                //             }
-                                //
-                                //             try {
-                                //                 stream = fs.createReadStream(info.path, { flags: "r", start: info.start, end: info.end });
-                                //             } catch(exception) {
-                                //                 console.log('spiderStreamer Error:'.red, exception);
-                                //                 console.log('spiderStreamer Notice: Retrying in 3 seconds... i:', i);
-                                //                 stream = null
-                                //             }
-                                //             if (stream !== null) {
-                                //                 clearInterval(timer_id);
-                                //                 if (settings.throttle) {
-                                //                     stream = stream.pipe(new Throttle(settings.throttle));
-                                //                 }
-                                //                 console.log('spiderStreamer Notice: Piping stream...');
-                                //                 stream.pipe(res);
-                                //                 console.log('spiderStreamer Notice: Pipe set');
-                                //             }
-                                //         } else if (stream !== null) {
-                                //             clearInterval(timer_id);
-                                //         }
-                                //     }, 3000);
-                                // }
                             } else {
                                 //console.log('ALL: ' + total);
                                 res.writeHead(200, {
