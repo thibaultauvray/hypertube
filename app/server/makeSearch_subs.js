@@ -52,7 +52,7 @@ var subs = function(result) {
 						request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + result.torrent.id + "-" + e + '.vtt'));
 					}
 				});
-				Tmp.update({'torrent.id':result.torrent.id}, {$set: {subtitles: subtitles}}, function(err, fuck){
+				Movie.update({'torrent.id':result.torrent.id}, {$set: {subtitles: subtitles}}, function(err, fuck){
 					console.log('err :'+err);
 					console.log(fuck);
 				});
