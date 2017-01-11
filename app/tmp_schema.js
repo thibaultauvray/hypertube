@@ -53,6 +53,10 @@ var tmpSchema = new Schema(
 		verified 	: Boolean,
 		uploaderLink: String
 	},
+	subtitles : {
+		en : String,
+		fr : String
+	},
 	comments: [{
 		id: String,
 		date: Date,
@@ -64,6 +68,7 @@ var tmpSchema = new Schema(
 			avatar: String
 		}
 	}],
+
 	ext : String,
 	like: {type: Number, default: 0},
 	dislike: {type: Number, default: 0}

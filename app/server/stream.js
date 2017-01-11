@@ -428,7 +428,7 @@ exports.torrent = function (req, res, next) {
     var torrentId = req.params.torrentId;
     var url_parts = url.parse(req.url, true);
     var duration = req.params.duration;
-    var torrent_path = '/tmp/tdl/' + torrentId + '/';
+    var torrent_path = '/tmp/tdl/' + torrentId;
     var range_string = req.headers['range'];
     Movies.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
         var magnet = movie.torrent.magnetLink;

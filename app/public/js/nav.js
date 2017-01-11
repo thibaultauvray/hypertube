@@ -43,7 +43,7 @@
 		var btn = $(this).find("button[type=submit]:focus");
 		switch (btn[0].id){
 			case "search-btn":
-				search = "yts";
+				search = "local";
 				break;
 			case "search-yts":
 				search = "yts";
