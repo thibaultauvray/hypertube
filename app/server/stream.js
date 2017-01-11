@@ -5,6 +5,7 @@ var imdb = require('imdb-api');
 var promise = require('promise');
 var settings = require('./config.json');
 var url = require('url');
+var mongoose = require('../mongoose');
 
 var torrentStream = require('torrent-stream');
 var mimeTypes = require('./mine-type.js');
