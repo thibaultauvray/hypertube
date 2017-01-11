@@ -12,6 +12,9 @@ var mongoose = require('./mongoose');
 var Movies = require('./movie_schema');
 
 
+const server = app.listen(3000, () => {
+    console.log('listening on *:3000');
+});
 
 app.set('view engine', 'handlebars'); // Set template engine
 app.use('/subs', express.static(__dirname + '/public/subtitles'));
