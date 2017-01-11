@@ -137,8 +137,6 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                     console.log("MOVIE DATA");
                     console.log(movie_data);
                     var mime = validExtension(movie_file.name);
-                    if (res.io.sockets.connected[global.client])
-                        res.io.sockets.connected[global.client].emit('getExt', mime);
                     // ON ENVOIT REOTUR PROMISE LE FICHIER EN TRAIN DETRE TELECHARGE
                     console.log("MIMEUH" + mime);
                     // fulfill(movie_data);
@@ -159,9 +157,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                             //     fulfill(movie_data);
                             // }
                             // console.log(pourcent);
-                            // io.emit('update', parseInt((engine.swarm.downloaded * 100) / movie_file.length));
                             // console.log(parseInt((engine.swarm.downloaded * 100) / movie_file.length / 2));
-                            // res.io.sockets.connected[global.client].emit('progressDL', parseInt((engine.swarm.downloaded * 100) / movie_file.length / 2));
                             if(!firstDL && piece_index == 0)
                             {
                                 fulfill(movie_data);
@@ -193,7 +189,6 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                     }
                 }
                 else {
-                    events.emit('badExt', res, io);
                     return false;
                     // FICHIER NON COMPTAIBLE ENVOIE MESSAGE DERREUR TODO
 
@@ -263,13 +258,9 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                         try {
                             info.size = fs.statSync(info.path).size;
                             console.log(info.path + ' size:' + info.size);
-                            // if(res.io.sockets.connected[global.client])
-                            //     res.io.sockets.connected[global.client].emit('progressDL', parseInt((info.size * 100) / 5000000));
                             if (info.size > 10000000) {
                                 // on atend que le fichier soit assez gros pour le stream
                                 clearInterval(interval_id);
-                                if (res.io.sockets.connected[global.client])
-                                    res.io.sockets.connected[global.client].emit("convertDone");
                                 fulfill(info.size);
                                 return;
                             }

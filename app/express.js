@@ -12,12 +12,6 @@ var mongoose = require('./mongoose');
 var Movies = require('./movie_schema');
 
 
-global.client;
-const server = app.listen(3000, () => {
-    console.log('listening on *:3000');
-});
-const io = require('socket.io')(server);
-
 
 app.set('view engine', 'handlebars'); // Set template engine
 app.use('/subs', express.static(__dirname + '/public/subtitles'));
@@ -94,14 +88,6 @@ cron.schedule('0 0 * * *', function(){
     });
 });
 
-io.on('connection', (socket) => {
-    // console.log('a user connected');
-    // console.log(socket.handshake.sessionID);
-    global.client = socket.id;
-    socket.on('disconnect', () => {
-        // console.log('user disconnected');
-    });
-});
 
 process.env.NODE_ENV = 'production';
 app.enable('view cache');
@@ -121,7 +107,6 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-	res.io = io;
 	var views = req.session.views ;
 	if (!views) {
 		views = req.session.views = {};
