@@ -16,7 +16,7 @@
 	var query = "";
 
 	$('#search-field').on('input change', function() {
-		if ($(this).val().length > 0) {
+		if ($(this).val().trim().length > 0) {
 			$('#search-btn').removeAttr('disabled');
 			$('#search-yts').removeAttr('disabled');
 			$('#search-tpb').removeAttr('disabled');

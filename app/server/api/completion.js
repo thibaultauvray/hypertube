@@ -3,8 +3,9 @@ var mongoose = require('../../mongoose'),
     Movie = require('../../movie_schema');
 
 var movieCompletion = function (req, res, next) {
-    if (req.params.query)
+    if (req.params.query) 
         var regex = { 'movie.title' : new RegExp(req.params.query, "i" ) };
+    console.log(regex);
     User.findOne({ username : req.session.username }, function(err, user) {
         if (!err && user) {
            Movie.find(regex, {'movie.title':1}, function (error, results) {
