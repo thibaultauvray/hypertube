@@ -72,8 +72,8 @@ var deleteFolderRecursive = function(path) {
         fs.rmdirSync(path);
     }
 };
-//
-cron.schedule('35 12 * * * *', function(){
+// Tous les jorus a minuit
+cron.schedule('0 0 * * *', function(){
     var d = new Date();
     console.log("CRON")
     d.setMonth(d.getMonth() - 1);
