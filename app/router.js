@@ -15,6 +15,8 @@ var app = require('./express.js'),
 	user = require('./server/user'),
 	vote = require('./server/vote');
 
+var Movies = require('./movie_schema');
+
 var addNewUser = require('./server/api/addNewUser'),
 	editUser = require('./server/api/editUser'),
 	signInUser = require('./server/api/signInUser'),
@@ -31,43 +33,9 @@ var addNewUser = require('./server/api/addNewUser'),
 
 var getCode42 = require('./server/oauth/42/getCode42'),
 	loginApi42 = require('./server/oauth/42/loginApi42'),
-	cron = require('node-cron'),
 	twitter = require('./server/oauth/twitter/twitter');
 
-/*
-* CRON DELETE MOVIES IN SERVER IF < 30 DAY WITHOUT PLAY
-*/
-var deleteFolderRecursive = function(path) {
-	if( fs.existsSync(path) ) {
-		fs.readdirSync(path).forEach(function(file,index){
-			var curPath = path + "/" + file;
-			if(fs.lstatSync(curPath).isDirectory()) { // recurse
-				deleteFolderRecursive(curPath);
-			} else { // delete file
-				fs.unlinkSync(curPath);
-			}
-		});
-		fs.rmdirSync(path);
-	}
-};
 
-cron.schedule('35 12 * * *', function(){
-	var d = new Date();
-	d.setMonth(d.getMonth() - 1);
-	Movies.find({'torrent.date' : {$lt: d} }, function (err, doc)
-	{
-		doc.forEach(function(elem)
-		{
-			var path = elem.torrent.path;
-			deleteFolderRecursive('/tmp/tdl/'+elem.torrent.id);
-			console.log(path);
-			Movies.update({'torrent.id' : elem.torrent.id}, {$set : {'torrent.date' : Date.now(), 'torrent.path' : null}}, function(err, doc)
-			{
-			})
-		});
-		console.log(doc.length + "Film supprime");
-	});
-});
 
 /*
 * ROUTES 
