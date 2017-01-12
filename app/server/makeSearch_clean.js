@@ -57,11 +57,11 @@ var cleanTop = function () {
 	                	engine.removeAllListeners();
 	                	engine.destroy();
 	                	if (!(ext = validExtension(movie_file.name))) {
-	                		Tmp.remove({ 'torrent.id': result.torrent.id }, function (err) {
+	                		Tmp.remove({ '_id': result._id }, function (err) {
 	  							if (err) return handleError(err);
 	  							// console.log(result.movie.title+ " ======> removed from DB : bad format");
 							});
-							Movie.remove({ 'torrent.id': result.torrent.id }, function (err) {
+							Movie.remove({ '_id': result._id }, function (err) {
 	  							if (err) return handleError(err);
 	  							// console.log(result.movie.title+ " ======> removed from DB : bad format");
 							});

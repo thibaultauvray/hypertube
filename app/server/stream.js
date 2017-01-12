@@ -121,7 +121,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                         path: engine.path + '/' + movie_file.path
                     };
                     console.log(movie_file.length);
-                    if(firstDL) {
+                  
                         fulfill(movie_data);
                         Movies.update({'torrent.id': movie.torrent.id}, {
                             $set: {
@@ -131,7 +131,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                         }, function (err, doc) {
                             console.log('path updated');
                         });
-                    }
+             
                     console.log("PATH UPDATE");
                     console.log("=============");
                     console.log("MOVIE DATA");
@@ -143,18 +143,7 @@ var downloadTorrent = function (movie, magnet, torrent_path, io, res, firstDL) {
                     if (original) {
                         movie_file.createReadStream({start: movie_file.length - 1025, end: movie_file.length - 1});
                         engine.on('download', function (piece_index) {
-                            if(!firstDL && piece_index == 0)
-                            {
-                                fulfill(movie_data);
-                                Movies.update({'torrent.id': movie.torrent.id}, {
-                                    $set: {
-                                        'torrent.path': engine.path + '/' + movie_file.path,
-                                        'torrent.size': movie_file.length
-                                    }
-                                }, function (err, doc) {
-                                    console.log('path updated');
-                                });
-                            }
+                        
                             console.log('downloaded ' + piece_index + '(' + engine.swarm.downloaded + '/' + movie_file.length + ')');
                         });
                         engine.on('idle', function () {
@@ -357,23 +346,21 @@ exports.torrent = function (req, res, next) {
     var torrentId = req.params.torrentId;
     var url_parts = url.parse(req.url, true);
     var duration = req.params.duration;
-    var torrent_path = '/tmp/tdl/' + torrentId;
     var range_string = req.headers['range'];
-    Movies.findOne({'torrent.id': torrentId}).lean().exec(function (err, movie) {
+    Movies.findOne({'_id': torrentId}).lean().exec(function (err, movie) {
+        var torrent_path = '/tmp/tdl/' + movie.movie.title + '/' + movie.torrent.name;
         var magnet = movie.torrent.magnetLink;
         if (movie.torrent.path && movie.torrent.length) {
-            console.log('spiderTorrent Notice: Movie data found for', movie.title);
+            console.log('Torrent Notice: Movie data found for', movie.movie.title);
             var file_size;
             try {
                 file_size = fs.statSync(movie.torrent.path).size;
             } catch (exception) {
-                console.log('spiderTorrent Error:'.red, 'Movie size not found');
+                console.log('Torrent Error:'.red, 'Movie size not found');
                 file_size = 0;
             }
-            console.log('spiderTorrent Notice: Movie size comparison:', file_size, resolution.data.length);
             if (file_size >= movie.torrent.length && (enginePaths[torrent_path] === 1)) {
                 /* Does not work: file always final size; poential fix? */
-                console.log('spiderTorrent Notice: Movie already torrented; streaming:', movie.title, resolution.resolution);
                 streamMovie(req, {
                     name: movie.torrent.name,
                     length: movie.torrent.length,

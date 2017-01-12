@@ -14,7 +14,7 @@ var user = function(req, res, next) {
 						if (user.history[i].resolution === 'N/A')
 							user.history[i].resolution = 'undefined';
 						//penser à changer le lien +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-						user.history[i].link = '/player/html5/' + user.history[i].id + '/' + user.history[i].resolution;
+						user.history[i].link = '/app/player/' + user.history[i]._id;
 					}
 
 					res.render('user', {

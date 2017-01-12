@@ -10,18 +10,18 @@ var accueil = function(req, res, next) {
 
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			Top.find({'torrent.seeders':{$gt:'100'}}).lean().exec(function(err, result){
-				if (result) {
-					result.forEach(function(film) {
+			Top.find({'torrent.seeders':{$gt:'100'}}).lean().exec(function(err, results){
+				if (results) {
+					results.forEach(function(film) {
 						var movie = film.movie;
 						var torrent = film.torrent;
-						movies.push({movie,torrent,vu});
+						movies.push({_id: film._id, movie,torrent,vu});
 					})
 				}
 				movies.forEach(function(film){
 					user.history.forEach(function(histo){
 
-						if (film.torrent.id == histo.torrent.id){
+						if (film._id == histo._id){
 							film.vu = true
 						}
 					});

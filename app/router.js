@@ -49,7 +49,7 @@ app.get('/users/forgot-password', forgotPassword);
 app.get('/users/reset-password/:username/:token', resetPassword);
 app.get('/app/library', library);
 app.get('/app/accueil', accueil);
-app.get('/app/player/:id', player);
+app.get('/app/player/:_id', player);
 app.get('/app/torrent/:torrentId/:duration', stream.torrent)
 
 // app.get('/player/html5/:text', player);

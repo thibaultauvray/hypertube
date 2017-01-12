@@ -8,7 +8,7 @@ var addNewVisit = function(req, res, next) {
 		if (!err && user) {
 			var history = user.history ? user.history : [];
 
-			Movie.findOne({ 'torrent.id' : req.body.movieID }, function(err, movie) {
+			Movie.findOne({ '_id' : req.body.movieID }, function(err, movie) {
 				if (!err && movie) {
 					var alreadyVisited = false;
 					

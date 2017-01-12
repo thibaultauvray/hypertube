@@ -9,8 +9,11 @@ var imdb = require('imdb-api');
 var player = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			Movie.findOne({ 'torrent.id' : req.params.id }, function(err, movie) {
+			console.log(req.params._id);
+			Movie.findOne({ '_id' : req.params._id }, function(err, movie) {
+				console.log(movie);
 				if (!err && movie) {
+
 					// movie.director = movie.director ? movie.director : 'N/A';
 					// movie.runtime = movie.runtime ? movie.runtime : 'N/A';
 					// movie.actors = movie.actors ? movie.actors.join(', ') : 'N/A';
@@ -46,16 +49,16 @@ var player = function(req, res, next) {
 							ext: ext,
 							subtitles : subtitles,
 							magnet: movie.magnet,
-							torrentId: req.params.id,
+							torrentId: movie._id,
 			                duration: parseInt(data.runtime),
 							params : {
 								id : req.params.id,
-								resolution : req.params.link
+								resolution : req.params.link,
 							},
 							likes : movie.like,
 							dislikes: movie.dislike
 						});
-				});
+					});
 				} else {
 					console.log('Movie not found at this url');
 					res.redirect('/app/accueil');

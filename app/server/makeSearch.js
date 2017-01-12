@@ -57,7 +57,7 @@ var omdbSearch = function(req, res, next) {
 			    Movie.find({'movie.title': Query_regex}, function(err, results){
 			    	if (results.length > 0) { 		
 			    		results.forEach(function(result){
-			    			movies.push({movie: result.movie, torrent: result.torrent, vu});
+			    			movies.push({_id: result._id, movie: result.movie, torrent: result.torrent, vu});
 			    			var film = new Tmp({_id: mongoose.Types.ObjectId(), movie: result.movie, torrent: result.torrent});
 							film.save(function(err) {
 							  	// if (err) console.log(err);
@@ -102,6 +102,8 @@ var omdbSearch = function(req, res, next) {
 						sortBy: 'desc'    	// default - desc, asc 
 					})
 				.then(torrents => {
+					var torrents = torrents.slice(0, 6);
+					console.log(torrents.length);
 					async.each(torrents, function(torrent, callback) {
 				   		var file_size = 0;
 						if (torrent.magnetLink) {
@@ -134,12 +136,21 @@ var omdbSearch = function(req, res, next) {
 									  	if (err) return console.log(err);
 									   	if (nightmare) {
 										    omdb.get(nightmare, function(err, movie) {
-										      	movies.push({movie, torrent, vu});
-										       	var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent, ext});
-										        film.save(function(err) {
+										    	var film = ({_id: mongoose.Types.ObjectId(), movie, torrent, ext})
+										      	
+										       	var store_tmp = new Tmp(film);
+										        // var store = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, ext});
+										        var store_db = new Movie(film);
+										        movies.push(film);
+										        store_tmp.save(function(err) {
 										          	// if (err) console.log(err);
 										        })
-												Movie.findOne({'torrent.id':torrent.id}, function(err, result){
+										        store_db.save(function (err) {
+										        	// body...
+										        })
+												Movie.findOne({'_id': film._id}, function(err, result){
+													console.log('Erreur' + err);
+													console.log('result' + result);
 												   	if (!result) {
 												        OpenSubtitles.login()
 														.then(function (res) {
@@ -170,34 +181,57 @@ var omdbSearch = function(req, res, next) {
 																		request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
 																	}
 																});
-																var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles, ext});
-																film.save(function(err){
-																	// if (err) {
-																	// 	console.log('---------\n');
-																	// 	console.log(err);
-																	// }
+
+    															Movie.update({'torrent.id':film.torrent.id}, {$set: {subtitles: subtitles}}, function(err, fuck){
+																	console.log('err :'+err);
+																	console.log(fuck);
 																});
+																// var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles, ext});
+																// film.save(function(err){
+																// 	// if (err) {
+																// 	// 	console.log('---------\n');
+																// 	// 	console.log(err);
+																// 	// }
+																// });
 															});
 														});
 													}
 												})
 											})
-										}  
-									    callback(null);
+										}
+										// console.log(i);
+										// i++;
+										callback(null);
 									})
 									.end()
+								} else {
+									callback(null);
 								}
 						  	})
 					  	}
 					}, function(err) {
-					    res.render('search', {
-							isApp : true,
-							isLibrary : true,
-							title : 'Hypertube - Search',
-							firstname : _.capitalize(user.firstname),
-							language : user.language,
-							movies : movies
-						})
+					    if (movies.length > 0){
+						    res.render('search', {
+								isApp : true,
+								isLibrary : true,
+								noResult: false,
+								title : 'Hypertube - Search',
+								firstname : _.capitalize(user.firstname),
+								language : user.language,
+								movies : movies
+							})
+						} else {
+							res.render('search', {
+								isApp : true,
+								isLibrary : false,
+								noResult: true,
+								title : 'Hypertube - Search',
+								firstname : _.capitalize(user.firstname),
+								language : user.language,
+								movies : movies
+								
+							})
+						}
 					}) 
 				})
 			} else if (req.params.search === 'yts') {
@@ -226,15 +260,66 @@ var omdbSearch = function(req, res, next) {
 												uploadDate 	: data.date_uploaded,
 												magnetLink 	: result.magnet,
 											}
-										var film = new Tmp({_id: mongoose.Types.ObjectId(), movie, torrent});
-										var store = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent});
-										movies.push({movie, torrent, vu});
-										film.save(function(err) {
+										var film = ({_id: mongoose.Types.ObjectId(), movie, torrent});
+										var store_tmp = new Tmp(film);
+										var store_db = new Movie(film);
+										// console.log(store.movie.title);
+										// movies.push(film);
+										store_tmp.save(function(err) {
 										   	// if (err) console.log(err);
 										})
-										store.save(function(err){
-											// if (err) console.log(err);
+										store_db.save(function(err){
+											 if (err) console.log("EROOR " + err);
 										})
+										movies.push(film);
+										Movie.findOne({'_id': film._id}, function(err, resp){
+											console.log('Erreur' + err);
+											console.log('result' + result);
+										   	if (!resp) {
+										        OpenSubtitles.login()
+												.then(function (res) {
+													OpenSubtitles.search({
+														imdbid: result.imdb_code
+													})
+													.then(function (data) {
+														/*var file = fs.createWriteStream("f.txt");
+														var request = http.get(subtitles.fr.url, function(response) {
+														response.pipe(file);
+														});*/
+														if (Object.keys(data).length === 0 || (!data.en && !data.fr))
+															subtitles = {en : "", fr:""};
+														else if (data.en && data.fr)
+															subtitles = {en: data.en.url , fr : data.fr.url };
+														else if (data.en)
+															subtitles = {en: data.en.url , fr : "" };
+														else if (data.fr)
+															subtitles = {en: "" , fr : data.fr.url };
+														path = __dirname + "/../public/subtitles/" + torrent.id + "/";
+														console.log(path);
+														if (!fs.existsSync(path)){
+															fs.mkdirSync(path);
+														}
+														Object.keys(subtitles).forEach(function(e){
+															console.log(subtitles[e]);
+															if (subtitles[e].length != 0) {
+																request.get(subtitles[e]).pipe(srt2vtt()).pipe(fs.createWriteStream(path + torrent.id + "-" + e + '.vtt'));
+															}
+														});
+   														Movie.update({'torrent.id':film.torrent.id}, {$set: {subtitles: subtitles}}, function(err, fuck){
+															console.log('err :'+err);
+															console.log(fuck);
+														});
+																// var film = new Movie({_id: mongoose.Types.ObjectId(), movie, torrent, subtitles, ext});
+																// film.save(function(err){
+																// 	// if (err) {
+																// 	// 	console.log('---------\n');
+																// 	// 	console.log(err);
+																// 	// }
+																// });
+													});
+												});
+											}
+										})										
 									})
 								})
 								callback(null);
@@ -242,17 +327,32 @@ var omdbSearch = function(req, res, next) {
 						}
 					}, function(err){
 						// console.log(movies);
-						cleanTop()
-						.then(function (movies){
-							res.render('search', {
-								isApp : true,
-								isLibrary : true,
-								title : 'Hypertube - Search',
-								firstname : _.capitalize(user.firstname),
-								language : user.language,
-								movies : movies	
-							})
-						})
+						// cleanTop()
+						// .then(function (movies){
+						// 	console.log('movies =>>>>>>>>>>>>>>>>>>>>>>>>>>> '+ movies);
+							if (movies.length){
+							    res.render('search', {
+									isApp : true,
+									isLibrary : true,
+									noResult: false,
+									title : 'Hypertube - Search',
+									firstname : _.capitalize(user.firstname),
+									language : user.language,
+									movies : movies
+								})
+							} else {
+								res.render('search', {
+									isApp : true,
+									isLibrary : false,
+									noResult: true,
+									title : 'Hypertube - Search',
+									firstname : _.capitalize(user.firstname),
+									language : user.language,
+									movies : movies
+									
+								})
+							}
+						// })
 					})
 				})	
 			}	

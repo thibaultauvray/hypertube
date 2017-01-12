@@ -5,7 +5,7 @@ var movieSchema = new Schema(
 {
 	_id 		: String,
 	movie 		: {
-		title 		: { type: String, unique: true, required: true, dropDups: true },
+		title 		: { type: String, required: true},
 		year 		: { type: Number, required: true },
 		rated 		: String,
 		season 		: Number,
@@ -34,7 +34,7 @@ var movieSchema = new Schema(
 	},
 	torrent 	: {
 		id 			: Number,
-		name		: {type: String, required: true},
+		name		: {type: String, unique: true, required: true},
 		size 		: String,
 		isDownload  : {type: Boolean, default: false},
 		path 		: {type		:String, default: null},

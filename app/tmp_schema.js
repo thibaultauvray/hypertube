@@ -5,7 +5,7 @@ var tmpSchema = new Schema(
 {
 	_id 		: String,
 	movie 		: {
-		title 		: { type: String, unique: true, required: true, dropDups: true },
+		title 		: { type: String, required: true },
 		year 		: { type: Number, required: true },
 		rated 		: String,
 		season 		: Number,
