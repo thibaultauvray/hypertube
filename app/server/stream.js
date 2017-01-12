@@ -275,7 +275,7 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
 
                                 var chunksize = (end - start) + 1;
                                 console.log(parts + " - " + end);
-                                stream = fs.createReadStream(info.path, {start: start, end: end});
+                                stream = fs.createReadStream(info.path, {start: start, end: end, autoClose: true});
 
                                 res.writeHead(206, {
                                     'transferMode.dlna.org': 'Streaming',
@@ -298,7 +298,7 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                                     'Content-Length': total,
                                     'Content-Type': 'video/x-matroska'
                                 });
-                                fs.createReadStream(info.path).pipe(res);
+                                fs.createReadStream(info.path, { autoClose: true}).pipe(res);
                             }
                         }
                         else {
@@ -315,7 +315,7 @@ var streamMovie = function (req, data, query, range_string, res, movie, magnet, 
                                         "Cache-Control": "must-revalidate, post-check=0, pre-check=0",
                                         'Content-Type': 'video/mp4'
                                     });
-                                    file = GrowingFile.open(info.path);
+                                    file = GrowingFile.open(info.path, { timeout: 10000 });
                                     file.pipe(res);
                                 }
                             }

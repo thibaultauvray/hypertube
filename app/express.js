@@ -81,9 +81,14 @@ cron.schedule('0 0 * * *', function(){
         doc.forEach(function(elem)
         {
             var path = elem.torrent.path;
-            deleteFolderRecursive('/tmp/tdl/'+elem.torrent.id);
+            // deleteFolderRecursive('/tmp/tdl/'+ elem.movie.title);
+            if (fs.existsSync(path)) {
+            fs.unlinkSync(path);
+
+				}
+
             console.log(path);
-            Movies.update({'torrent.id' : elem.torrent.id}, {$set : {'torrent.date' : Date.now(), 'torrent.path' : null, 'torrent.isDownload' : false}}, function(err, doc)
+            Movies.update({'_id' : elem._id}, {$set : {'torrent.date' : Date.now(), 'torrent.path' : null, 'torrent.isDownload' : false}}, function(err, doc)
             {
             })
         });
