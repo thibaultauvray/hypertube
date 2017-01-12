@@ -12,7 +12,6 @@ var editUser = function(req, res, next) {
 					{ username : req.session.username },
 					{ $set : { password : mhash('whirlpool', _.protectEntry(req.body.user.password)) } },
 					function() {
-						console.log('Password updated for user : ', req.session.username);
 					}
 				);
 			}
@@ -22,7 +21,6 @@ var editUser = function(req, res, next) {
 					{ username : req.session.username },
 					{ $set : { mail : _.protectEntry(req.body.user.mail) } },
 					function() {
-						console.log('Email updated for user : ', req.session.username);
 						req.session.mail = req.body.user.mail;
 					}
 				);
@@ -33,7 +31,6 @@ var editUser = function(req, res, next) {
 					{ username : req.session.username },
 					{ $set : { firstname : _.protectEntry(req.body.user.firstname) } },
 					function() {
-						console.log('Firstname updated for user : ', req.session.username);
 						req.session.firstname = req.body.user.firstname;
 					}
 				);
@@ -44,7 +41,6 @@ var editUser = function(req, res, next) {
 					{ username : req.session.username },
 					{ $set : { lastname : _.protectEntry(req.body.user.lastname) } },
 					function() {
-						console.log('Lastname updated for user : ', req.session.username);
 						req.session.lastname = req.body.user.lastname;
 					}
 				);
@@ -55,7 +51,6 @@ var editUser = function(req, res, next) {
 					{ username : req.session.username },
 					{ $set : { avatar : req.body.user.avatar } },
 					function() {
-						console.log('Avatar updated for user : ', req.session.username);
 					}
 				);
 			}

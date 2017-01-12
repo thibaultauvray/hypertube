@@ -114,8 +114,6 @@
 	});
 
 	$('button#profile-btn').on('click', function() {
-		console.log(userData);
-		console.log(state);
 		var self = this;
 		$(self).html('<i class="fa fa-refresh" aria-hidden="true"></i> Loading...');
 		$.post('/api/user/edit', {

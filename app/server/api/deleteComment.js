@@ -7,7 +7,7 @@ var mhash = require('mhash'),
 var deleteComment = function(req, res, next) {
 	User.findOne({ username : req.session.username }, function(err, user) {
 		if (!err && user) {
-			Movie.findOne({ 'torrent.id' : req.body.movieID }, function(err, movie) {
+			Movie.findOne({ '_id' : req.body.movieID }, function(err, movie) {
 				if (!err && movie) {
 					var comments = movie.comments,
 						isDelete = false;
@@ -21,7 +21,7 @@ var deleteComment = function(req, res, next) {
 
 					if (isDelete) {
 						Movie.update(
-							{ 'torrent.id' : req.body.movieID },
+							{ '_id' : req.body.movieID },
 							{ $set : { comments : comments } },
 							function() {
 								console.log('SUCCESS : comment has been deleted');
