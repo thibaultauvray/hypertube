@@ -23,7 +23,7 @@ var player = function(req, res, next) {
 					subtitles = [];
 					subtitles['en'] = movie.subtitles.en && movie.subtitles.en.length != 0 ? movie.subtitles.en : null;
 					subtitles['fr'] = movie.subtitles.fr && movie.subtitles.fr.length != 0 ? movie.subtitles.fr : null;
-					subtitles['id'] = req.params.id;
+					subtitles['id'] = req.params._id;
 	                imdb.getById(movie.movie.imdb.id).then(function (data) {
 						res.render('player', {
 							isApp : true,
