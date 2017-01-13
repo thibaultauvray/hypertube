@@ -18,7 +18,7 @@ var userSchema = mongoose.Schema({
 	history : Array,
 	votes: [{
 		which : {type: String, default: "none"},
-		torrentId : {type: Number, default: 0}
+		torrentId : String
 	}]
 });
 

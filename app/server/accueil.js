@@ -15,7 +15,7 @@ var accueil = function(req, res, next) {
 					results.forEach(function(film) {
 						var movie = film.movie;
 						var torrent = film.torrent;
-						movies.push({_id: film._id, movie,torrent,vu});
+						movies.push({_id: film._id, movie, torrent, vu});
 					})
 				}
 				movies.forEach(function(film){

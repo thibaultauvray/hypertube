@@ -13,7 +13,7 @@ var addNewVisit = function(req, res, next) {
 					var alreadyVisited = false;
 					
 					for (var i = 0; i < history.length; i++) {
-						if (history[i].movie.title === movie.movie.title)
+						if (history[i]._id === movie._id)
 							alreadyVisited = true;
 					}
 

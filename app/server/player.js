@@ -13,20 +13,6 @@ var player = function(req, res, next) {
 			Movie.findOne({ '_id' : req.params._id }, function(err, movie) {
 				console.log(movie);
 				if (!err && movie) {
-
-					// movie.director = movie.director ? movie.director : 'N/A';
-					// movie.runtime = movie.runtime ? movie.runtime : 'N/A';
-					// movie.actors = movie.actors ? movie.actors.join(', ') : 'N/A';
-					// movie.genres = movie.genres ? movie.genres.join(' | ') : 'N/A';
-					// movie.rated = movie.rated ? movie.rated : 'N/A';
-
-					// for (var j = 0; j < movie.torrent.length; j++) {
-					// 	if (movie.resolutions[j].resolution !== req.params.link) {
-					// 		movie.resolutions[j].link = '/player/html5/' + torrent.id + '/' + movie.resolutions[j].resolution;
-					// 		if (movie.resolutions[j].resolution === 'undefined')
-					// 			movie.resolutions[j].resolution = 'N/A';
-					// 	}
-					// }
 					var disabled = true;
 			        var isDownload = movie.torrent.isDownload ? movie.torrent.isDownload : false;
 					if (!isDownload)
