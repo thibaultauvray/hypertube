@@ -3,12 +3,12 @@ var axios = require('axios'),
 	User = require('../../../user_schema');
 
 var getCode42 = function(req, res, next) {
-	//console.log('QUERY : ', req.query);
+
 	if (req.query && req.query.error) {
 		console.log('ERROR : ', req.query.error);
 		res.redirect('/users/register');
 	} else if (req.query && req.query.code) {
-		//console.log('CODE : ', req.query.code);
+
 		axios.post('https://api.intra.42.fr/oauth/token', {
 			grant_type : 'authorization_code',
 			client_id : '592306c98554ede4bbefe02ae74260c297c9c793583eef689a0420af1b21cece',
@@ -16,11 +16,11 @@ var getCode42 = function(req, res, next) {
 			code : req.query.code,
 			redirect_uri : 'http://localhost:3000/users/register/42'
 		}).then(function (response) {
-			//console.log('Asking for auth token');
+
 			axios.get('https://api.intra.42.fr/v2/me', {
 				headers : { 'Authorization' : response.data.token_type + ' ' + response.data.access_token }
 			}).then(function (user) {
-				//console.log('Getting user data');
+
 				var newUser = {
 					access_token_42 : response.data.access_token,
 					refresh_token_42 : response.data.refresh_token,
@@ -31,13 +31,13 @@ var getCode42 = function(req, res, next) {
 					lastname : user.data.displayname.split(' ')[1],
 					avatar : user.data.image_url
 				};
-				//console.log(newUser);
+
 				axios.post('http://localhost:3000/api/user/new', {
 					user : newUser
 				}).then(function(resp) {
 					if (resp.data.state === 'success')
-						res.redirect('/app/library');
-					if (resp.data.state === 'user already exist') {
+						res.redirect('/app/accueil');
+					else if (resp.data.state === 'user already exist') {
 						User.findOne({ username : newUser.username }, function(err, user) {
 							if (!err && user) {
 								req.session.id = user._id;
